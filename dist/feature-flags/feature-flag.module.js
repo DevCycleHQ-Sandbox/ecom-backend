@@ -6,16 +6,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DevCycleModule = void 0;
+exports.FeatureFlagModule = void 0;
 const common_1 = require("@nestjs/common");
-const devcycle_service_1 = require("./devcycle.service");
-let DevCycleModule = class DevCycleModule {
+const feature_flag_service_1 = require("./feature-flag.service");
+let FeatureFlagModule = class FeatureFlagModule {
 };
-exports.DevCycleModule = DevCycleModule;
-exports.DevCycleModule = DevCycleModule = __decorate([
+exports.FeatureFlagModule = FeatureFlagModule;
+exports.FeatureFlagModule = FeatureFlagModule = __decorate([
     (0, common_1.Module)({
-        providers: [devcycle_service_1.DevCycleService],
-        exports: [devcycle_service_1.DevCycleService],
+        providers: [feature_flag_service_1.FeatureFlagService],
+        exports: [feature_flag_service_1.FeatureFlagService],
     })
-], DevCycleModule);
-//# sourceMappingURL=devcycle.module.js.map
+], FeatureFlagModule);
+//# sourceMappingURL=feature-flag.module.js.map

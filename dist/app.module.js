@@ -15,7 +15,7 @@ const cart_module_1 = require("./cart/cart.module");
 const orders_module_1 = require("./orders/orders.module");
 const users_module_1 = require("./users/users.module");
 const database_module_1 = require("./database/database.module");
-const devcycle_module_1 = require("./devcycle/devcycle.module");
+const feature_flag_module_1 = require("./feature-flags/feature-flag.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -32,7 +32,7 @@ exports.AppModule = AppModule = __decorate([
             cart_module_1.CartModule,
             orders_module_1.OrdersModule,
             users_module_1.UsersModule,
-            devcycle_module_1.DevCycleModule,
+            feature_flag_module_1.FeatureFlagModule,
         ],
     })
 ], AppModule);

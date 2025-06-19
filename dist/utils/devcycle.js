@@ -1,37 +1,45 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.initializeDevCycle = initializeDevCycle;
-exports.getDevCycleClient = getDevCycleClient;
+exports.getDevCycleClient = exports.initializeDevCycle = void 0;
+exports.initializeOpenFeature = initializeOpenFeature;
+exports.getFeatureFlagClient = getFeatureFlagClient;
 exports.getFeatureFlag = getFeatureFlag;
+exports.getStringFlag = getStringFlag;
+exports.getNumberFlag = getNumberFlag;
+exports.getObjectFlag = getObjectFlag;
+const server_sdk_1 = require("@openfeature/server-sdk");
 const nodejs_server_sdk_1 = require("@devcycle/nodejs-server-sdk");
-let devCycleClient = null;
-function initializeDevCycle() {
+let featureFlagClient = null;
+async function initializeOpenFeature() {
     const serverKey = process.env.DEVCYCLE_SERVER_SDK_KEY;
     if (!serverKey) {
         console.warn("⚠️  DevCycle server SDK key not found. Feature flags will be disabled.");
         return;
     }
     try {
-        devCycleClient = (0, nodejs_server_sdk_1.initialize)(serverKey);
-        console.log("✅ DevCycle SDK initialized successfully");
+        const devcycleProvider = new nodejs_server_sdk_1.DevCycleProvider(serverKey);
+        await server_sdk_1.OpenFeature.setProvider(devcycleProvider);
+        featureFlagClient = server_sdk_1.OpenFeature.getClient();
+        console.log("✅ OpenFeature with DevCycle provider initialized successfully");
     }
     catch (error) {
-        console.error("❌ Failed to initialize DevCycle SDK:", error);
+        console.error("❌ Failed to initialize OpenFeature with DevCycle provider:", error);
     }
 }
-function getDevCycleClient() {
-    return devCycleClient;
+function getFeatureFlagClient() {
+    return featureFlagClient;
 }
 async function getFeatureFlag(userId, flagKey, defaultValue = false) {
-    if (!devCycleClient) {
-        console.warn(`Feature flag ${flagKey} requested but DevCycle not initialized`);
+    if (!featureFlagClient) {
+        console.warn(`Feature flag ${flagKey} requested but OpenFeature not initialized`);
         return defaultValue;
     }
     try {
-        const user = {
+        const context = {
+            targetingKey: userId,
             user_id: userId,
         };
-        const result = await devCycleClient.variableValue(user, flagKey, defaultValue);
+        const result = await featureFlagClient.getBooleanValue(flagKey, defaultValue, context);
         return result;
     }
     catch (error) {
@@ -39,4 +47,57 @@ async function getFeatureFlag(userId, flagKey, defaultValue = false) {
         return defaultValue;
     }
 }
+async function getStringFlag(userId, flagKey, defaultValue = "") {
+    if (!featureFlagClient) {
+        return defaultValue;
+    }
+    try {
+        const context = {
+            targetingKey: userId,
+            user_id: userId,
+        };
+        const result = await featureFlagClient.getStringValue(flagKey, defaultValue, context);
+        return result;
+    }
+    catch (error) {
+        console.error(`Error getting string flag ${flagKey}:`, error);
+        return defaultValue;
+    }
+}
+async function getNumberFlag(userId, flagKey, defaultValue = 0) {
+    if (!featureFlagClient) {
+        return defaultValue;
+    }
+    try {
+        const context = {
+            targetingKey: userId,
+            user_id: userId,
+        };
+        const result = await featureFlagClient.getNumberValue(flagKey, defaultValue, context);
+        return result;
+    }
+    catch (error) {
+        console.error(`Error getting number flag ${flagKey}:`, error);
+        return defaultValue;
+    }
+}
+async function getObjectFlag(userId, flagKey, defaultValue = {}) {
+    if (!featureFlagClient) {
+        return defaultValue;
+    }
+    try {
+        const context = {
+            targetingKey: userId,
+            user_id: userId,
+        };
+        const result = await featureFlagClient.getObjectValue(flagKey, defaultValue, context);
+        return result;
+    }
+    catch (error) {
+        console.error(`Error getting object flag ${flagKey}:`, error);
+        return defaultValue;
+    }
+}
+exports.initializeDevCycle = initializeOpenFeature;
+exports.getDevCycleClient = getFeatureFlagClient;
 //# sourceMappingURL=devcycle.js.map

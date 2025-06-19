@@ -18,6 +18,7 @@ const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const user_entity_1 = require("../entities/user.entity");
 const order_entity_1 = require("../entities/order.entity");
+const lodash_1 = require("lodash");
 let UsersService = class UsersService {
     constructor(userRepository, orderRepository) {
         this.userRepository = userRepository;
@@ -28,7 +29,7 @@ let UsersService = class UsersService {
         if (!user) {
             throw new common_1.NotFoundException("User not found");
         }
-        const { password, ...userProfile } = user;
+        const userProfile = (0, lodash_1.omit)(user, ["password"]);
         return userProfile;
     }
     async getStats(userId) {
