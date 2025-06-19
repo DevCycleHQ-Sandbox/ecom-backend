@@ -1,8 +1,9 @@
-import { DVCClient, initialize } from "@devcycle/nodejs-server-sdk"
+import { Client, OpenFeature } from "@openfeature/server-sdk"
+import { DevCycleProvider } from "@devcycle/nodejs-server-sdk"
 
-let devCycleClient: DVCClient | null = null
+let featureFlagClient: Client | null = null
 
-export function initializeDevCycle(): void {
+export async function initializeOpenFeature(): Promise<void> {
   const serverKey = process.env.DEVCYCLE_SERVER_SDK_KEY
 
   if (!serverKey) {
@@ -13,15 +14,28 @@ export function initializeDevCycle(): void {
   }
 
   try {
-    devCycleClient = initialize(serverKey)
-    console.log("✅ DevCycle SDK initialized successfully")
+    // Initialize DevCycle provider
+    const devcycleProvider = new DevCycleProvider(serverKey)
+
+    // Set the provider for OpenFeature
+    await OpenFeature.setProvider(devcycleProvider)
+
+    // Get the OpenFeature client
+    featureFlagClient = OpenFeature.getClient()
+
+    console.log(
+      "✅ OpenFeature with DevCycle provider initialized successfully"
+    )
   } catch (error) {
-    console.error("❌ Failed to initialize DevCycle SDK:", error)
+    console.error(
+      "❌ Failed to initialize OpenFeature with DevCycle provider:",
+      error
+    )
   }
 }
 
-export function getDevCycleClient(): DVCClient | null {
-  return devCycleClient
+export function getFeatureFlagClient(): Client | null {
+  return featureFlagClient
 }
 
 export async function getFeatureFlag(
@@ -29,22 +43,23 @@ export async function getFeatureFlag(
   flagKey: string,
   defaultValue: boolean = false
 ): Promise<boolean> {
-  if (!devCycleClient) {
+  if (!featureFlagClient) {
     console.warn(
-      `Feature flag ${flagKey} requested but DevCycle not initialized`
+      `Feature flag ${flagKey} requested but OpenFeature not initialized`
     )
     return defaultValue
   }
 
   try {
-    const user = {
+    const context = {
+      targetingKey: userId,
       user_id: userId,
     }
 
-    const result = await devCycleClient.variableValue(
-      user,
+    const result = await featureFlagClient.getBooleanValue(
       flagKey,
-      defaultValue
+      defaultValue,
+      context
     )
     return result
   } catch (error) {
@@ -52,3 +67,89 @@ export async function getFeatureFlag(
     return defaultValue
   }
 }
+
+// Additional utility functions for different data types
+export async function getStringFlag(
+  userId: string,
+  flagKey: string,
+  defaultValue: string = ""
+): Promise<string> {
+  if (!featureFlagClient) {
+    return defaultValue
+  }
+
+  try {
+    const context = {
+      targetingKey: userId,
+      user_id: userId,
+    }
+
+    const result = await featureFlagClient.getStringValue(
+      flagKey,
+      defaultValue,
+      context
+    )
+    return result
+  } catch (error) {
+    console.error(`Error getting string flag ${flagKey}:`, error)
+    return defaultValue
+  }
+}
+
+export async function getNumberFlag(
+  userId: string,
+  flagKey: string,
+  defaultValue: number = 0
+): Promise<number> {
+  if (!featureFlagClient) {
+    return defaultValue
+  }
+
+  try {
+    const context = {
+      targetingKey: userId,
+      user_id: userId,
+    }
+
+    const result = await featureFlagClient.getNumberValue(
+      flagKey,
+      defaultValue,
+      context
+    )
+    return result
+  } catch (error) {
+    console.error(`Error getting number flag ${flagKey}:`, error)
+    return defaultValue
+  }
+}
+
+export async function getObjectFlag(
+  userId: string,
+  flagKey: string,
+  defaultValue: any = {}
+): Promise<any> {
+  if (!featureFlagClient) {
+    return defaultValue
+  }
+
+  try {
+    const context = {
+      targetingKey: userId,
+      user_id: userId,
+    }
+
+    const result = await featureFlagClient.getObjectValue(
+      flagKey,
+      defaultValue,
+      context
+    )
+    return result
+  } catch (error) {
+    console.error(`Error getting object flag ${flagKey}:`, error)
+    return defaultValue
+  }
+}
+
+// Legacy function names for backward compatibility
+export const initializeDevCycle = initializeOpenFeature
+export const getDevCycleClient = getFeatureFlagClient

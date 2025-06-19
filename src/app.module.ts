@@ -6,7 +6,7 @@ import { CartModule } from "./cart/cart.module"
 import { OrdersModule } from "./orders/orders.module"
 import { UsersModule } from "./users/users.module"
 import { DatabaseModule } from "./database/database.module"
-import { DevCycleModule } from "./devcycle/devcycle.module"
+import { FeatureFlagModule } from "./feature-flags/feature-flag.module"
 
 @Module({
   imports: [
@@ -20,7 +20,7 @@ import { DevCycleModule } from "./devcycle/devcycle.module"
     CartModule,
     OrdersModule,
     UsersModule,
-    DevCycleModule,
+    FeatureFlagModule,
   ],
 })
 export class AppModule {}
