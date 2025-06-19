@@ -15,13 +15,22 @@ export class OrdersService {
   ) {}
 
   async create(userId: string, createOrderDto: CreateOrderDto): Promise<Order> {
-    const { shipping_address, card_number, items } = createOrderDto
+    const {
+      shipping_address,
+      card_number,
+      items,
+      shipping_cost = 0,
+      tax_amount = 0,
+    } = createOrderDto
 
-    // Calculate total amount
-    const total_amount = items.reduce(
+    // Calculate subtotal from items
+    const subtotal = items.reduce(
       (sum, item) => sum + item.price * item.quantity,
       0
     )
+
+    // Calculate total amount including shipping and tax
+    const total_amount = subtotal + shipping_cost + tax_amount
 
     // Create order
     const order = this.orderRepository.create({
