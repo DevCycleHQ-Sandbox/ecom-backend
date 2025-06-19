@@ -1,0 +1,18 @@
+{
+  "users": [
+    {
+      "id": "admin-user-id-12345",
+      "username": "admin",
+      "email": "admin@shopper.com",
+      "password": "$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQupKF8yjEBEOZvSWYBOuC7Jq",
+      "role": "admin"
+    },
+    {
+      "id": "regular-user-id-12345",
+      "username": "user",
+      "email": "user@shopper.com",
+      "password": "$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQupKF8yjEBEOZvSWYBOuC7Jq",
+      "role": "user"
+    }
+  ]
+}
