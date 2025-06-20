@@ -1,66 +1,28 @@
-import { Injectable } from "@nestjs/common"
+import { Inject, Injectable } from "@nestjs/common"
 import { ConfigService } from "@nestjs/config"
-import { Client, OpenFeature } from "@openfeature/server-sdk"
-import { DevCycleProvider } from "@devcycle/nodejs-server-sdk"
-import { otelSetup } from "src/otelSetup"
-import { DynatraceOtelLogHook } from "src/dynatraceOtelLogHook"
+import { Client, OpenFeatureClient } from "@openfeature/nestjs-sdk"
+import type { DevCycleClient } from "@devcycle/nodejs-server-sdk"
 
 @Injectable()
 export class FeatureFlagService {
-  private featureFlagClient: Client
   private initialized = false
   private initializationPromise: Promise<void>
 
-  constructor(private configService: ConfigService) {
-    this.initializationPromise = this.initializeOpenFeature()
-  }
-
-  private async initializeOpenFeature(): Promise<void> {
-    try {
-      const sdkKey = this.configService.get<string>("DEVCYCLE_SERVER_SDK_KEY")
-
-      const { getTracer } = otelSetup
-      const tracer = getTracer()
-
-      const dynatraceLogHook = new DynatraceOtelLogHook(tracer)
-
-      if (sdkKey) {
-        // Initialize DevCycle provider
-        const devcycleProvider = new DevCycleProvider(sdkKey)
-        OpenFeature.addHooks(dynatraceLogHook)
-
-        // Set the provider for OpenFeature
-        await OpenFeature.setProviderAndWait(devcycleProvider)
-
-        // Get the OpenFeature client
-        this.featureFlagClient = OpenFeature.getClient()
-
-        this.initialized = true
-        console.log(
-          "✅ OpenFeature with DevCycle provider initialized successfully"
-        )
-      } else {
-        console.warn(
-          "⚠️  DEVCYCLE_SERVER_SDK_KEY not provided, feature flags will use default values"
-        )
-        this.initialized = false
-      }
-    } catch (error) {
-      console.warn(
-        "OpenFeature with DevCycle provider not available:",
-        error.message
-      )
-      this.initialized = false
-    }
+  constructor(
+    private configService: ConfigService,
+    @OpenFeatureClient() private client: Client,
+    @Inject("DVC_CLIENT") private devcycleClient: DevCycleClient | null
+  ) {
+    this.initialized = !!this.devcycleClient
   }
 
   async isInitialized(): Promise<boolean> {
-    await this.initializationPromise
     return this.initialized
   }
 
   async waitForInitialization(): Promise<void> {
-    await this.initializationPromise
+    // Already initialized in constructor
+    return Promise.resolve()
   }
 
   async getBooleanValue(
@@ -68,9 +30,7 @@ export class FeatureFlagService {
     key: string,
     defaultValue: boolean = false
   ) {
-    await this.waitForInitialization()
-
-    if (!this.featureFlagClient) {
+    if (!this.initialized) {
       return defaultValue
     }
 
@@ -80,11 +40,12 @@ export class FeatureFlagService {
         user_id: userId,
       }
 
-      const result = await this.featureFlagClient.getBooleanValue(
+      const result = await this.client.getBooleanValue(
         key,
         defaultValue,
         context
       )
+
       return result
     } catch (error) {
       console.warn(`Error getting feature flag ${key}:`, error.message)
@@ -93,9 +54,7 @@ export class FeatureFlagService {
   }
 
   async getStringValue(userId: string, key: string, defaultValue: string = "") {
-    await this.waitForInitialization()
-
-    if (!this.featureFlagClient) {
+    if (!this.initialized) {
       return defaultValue
     }
 
@@ -105,7 +64,7 @@ export class FeatureFlagService {
         user_id: userId,
       }
 
-      const result = await this.featureFlagClient.getStringValue(
+      const result = await this.client.getStringValue(
         key,
         defaultValue,
         context
@@ -118,9 +77,7 @@ export class FeatureFlagService {
   }
 
   async getNumberValue(userId: string, key: string, defaultValue: number = 0) {
-    await this.waitForInitialization()
-
-    if (!this.featureFlagClient) {
+    if (!this.initialized) {
       return defaultValue
     }
 
@@ -130,7 +87,7 @@ export class FeatureFlagService {
         user_id: userId,
       }
 
-      const result = await this.featureFlagClient.getNumberValue(
+      const result = await this.client.getNumberValue(
         key,
         defaultValue,
         context
@@ -143,9 +100,7 @@ export class FeatureFlagService {
   }
 
   async getObjectValue(userId: string, key: string, defaultValue: any = {}) {
-    await this.waitForInitialization()
-
-    if (!this.featureFlagClient) {
+    if (!this.initialized) {
       return defaultValue
     }
 
@@ -155,7 +110,7 @@ export class FeatureFlagService {
         user_id: userId,
       }
 
-      const result = await this.featureFlagClient.getObjectValue(
+      const result = await this.client.getObjectValue(
         key,
         defaultValue,
         context
@@ -178,6 +133,26 @@ export class FeatureFlagService {
       return this.getNumberValue(userId, key, defaultValue)
     } else {
       return this.getObjectValue(userId, key, defaultValue)
+    }
+  }
+
+  // Additional method to access DevCycle client directly if needed
+  getDevCycleClient(): DevCycleClient | null {
+    return this.devcycleClient
+  }
+
+  // Method to get all features for a user (using DevCycle client directly)
+  async getAllFeatures(userId: string) {
+    if (!this.devcycleClient) {
+      console.warn("DevCycle client not available")
+      return {}
+    }
+
+    try {
+      return await this.devcycleClient.allFeatures({ user_id: userId })
+    } catch (error) {
+      console.warn(`Error getting all features:`, error.message)
+      return {}
     }
   }
 }

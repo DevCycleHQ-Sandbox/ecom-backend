@@ -53,9 +53,13 @@ class DynatraceOtelLogHook implements Hook {
   ) {
     const span = this.spans.get(hookContext)
     if (span) {
+      span.setAttributes({
+        "feature_flag.value": String(evaluationDetails.value),
+      })
+    }
+    if (span) {
       span.end()
     }
-    evaluationDetails.value = "test"
   }
 
   finally(
