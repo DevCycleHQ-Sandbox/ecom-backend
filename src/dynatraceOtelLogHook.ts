@@ -5,7 +5,7 @@ import {
   HookContext,
 } from "@openfeature/core"
 import { Hook } from "@openfeature/server-sdk"
-import { Span, SpanKind, SpanStatusCode, Tracer } from "@opentelemetry/api"
+import { Span, SpanKind, Tracer } from "@opentelemetry/api"
 import { appMetadata } from "./otelSetup" // Import app metadata
 
 class DynatraceOtelLogHook implements Hook {
@@ -53,10 +53,10 @@ class DynatraceOtelLogHook implements Hook {
   ): void {
     const { value, variant, reason, errorCode, errorMessage } =
       evaluationDetails
+    console.log("evaluationDetails", evaluationDetails)
     const span = this.spans.get(hookContext)
 
     if (span) {
-      span.end()
       if (errorCode) {
         span.setAttributes({
           "feature_flag.error_code": errorCode,
@@ -77,24 +77,7 @@ class DynatraceOtelLogHook implements Hook {
           "feature_flag.variant": variant,
         })
       }
-      span.end()
-    }
-  }
-
-  error(hookContext: HookContext, err: Error) {
-    const { flagKey } = hookContext
-    const span = this.spans.get(hookContext)
-    if (span) {
-      span.setAttributes({
-        "feature_flag.key": flagKey,
-        "error.message": err.message,
-        "error.stack": err.stack || "",
-        // App metadata
-        "app.name": appMetadata.name,
-        "app.version": appMetadata.version,
-        "app.environment": appMetadata._environment,
-      })
-      span.setStatus({ code: SpanStatusCode.ERROR, message: err.message })
+      console.log("span", span)
       span.end()
     }
   }
