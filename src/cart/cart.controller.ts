@@ -6,13 +6,13 @@ import {
   Param,
   Patch,
   Post,
-  Request,
   UseGuards,
 } from "@nestjs/common"
 import { CartService } from "./cart.service"
 import { AddToCartDto } from "./dto/add-to-cart.dto"
 import { UpdateCartItemDto } from "./dto/update-cart-item.dto"
 import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard"
+import { Username } from "../auth/decorators/username.decorator"
 
 @Controller("cart")
 @UseGuards(JwtAuthGuard)
@@ -20,39 +20,31 @@ export class CartController {
   constructor(private readonly cartService: CartService) {}
 
   @Get()
-  getCart(@Request() req) {
-    return this.cartService.getCartItems(req.user.id)
+  getCart(@Username() username: string) {
+    return this.cartService.getCartItems(username)
   }
 
   @Post()
-  addToCart(@Request() req, @Body() addToCartDto: AddToCartDto) {
-    return this.cartService.addToCart(
-      req.user.id,
-      addToCartDto.product_id,
-      addToCartDto.quantity
-    )
+  addToCart(@Username() username: string, @Body() addToCartDto: AddToCartDto) {
+    return this.cartService.addToCart(username, addToCartDto)
   }
 
   @Patch(":id")
   updateCartItem(
-    @Request() req,
+    @Username() username: string,
     @Param("id") id: string,
     @Body() updateCartItemDto: UpdateCartItemDto
   ) {
-    return this.cartService.updateCartItem(
-      req.user.id,
-      id,
-      updateCartItemDto.quantity
-    )
+    return this.cartService.updateCartItem(username, id, updateCartItemDto)
   }
 
   @Delete(":id")
-  removeFromCart(@Request() req, @Param("id") id: string) {
-    return this.cartService.removeFromCart(req.user.id, id)
+  removeFromCart(@Username() username: string, @Param("id") id: string) {
+    return this.cartService.removeCartItem(username, id)
   }
 
   @Delete()
-  clearCart(@Request() req) {
-    return this.cartService.clearCart(req.user.id)
+  clearCart(@Username() username: string) {
+    return this.cartService.clearCart(username)
   }
 }

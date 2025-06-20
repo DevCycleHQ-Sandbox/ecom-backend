@@ -2,12 +2,17 @@ import { NestFactory } from "@nestjs/core"
 import { ValidationPipe } from "@nestjs/common"
 import { AppModule } from "./app.module"
 import { seedDatabase } from "./database/seed"
+import { getDataSourceToken } from "@nestjs/typeorm"
+import { LoggingInterceptor } from "./interceptors/logging.interceptor"
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
 
   // Global validation pipe
   app.useGlobalPipes(new ValidationPipe())
+
+  // Global logging interceptor
+  app.useGlobalInterceptors(new LoggingInterceptor())
 
   // CORS configuration
   app.enableCors({
@@ -26,9 +31,10 @@ async function bootstrap() {
 
   // Seed database with sample data
   try {
-    const { DataSource } = await import("typeorm")
-    const dataSource = app.get(DataSource)
-    await seedDatabase(dataSource)
+    // Use the named SQLite connection for seeding
+    const sqliteDataSource = app.get(getDataSourceToken("sqlite"))
+    await seedDatabase(sqliteDataSource)
+    console.log("✅ Database seeded successfully")
   } catch (error) {
     console.log("⚠️  Error seeding database:", error.message)
   }

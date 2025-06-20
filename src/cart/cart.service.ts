@@ -1,88 +1,152 @@
 import { Injectable, NotFoundException } from "@nestjs/common"
-import { InjectRepository } from "@nestjs/typeorm"
-import { Repository } from "typeorm"
 import { CartItem } from "../entities/cart-item.entity"
 import { Product } from "../entities/product.entity"
+import { User } from "../entities/user.entity"
+import { AddToCartDto } from "./dto/add-to-cart.dto"
+import { UpdateCartItemDto } from "./dto/update-cart-item.dto"
+import { DualDatabaseService } from "../database/dual-database.service"
 
 @Injectable()
 export class CartService {
-  constructor(
-    @InjectRepository(CartItem)
-    private cartRepository: Repository<CartItem>,
-    @InjectRepository(Product)
-    private productRepository: Repository<Product>
-  ) {}
+  constructor(private dualDatabaseService: DualDatabaseService) {}
 
-  async getCartItems(userId: string): Promise<CartItem[]> {
-    return await this.cartRepository.find({
-      where: { user_id: userId },
-      relations: ["product"],
+  private async getUserIdFromUsername(username: string): Promise<string> {
+    if (username === "anonymous") {
+      return "anonymous"
+    }
+
+    const user = await this.dualDatabaseService.findOne(username, User, {
+      where: { username },
     })
+
+    if (!user) {
+      throw new NotFoundException("User not found")
+    }
+
+    return user.id
   }
 
   async addToCart(
-    userId: string,
-    productId: string,
-    quantity: number
+    username: string,
+    addToCartDto: AddToCartDto
   ): Promise<CartItem> {
-    // Check if product exists
-    const product = await this.productRepository.findOne({
-      where: { id: productId },
+    const { product_id, quantity } = addToCartDto
+
+    // Resolve username to user ID for business logic
+    const userId = await this.getUserIdFromUsername(username)
+
+    // Check if product exists (use username for feature flag targeting)
+    const product = await this.dualDatabaseService.findOne(username, Product, {
+      where: { id: product_id },
     })
     if (!product) {
       throw new NotFoundException("Product not found")
     }
 
-    // Check if item already exists in cart
-    const existingItem = await this.cartRepository.findOne({
-      where: { user_id: userId, product_id: productId },
-    })
+    // Check if item already exists in cart (use username for feature flag targeting)
+    const existingCartItem = await this.dualDatabaseService.findOne(
+      username,
+      CartItem,
+      {
+        where: { user_id: userId, product_id },
+        relations: ["product"],
+      }
+    )
 
-    if (existingItem) {
+    if (existingCartItem) {
       // Update quantity
-      existingItem.quantity += quantity
-      return await this.cartRepository.save(existingItem)
+      const updatedQuantity = existingCartItem.quantity + quantity
+      await this.dualDatabaseService.dualUpdate(CartItem, existingCartItem.id, {
+        quantity: updatedQuantity,
+      })
+      return await this.dualDatabaseService.findOne(username, CartItem, {
+        where: { id: existingCartItem.id },
+        relations: ["product"],
+      })
+    } else {
+      // Create new cart item
+      const cartItem = new CartItem()
+      Object.assign(cartItem, {
+        user_id: userId,
+        product_id,
+        quantity,
+        product,
+      })
+      return await this.dualDatabaseService.dualSave(CartItem, cartItem)
     }
+  }
 
-    // Create new cart item
-    const cartItem = this.cartRepository.create({
-      user_id: userId,
-      product_id: productId,
-      quantity,
+  async getCartItems(username: string): Promise<CartItem[]> {
+    // Resolve username to user ID for business logic
+    const userId = await this.getUserIdFromUsername(username)
+
+    return await this.dualDatabaseService.findMany(username, CartItem, {
+      where: { user_id: userId },
+      relations: ["product"],
     })
-
-    return await this.cartRepository.save(cartItem)
   }
 
   async updateCartItem(
-    userId: string,
-    cartItemId: string,
-    quantity: number
+    username: string,
+    id: string,
+    updateCartItemDto: UpdateCartItemDto
   ): Promise<CartItem> {
-    const cartItem = await this.cartRepository.findOne({
-      where: { id: cartItemId, user_id: userId },
-    })
+    // Resolve username to user ID for business logic
+    const userId = await this.getUserIdFromUsername(username)
+
+    const cartItem = await this.dualDatabaseService.findOne(
+      username,
+      CartItem,
+      {
+        where: { id, user_id: userId },
+        relations: ["product"],
+      }
+    )
 
     if (!cartItem) {
       throw new NotFoundException("Cart item not found")
     }
 
-    cartItem.quantity = quantity
-    return await this.cartRepository.save(cartItem)
+    await this.dualDatabaseService.dualUpdate(CartItem, id, updateCartItemDto)
+    return await this.dualDatabaseService.findOne(username, CartItem, {
+      where: { id },
+      relations: ["product"],
+    })
   }
 
-  async removeFromCart(userId: string, cartItemId: string): Promise<void> {
-    const result = await this.cartRepository.delete({
-      id: cartItemId,
-      user_id: userId,
-    })
+  async removeCartItem(username: string, id: string): Promise<void> {
+    // Resolve username to user ID for business logic
+    const userId = await this.getUserIdFromUsername(username)
 
-    if (result.affected === 0) {
+    const cartItem = await this.dualDatabaseService.findOne(
+      username,
+      CartItem,
+      {
+        where: { id, user_id: userId },
+      }
+    )
+
+    if (!cartItem) {
       throw new NotFoundException("Cart item not found")
     }
+
+    await this.dualDatabaseService.dualDelete(CartItem, id)
   }
 
-  async clearCart(userId: string): Promise<void> {
-    await this.cartRepository.delete({ user_id: userId })
+  async clearCart(username: string): Promise<void> {
+    // Resolve username to user ID for business logic
+    const userId = await this.getUserIdFromUsername(username)
+
+    const cartItems = await this.dualDatabaseService.findMany(
+      username,
+      CartItem,
+      {
+        where: { user_id: userId },
+      }
+    )
+
+    for (const item of cartItems) {
+      await this.dualDatabaseService.dualDelete(CartItem, item.id)
+    }
   }
 }

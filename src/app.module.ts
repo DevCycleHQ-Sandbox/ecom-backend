@@ -7,6 +7,7 @@ import { OrdersModule } from "./orders/orders.module"
 import { UsersModule } from "./users/users.module"
 import { DatabaseModule } from "./database/database.module"
 import { FeatureFlagModule } from "./feature-flags/feature-flag.module"
+import { AdminModule } from "./admin/admin.module"
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { FeatureFlagModule } from "./feature-flags/feature-flag.module"
     OrdersModule,
     UsersModule,
     FeatureFlagModule,
+    AdminModule,
   ],
 })
 export class AppModule {}

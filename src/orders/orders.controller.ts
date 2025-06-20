@@ -26,7 +26,7 @@ export class OrdersController {
 
   @Get()
   findAll(@Request() req) {
-    return this.ordersService.findAllByUser(req.user.id)
+    return this.ordersService.findAll(req.user.id)
   }
 
   @Get(":id")
@@ -38,10 +38,10 @@ export class OrdersController {
   @UseGuards(RolesGuard)
   @Roles("admin")
   updateStatus(
+    @Request() req,
     @Param("id") id: string,
-    @Body("status")
-    status: "pending" | "processing" | "shipped" | "delivered" | "cancelled"
+    @Body("status") status: string
   ) {
-    return this.ordersService.updateStatus(id, status)
+    return this.ordersService.updateStatus(id, status, req.user?.id || "system")
   }
 }

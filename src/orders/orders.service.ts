@@ -1,24 +1,18 @@
 import { Injectable, NotFoundException } from "@nestjs/common"
-import { InjectRepository } from "@nestjs/typeorm"
-import { Repository } from "typeorm"
 import { Order } from "../entities/order.entity"
 import { OrderItem } from "../entities/order-item.entity"
 import { CreateOrderDto } from "./dto/create-order.dto"
+import { DualDatabaseService } from "../database/dual-database.service"
 
 @Injectable()
 export class OrdersService {
-  constructor(
-    @InjectRepository(Order)
-    private orderRepository: Repository<Order>,
-    @InjectRepository(OrderItem)
-    private orderItemRepository: Repository<OrderItem>
-  ) {}
+  constructor(private dualDatabaseService: DualDatabaseService) {}
 
   async create(userId: string, createOrderDto: CreateOrderDto): Promise<Order> {
     const {
+      items,
       shipping_address,
       card_number,
-      items,
       shipping_cost = 0,
       tax_amount = 0,
     } = createOrderDto
@@ -33,7 +27,8 @@ export class OrdersService {
     const total_amount = subtotal + shipping_cost + tax_amount
 
     // Create order
-    const order = this.orderRepository.create({
+    const order = new Order()
+    Object.assign(order, {
       user_id: userId,
       total_amount,
       shipping_address,
@@ -41,38 +36,39 @@ export class OrdersService {
       status: "pending",
     })
 
-    const savedOrder = await this.orderRepository.save(order)
+    const savedOrder = await this.dualDatabaseService.dualSave(Order, order)
 
     // Create order items
-    const orderItems = items.map((item) =>
-      this.orderItemRepository.create({
+    for (const item of items) {
+      const orderItem = new OrderItem()
+      Object.assign(orderItem, {
         order_id: savedOrder.id,
         product_id: item.product_id,
         quantity: item.quantity,
         price: item.price,
       })
-    )
+      await this.dualDatabaseService.dualSave(OrderItem, orderItem)
+    }
 
-    await this.orderItemRepository.save(orderItems)
-
-    return await this.orderRepository.findOne({
+    // Return order with items
+    return await this.dualDatabaseService.findOne(userId, Order, {
       where: { id: savedOrder.id },
-      relations: ["items", "items.product"],
+      relations: ["orderItems", "orderItems.product"],
     })
   }
 
-  async findAllByUser(userId: string): Promise<Order[]> {
-    return await this.orderRepository.find({
+  async findAll(userId: string): Promise<Order[]> {
+    return await this.dualDatabaseService.findMany(userId, Order, {
       where: { user_id: userId },
-      relations: ["items", "items.product"],
+      relations: ["orderItems", "orderItems.product"],
       order: { created_at: "DESC" },
     })
   }
 
   async findOne(id: string, userId: string): Promise<Order> {
-    const order = await this.orderRepository.findOne({
+    const order = await this.dualDatabaseService.findOne(userId, Order, {
       where: { id, user_id: userId },
-      relations: ["items", "items.product"],
+      relations: ["orderItems", "orderItems.product"],
     })
 
     if (!order) {
@@ -84,18 +80,17 @@ export class OrdersService {
 
   async updateStatus(
     id: string,
-    status: "pending" | "processing" | "shipped" | "delivered" | "cancelled"
+    status: string,
+    userId: string = "system"
   ): Promise<Order> {
-    await this.orderRepository.update(id, { status })
-    const updatedOrder = await this.orderRepository.findOne({
+    const order = await this.dualDatabaseService.findOne(userId, Order, {
       where: { id },
-      relations: ["items", "items.product"],
     })
-
-    if (!updatedOrder) {
+    if (!order) {
       throw new NotFoundException("Order not found")
     }
 
-    return updatedOrder
+    await this.dualDatabaseService.dualUpdate(Order, id, { status })
+    return await this.findOne(id, userId)
   }
 }

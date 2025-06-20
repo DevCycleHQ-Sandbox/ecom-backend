@@ -2,39 +2,65 @@ import { Injectable } from "@nestjs/common"
 import { ConfigService } from "@nestjs/config"
 import { Client, OpenFeature } from "@openfeature/server-sdk"
 import { DevCycleProvider } from "@devcycle/nodejs-server-sdk"
+import { otelSetup } from "src/otelSetup"
+import { DynatraceOtelLogHook } from "src/dynatraceOtelLogHook"
 
 @Injectable()
 export class FeatureFlagService {
   private featureFlagClient: Client
+  private initialized = false
+  private initializationPromise: Promise<void>
 
   constructor(private configService: ConfigService) {
-    this.initializeOpenFeature()
+    this.initializationPromise = this.initializeOpenFeature()
   }
 
-  private async initializeOpenFeature() {
+  private async initializeOpenFeature(): Promise<void> {
     try {
       const sdkKey = this.configService.get<string>("DEVCYCLE_SERVER_SDK_KEY")
+
+      const { getTracer } = otelSetup
+      const tracer = getTracer()
+
+      const dynatraceLogHook = new DynatraceOtelLogHook(tracer)
 
       if (sdkKey) {
         // Initialize DevCycle provider
         const devcycleProvider = new DevCycleProvider(sdkKey)
+        OpenFeature.addHooks(dynatraceLogHook)
 
         // Set the provider for OpenFeature
-        await OpenFeature.setProvider(devcycleProvider)
+        await OpenFeature.setProviderAndWait(devcycleProvider)
 
         // Get the OpenFeature client
         this.featureFlagClient = OpenFeature.getClient()
 
+        this.initialized = true
         console.log(
           "✅ OpenFeature with DevCycle provider initialized successfully"
         )
+      } else {
+        console.warn(
+          "⚠️  DEVCYCLE_SERVER_SDK_KEY not provided, feature flags will use default values"
+        )
+        this.initialized = false
       }
     } catch (error) {
       console.warn(
         "OpenFeature with DevCycle provider not available:",
         error.message
       )
+      this.initialized = false
     }
+  }
+
+  async isInitialized(): Promise<boolean> {
+    await this.initializationPromise
+    return this.initialized
+  }
+
+  async waitForInitialization(): Promise<void> {
+    await this.initializationPromise
   }
 
   async getBooleanValue(
@@ -42,6 +68,8 @@ export class FeatureFlagService {
     key: string,
     defaultValue: boolean = false
   ) {
+    await this.waitForInitialization()
+
     if (!this.featureFlagClient) {
       return defaultValue
     }
@@ -65,6 +93,8 @@ export class FeatureFlagService {
   }
 
   async getStringValue(userId: string, key: string, defaultValue: string = "") {
+    await this.waitForInitialization()
+
     if (!this.featureFlagClient) {
       return defaultValue
     }
@@ -88,6 +118,8 @@ export class FeatureFlagService {
   }
 
   async getNumberValue(userId: string, key: string, defaultValue: number = 0) {
+    await this.waitForInitialization()
+
     if (!this.featureFlagClient) {
       return defaultValue
     }
@@ -111,6 +143,8 @@ export class FeatureFlagService {
   }
 
   async getObjectValue(userId: string, key: string, defaultValue: any = {}) {
+    await this.waitForInitialization()
+
     if (!this.featureFlagClient) {
       return defaultValue
     }
