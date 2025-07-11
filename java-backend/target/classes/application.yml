@@ -1,0 +1,78 @@
+server:
+  port: ${PORT:3002}
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: java-backend
+  
+  profiles:
+    active: ${NODE_ENV:development}
+  
+  datasource:
+    primary:
+      url: jdbc:sqlite:${DATABASE_URL:./database.sqlite}
+      driver-class-name: org.sqlite.JDBC
+      hikari:
+        connection-timeout: 20000
+        maximum-pool-size: 5
+    
+    secondary:
+      url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/shopper}
+      driver-class-name: org.postgresql.Driver
+      username: ${POSTGRES_USER:username}
+      password: ${POSTGRES_PASSWORD:password}
+      hikari:
+        connection-timeout: 20000
+        maximum-pool-size: 10
+  
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.community.dialect.SQLiteDialect
+        format_sql: true
+        use_sql_comments: true
+  
+  security:
+    cors:
+      allowed-origins: ${FRONTEND_URL:http://localhost:3000}
+      allowed-methods: GET,POST,PUT,DELETE,PATCH,OPTIONS
+      allowed-headers: "*"
+      allow-credentials: true
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:your-jwt-secret-key-here}
+    expiration: 86400000 # 24 hours in milliseconds
+  
+  devcycle:
+    server-sdk-key: ${DEVCYCLE_SERVER_SDK_KEY:your-devcycle-server-sdk-key}
+    client-sdk-key: ${DEVCYCLE_CLIENT_SDK_KEY:your-devcycle-client-sdk-key}
+
+logging:
+  level:
+    com.shopper: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+# OpenAPI/Swagger configuration
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha

@@ -1,0 +1,40 @@
+{
+  "name": "java-backend",
+  "version": "1.0.0",
+  "description": "Java Spring Boot backend for shopping webapp",
+  "main": "target/java-backend-1.0.0.jar",
+  "scripts": {
+    "start": "./run.sh",
+    "build": "mvn clean compile",
+    "test": "mvn test",
+    "package": "mvn clean package",
+    "dev": "mvn spring-boot:run",
+    "dev:debug": "mvn spring-boot:run -Dspring-boot.run.jvmArguments='-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005'",
+    "clean": "mvn clean",
+    "install": "mvn install"
+  },
+  "keywords": [
+    "java",
+    "spring-boot",
+    "backend",
+    "api",
+    "ecommerce",
+    "shopping",
+    "jwt",
+    "security"
+  ],
+  "author": "Shopper Team",
+  "license": "MIT",
+  "engines": {
+    "java": ">=17",
+    "maven": ">=3.8"
+  },
+  "repository": {
+    "type": "git",
+    "url": "."
+  },
+  "bugs": {
+    "url": "."
+  },
+  "homepage": "."
+}
