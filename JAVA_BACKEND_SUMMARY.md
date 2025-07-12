@@ -45,11 +45,13 @@ I've successfully created a comprehensive Java Spring Boot backend that mirrors 
 - System monitoring capabilities
 - Entity-specific sync operations
 
-### ✅ Feature Flags
+### ✅ Feature Flags & Observability
+- **OpenFeature SDK** with DevCycle provider integration
 - Boolean, string, number, and object feature flags
-- Runtime flag updates
-- User-specific feature targeting
-- Premium features control
+- Runtime flag updates and user-specific targeting
+- **OpenTelemetry** distributed tracing with Dynatrace integration
+- **Telemetry hooks** for feature flag evaluation tracking
+- **Request logging** with performance monitoring
 
 ### ✅ Security & Configuration
 - CORS configuration
@@ -279,7 +281,9 @@ The feature flag service supports:
 | Cart Operations | Service Layer | Service Layer | ✅ Complete |
 | Order Processing | Service Layer | Service Layer | ✅ Complete |
 | Admin Features | Controller + Service | Controller + Service | ✅ Complete |
-| Feature Flags | DevCycle SDK | Custom Implementation | ✅ Complete |
+| Feature Flags | DevCycle SDK | OpenFeature + DevCycle | ✅ Complete |
+| OpenTelemetry | OTLP + Dynatrace | OTLP + Dynatrace | ✅ Complete |
+| Telemetry Hooks | Custom Hooks | Custom Hooks | ✅ Complete |
 | Database | SQLite + PostgreSQL | SQLite + PostgreSQL | ✅ Complete |
 | API Documentation | Swagger | Swagger/OpenAPI | ✅ Complete |
 | Monitoring | Interceptors | Spring Actuator | ✅ Complete |

@@ -107,8 +107,43 @@
             <artifactId>opentelemetry-exporter-otlp</artifactId>
             <version>${opentelemetry.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-sdk-trace</artifactId>
+            <version>${opentelemetry.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-semconv</artifactId>
+            <version>${opentelemetry.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.opentelemetry.instrumentation</groupId>
+            <artifactId>opentelemetry-spring-boot-starter</artifactId>
+            <version>1.32.0-alpha</version>
+        </dependency>
+        
+        <!-- Micrometer for Spring Boot metrics -->
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-tracing-bridge-otel</artifactId>
+        </dependency>
 
-        <!-- Feature Flags (DevCycle) -->
+        <!-- OpenFeature SDK -->
+        <dependency>
+            <groupId>dev.openfeature</groupId>
+            <artifactId>sdk</artifactId>
+            <version>1.7.4</version>
+        </dependency>
+        
+        <!-- DevCycle OpenFeature Provider -->
+        <dependency>
+            <groupId>com.devcycle</groupId>
+            <artifactId>openfeature-provider</artifactId>
+            <version>1.2.0</version>
+        </dependency>
+        
+        <!-- DevCycle Java SDK -->
         <dependency>
             <groupId>com.devcycle</groupId>
             <artifactId>java-server-sdk</artifactId>

@@ -10,7 +10,9 @@ A comprehensive Java Spring Boot backend implementation that mirrors the functio
 - **Order Management**: Create orders, track status, admin order management
 - **User Management**: User registration, login, profile management
 - **Admin Dashboard**: Database statistics, sync operations, system monitoring
-- **Feature Flags**: Feature flag management for A/B testing and gradual rollouts
+- **Feature Flags**: OpenFeature SDK with DevCycle provider for A/B testing and gradual rollouts
+- **OpenTelemetry**: Distributed tracing with Dynatrace integration
+- **Observability**: Request logging, telemetry hooks, and performance monitoring
 - **Security**: Spring Security with JWT tokens, password encryption
 - **Database**: SQLite (primary) and PostgreSQL (secondary) support
 - **API Documentation**: Swagger/OpenAPI documentation
@@ -24,6 +26,8 @@ A comprehensive Java Spring Boot backend implementation that mirrors the functio
 - **Spring Data JPA**
 - **SQLite & PostgreSQL**
 - **JWT (JSON Web Tokens)**
+- **OpenFeature SDK** with DevCycle provider
+- **OpenTelemetry** with Dynatrace integration
 - **Swagger/OpenAPI**
 - **Maven**
 - **Lombok**
@@ -128,6 +132,14 @@ java-backend/
 - `GET /api/admin/database/stats` - Database statistics
 - `GET /api/admin/sync/status` - Sync status
 
+### Feature Flags
+- `GET /api/feature-flags/test` - Test feature flag evaluation
+- `GET /api/feature-flags/all` - Get all available feature flags
+- `GET /api/feature-flags/flag/{flagKey}` - Get specific feature flag value
+- `POST /api/feature-flags/admin/update/{flagKey}` - Update fallback feature flag value
+- `DELETE /api/feature-flags/admin/remove/{flagKey}` - Remove fallback feature flag
+- `GET /api/feature-flags/status` - Get feature flag service status
+
 ## Configuration
 
 ### Application Properties
@@ -160,6 +172,11 @@ spring:
 - `DATABASE_URL` - Primary database URL
 - `POSTGRES_URL` - Secondary database URL
 - `FRONTEND_URL` - Frontend URL for CORS
+- `DEVCYCLE_SERVER_SDK_KEY` - DevCycle server SDK key for feature flags
+- `USE_LOCAL_OTLP` - Enable local OTLP endpoint (default: false)
+- `LOCAL_OTLP_PORT` - Local OTLP port (default: 14499)
+- `DYNATRACE_ENV_URL` - Dynatrace environment URL
+- `DYNATRACE_API_TOKEN` - Dynatrace API token
 
 ## Security
 

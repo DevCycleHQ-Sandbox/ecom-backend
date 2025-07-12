@@ -45,6 +45,7 @@ spring:
       allow-credentials: true
 
 app:
+  version: 1.0.0
   jwt:
     secret: ${JWT_SECRET:your-jwt-secret-key-here}
     expiration: 86400000 # 24 hours in milliseconds
@@ -52,6 +53,15 @@ app:
   devcycle:
     server-sdk-key: ${DEVCYCLE_SERVER_SDK_KEY:your-devcycle-server-sdk-key}
     client-sdk-key: ${DEVCYCLE_CLIENT_SDK_KEY:your-devcycle-client-sdk-key}
+  
+  telemetry:
+    use-local-otlp: ${USE_LOCAL_OTLP:false}
+    local-otlp-port: ${LOCAL_OTLP_PORT:14499}
+    project: ${TELEMETRY_PROJECT:new-parth-project}
+    environment-id: ${TELEMETRY_ENVIRONMENT_ID:66ccc3628c118d9a6da306e0}
+    dynatrace:
+      env-url: ${DYNATRACE_ENV_URL:}
+      api-token: ${DYNATRACE_API_TOKEN:}
 
 logging:
   level:
