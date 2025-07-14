@@ -4,7 +4,6 @@ import dev.openfeature.sdk.EvaluationContext;
 import dev.openfeature.sdk.FlagEvaluationDetails;
 import dev.openfeature.sdk.Hook;
 import dev.openfeature.sdk.HookContext;
-import dev.openfeature.sdk.Value;
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.SpanKind;
 import io.opentelemetry.api.trace.Tracer;
@@ -54,7 +53,7 @@ public class DynatraceOtelLogHook implements Hook<Object> {
         Span span = spans.remove(ctx);
 
         if (span != null) {
-            log.info("evaluationDetails: {}", details);
+            log.debug("evaluationDetails: {}", details);
 
             if (details.getErrorCode() != null) {
                 span.setAttribute("feature_flag.error_code", details.getErrorCode().toString());
@@ -71,7 +70,7 @@ public class DynatraceOtelLogHook implements Hook<Object> {
                 span.setAttribute("feature_flag.variant", details.getVariant());
             }
 
-            log.info("span: {}", span);
+            log.debug("Feature flag span completed: {}", ctx.getFlagKey());
             span.end();
         }
     }

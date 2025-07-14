@@ -132,13 +132,7 @@ java-backend/
 - `GET /api/admin/database/stats` - Database statistics
 - `GET /api/admin/sync/status` - Sync status
 
-### Feature Flags
-- `GET /api/feature-flags/test` - Test feature flag evaluation
-- `GET /api/feature-flags/all` - Get all available feature flags
-- `GET /api/feature-flags/flag/{flagKey}` - Get specific feature flag value
-- `POST /api/feature-flags/admin/update/{flagKey}` - Update fallback feature flag value
-- `DELETE /api/feature-flags/admin/remove/{flagKey}` - Remove fallback feature flag
-- `GET /api/feature-flags/status` - Get feature flag service status
+
 
 ## Configuration
 
@@ -205,16 +199,22 @@ For production, use `ddl-auto: validate` and proper database migrations.
 
 ## Feature Flags
 
-The application includes a feature flag service that supports:
-- Boolean flags
-- String values
-- Number values
-- Object values
-- Runtime flag updates
+The application includes OpenFeature SDK with DevCycle provider integration:
+- **OpenFeature SDK** with DevCycle provider
+- **Boolean, string, number, and object** feature flags
+- **User-specific targeting** with evaluation context
+- **OpenTelemetry integration** for flag evaluation tracing
+- **Automatic fallback** when DevCycle is unavailable
+
+Feature flags are integrated into existing endpoints (e.g., `/products/with-feature-flag`, `/products/premium-only`):
 
 Example usage:
 ```java
-boolean newFlow = featureFlagService.getBooleanValue(userId, "new-flow", false);
+// Create evaluation context with user information
+EvaluationContext context = new MutableContext(userId).add("user_id", userId);
+
+// Evaluate feature flag with OpenFeature
+boolean newFlow = openFeatureClient.getBooleanValue("new-flow", false, context);
 ```
 
 ## Monitoring

@@ -129,21 +129,7 @@
             <artifactId>micrometer-tracing-bridge-otel</artifactId>
         </dependency>
 
-        <!-- OpenFeature SDK -->
-        <dependency>
-            <groupId>dev.openfeature</groupId>
-            <artifactId>sdk</artifactId>
-            <version>1.7.4</version>
-        </dependency>
-        
-        <!-- DevCycle OpenFeature Provider -->
-        <dependency>
-            <groupId>com.devcycle</groupId>
-            <artifactId>openfeature-provider</artifactId>
-            <version>1.2.0</version>
-        </dependency>
-        
-        <!-- DevCycle Java SDK -->
+        <!-- DevCycle Java SDK (includes OpenFeature provider) -->
         <dependency>
             <groupId>com.devcycle</groupId>
             <artifactId>java-server-sdk</artifactId>
