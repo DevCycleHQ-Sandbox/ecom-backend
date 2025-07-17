@@ -1,5 +1,6 @@
 package com.shopper.dto;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -14,6 +15,7 @@ import java.util.UUID;
 public class AddToCartDto {
     
     @NotNull(message = "Product ID is required")
+    @JsonAlias("product_id")
     private UUID productId;
     
     @NotNull(message = "Quantity is required")

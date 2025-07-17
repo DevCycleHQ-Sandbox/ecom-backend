@@ -4,6 +4,8 @@ import com.shopper.dto.CreateProductDto;
 import com.shopper.dto.UpdateProductDto;
 import com.shopper.entity.Product;
 import com.shopper.entity.User;
+import com.shopper.repository.primary.PrimaryCartItemRepository;
+import com.shopper.repository.secondary.SecondaryCartItemRepository;
 import com.shopper.service.FeatureFlagService;
 import com.shopper.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,19 +16,22 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import com.shopper.entity.CartItem;
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/api/products")
 @RequiredArgsConstructor
 @Slf4j
 @Tag(name = "Products", description = "Product management endpoints")
@@ -34,6 +39,13 @@ public class ProductController {
     
     private final ProductService productService;
     private final FeatureFlagService featureFlagService;
+    
+    // Add this for debugging the sync issue
+    @Autowired
+    private PrimaryCartItemRepository primaryCartItemRepository;
+    
+    @Autowired(required = false)
+    private SecondaryCartItemRepository secondaryCartItemRepository;
     
     @GetMapping
     @Operation(summary = "Get all products")
@@ -154,6 +166,38 @@ public class ProductController {
     public ResponseEntity<List<Product>> searchProducts(@RequestParam String name) {
         List<Product> products = productService.searchByName(name);
         return ResponseEntity.ok(products);
+    }
+    
+    @GetMapping("/debug/cart-items")
+    public Map<String, Object> debugCartItems() {
+        Map<String, Object> result = new HashMap<>();
+        
+        try {
+            // Test primary repository
+            List<CartItem> primaryItems = primaryCartItemRepository.findAll();
+            result.put("primary_count", primaryItems.size());
+            result.put("primary_items", primaryItems);
+            log.info("Primary repository found {} cart items", primaryItems.size());
+            
+            // Test secondary repository
+            if (secondaryCartItemRepository != null) {
+                List<CartItem> secondaryItems = secondaryCartItemRepository.findAll();
+                result.put("secondary_count", secondaryItems.size());
+                result.put("secondary_items", secondaryItems);
+                log.info("Secondary repository found {} cart items", secondaryItems.size());
+            } else {
+                result.put("secondary_count", "Repository not available");
+                log.info("Secondary repository not available");
+            }
+            
+            result.put("success", true);
+        } catch (Exception e) {
+            log.error("Error debugging cart items: {}", e.getMessage(), e);
+            result.put("success", false);
+            result.put("error", e.getMessage());
+        }
+        
+        return result;
     }
     
     private String getCurrentUsername() {

@@ -22,12 +22,13 @@ public class CartItem {
     
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(columnDefinition = "VARCHAR(36)")
     private UUID id;
     
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "user_id", nullable = false, columnDefinition = "VARCHAR(36)")
     private UUID userId;
     
-    @Column(name = "product_id", nullable = false)
+    @Column(name = "product_id", nullable = false, columnDefinition = "VARCHAR(36)")
     private UUID productId;
     
     @Column(nullable = false)
@@ -49,6 +50,5 @@ public class CartItem {
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id", insertable = false, updatable = false)
-    @JsonBackReference("product-cartitems")
     private Product product;
 }

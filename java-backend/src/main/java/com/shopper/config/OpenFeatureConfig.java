@@ -33,13 +33,8 @@ public class OpenFeatureConfig {
                 return;
             }
 
-            // Create DevCycle client with options
-            DevCycleLocalOptions options = DevCycleLocalOptions.builder()
-                    .enableEdgeDB(false)
-                    .enableCloudBucketing(false)
-                    .build();
-
-            DevCycleLocalClient devCycleClient = new DevCycleLocalClient(devCycleServerSdkKey, options);
+            // Create DevCycle client with default options
+            DevCycleLocalClient devCycleClient = new DevCycleLocalClient(devCycleServerSdkKey);
 
             // Get OpenFeature provider from DevCycle client
             FeatureProvider provider = devCycleClient.getOpenFeatureProvider();
@@ -57,13 +52,17 @@ public class OpenFeatureConfig {
             Client client = OpenFeatureAPI.getInstance().getClient();
             log.info("OpenFeature client ready: {}", client.getMetadata().getName());
 
-            // Test a sample feature flag
+            // Test the use-neon feature flag specifically
             try {
                 var context = new dev.openfeature.sdk.MutableContext("admin").add("user_id", "admin");
-                var result = client.getBooleanValue("new-flow", false, context);
-                log.info("Sample feature flag 'new-flow' evaluated to: {}", result);
+                var useNeonResult = client.getBooleanValue("use-neon", false, context);
+                log.info("🎛️ DevCycle feature flag 'use-neon' evaluated to: {} for admin user", useNeonResult);
+                
+                // Test other sample flags
+                var newFlowResult = client.getBooleanValue("new-flow", false, context);
+                log.info("Sample feature flag 'new-flow' evaluated to: {}", newFlowResult);
             } catch (Exception e) {
-                log.debug("Could not evaluate sample feature flag: {}", e.getMessage());
+                log.debug("Could not evaluate feature flags: {}", e.getMessage());
             }
 
         } catch (Exception e) {

@@ -5,6 +5,7 @@ import com.shopper.dto.UpdateCartItemDto;
 import com.shopper.entity.CartItem;
 import com.shopper.entity.User;
 import com.shopper.service.CartService;
+import com.shopper.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -14,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +29,7 @@ import java.util.UUID;
 public class CartController {
     
     private final CartService cartService;
+    private final UserService userService;
     
     @GetMapping
     @Operation(summary = "Get cart items")
@@ -98,8 +101,17 @@ public class CartController {
     
     private UUID getCurrentUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof User) {
-            return ((User) authentication.getPrincipal()).getId();
+        if (authentication != null && authentication.isAuthenticated()) {
+            Object principal = authentication.getPrincipal();
+            
+            // Handle both UserDetails and User entity cases
+            if (principal instanceof UserDetails) {
+                String username = ((UserDetails) principal).getUsername();
+                User user = userService.findByUsername(username);
+                return user.getId();
+            } else if (principal instanceof User) {
+                return ((User) principal).getId();
+            }
         }
         throw new RuntimeException("User not authenticated");
     }

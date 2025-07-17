@@ -1,6 +1,7 @@
 package com.shopper.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,6 +25,7 @@ public class Product {
     
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(columnDefinition = "VARCHAR(36)")
     private UUID id;
     
     @Column(nullable = false)
@@ -36,12 +38,14 @@ public class Product {
     private BigDecimal price;
     
     @Column(name = "image_url", nullable = false)
+    @JsonProperty("image_url")
     private String imageUrl;
     
     @Column(nullable = false)
     private String category;
     
     @Column(name = "stock_quantity", nullable = false)
+    @JsonProperty("stock_quantity")
     @Builder.Default
     private Integer stockQuantity = 0;
     
@@ -54,10 +58,10 @@ public class Product {
     private LocalDateTime updatedAt;
     
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference("product-cartitems")
+    @JsonIgnore
     private List<CartItem> cartItems;
     
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference("product-orderitems")
+    @JsonIgnore
     private List<OrderItem> orderItems;
 }

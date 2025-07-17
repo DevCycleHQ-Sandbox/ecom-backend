@@ -28,6 +28,7 @@ public class User implements UserDetails {
     
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(columnDefinition = "VARCHAR(36)")
     private UUID id;
     
     @Column(unique = true, nullable = false)

@@ -24,7 +24,7 @@ public class CartService {
     private final ProductRepository productRepository;
     
     public List<CartItem> getCartItems(UUID userId) {
-        return cartItemRepository.findByUserId(userId);
+        return cartItemRepository.findByUserIdWithProduct(userId);
     }
     
     @Transactional

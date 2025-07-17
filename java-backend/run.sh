@@ -12,7 +12,7 @@ fi
 # Set default values
 export PORT=${PORT:-3002}
 export NODE_ENV=${NODE_ENV:-development}
-export JWT_SECRET=${JWT_SECRET:-your-jwt-secret-key-here-make-it-long-and-secure}
+export JWT_SECRET=${JWT_SECRET:-your-jwt-secret-key-here-make-it-really-long-and-secure-enough-for-jwt-hmac-sha-algorithms-minimum-256-bits-required}
 export DATABASE_URL=${DATABASE_URL:-jdbc:sqlite:./database.sqlite}
 export FRONTEND_URL=${FRONTEND_URL:-http://localhost:3000}
 

@@ -32,6 +32,7 @@ public class FeatureFlagService {
             fallbackFlags.put("premium-features", true);
             fallbackFlags.put("enhanced-product-details", true);
             fallbackFlags.put("beta-features", false);
+            fallbackFlags.put("use-neon", false);
             
             initialized = true;
             log.info("Feature flags initialized with default values");
@@ -154,6 +155,7 @@ public class FeatureFlagService {
             features.put("premium-features", openFeatureClient.getBooleanValue("premium-features", true, context));
             features.put("enhanced-product-details", openFeatureClient.getBooleanValue("enhanced-product-details", true, context));
             features.put("beta-features", openFeatureClient.getBooleanValue("beta-features", false, context));
+            features.put("use-neon", openFeatureClient.getBooleanValue("use-neon", false, context));
             
             log.debug("All features for user '{}': {}", userId, features);
             return features;
