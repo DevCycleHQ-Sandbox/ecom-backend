@@ -38,23 +38,11 @@ class OTelSpanHookTest {
     @Mock
     private ClientMetadata clientMetadata;
 
-    // @Mock
-    // private ProviderMetadata providerMetadata;
-
-    private OTelSpanHook.AppMetadata appMetadata;
     private OTelSpanHook hook;
 
     @BeforeEach
     void setUp() {
-        appMetadata = OTelSpanHook.SimpleAppMetadata.builder()
-                .name("test-service")
-                .version("1.0.0")
-                .environment("test")
-                .project("test-project")
-                .environmentId("test-env-id")
-                .build();
-
-        hook = new OTelSpanHook(tracer, appMetadata);
+        hook = new OTelSpanHook(tracer);
 
         // Setup mocks
         when(tracer.spanBuilder(anyString())).thenReturn(spanBuilder);
@@ -64,10 +52,8 @@ class OTelSpanHookTest {
         when(hookContext.getFlagKey()).thenReturn("test-flag");
         when(hookContext.getType()).thenReturn(FlagValueType.BOOLEAN);
         when(hookContext.getClientMetadata()).thenReturn(clientMetadata);
-        // when(hookContext.getProviderMetadata()).thenReturn(providerMetadata);
         
         when(clientMetadata.getName()).thenReturn("test-client");
-        // when(providerMetadata.getName()).thenReturn("test-provider");
     }
 
     @Test
@@ -83,13 +69,7 @@ class OTelSpanHookTest {
         verify(span).setAttribute("feature_flag.key", "test-flag");
         verify(span).setAttribute("feature_flag.value_type", "BOOLEAN");
         verify(span).setAttribute("feature_flag.flagset", "test-flag");
-        verify(span).setAttribute("feature_flag.project", "test-project");
-        verify(span).setAttribute("feature_flag.environment", "test-env-id");
-        verify(span).setAttribute("service.name", "test-service");
-        verify(span).setAttribute("service.version", "1.0.0");
-        verify(span).setAttribute("deployment.environment", "test");
         verify(span).setAttribute("openfeature.client.name", "test-client");
-        // verify(span).setAttribute("openfeature.provider.name", "test-provider");
     }
 
     @Test
@@ -145,9 +125,23 @@ class OTelSpanHookTest {
     }
 
     @Test
-    void testWithNullAppMetadata() {
-        hook = new OTelSpanHook(tracer, null);
+    void testWithProviderMetadata() {
         Map<String, Object> hints = new HashMap<>();
+        
+        // Mock provider metadata
+        var mockProviderMetadata = mock(dev.openfeature.sdk.ProviderMetadata.class);
+        when(mockProviderMetadata.getName()).thenReturn("test-provider");
+        when(hookContext.getProviderMetadata()).thenReturn(mockProviderMetadata);
+        
+        hook.before(hookContext, hints);
+        
+        verify(span).setAttribute("openfeature.provider.name", "devcycle");
+    }
+
+    @Test
+    void testWithNullClientMetadata() {
+        Map<String, Object> hints = new HashMap<>();
+        when(hookContext.getClientMetadata()).thenReturn(null);
         
         hook.before(hookContext, hints);
         
@@ -156,8 +150,7 @@ class OTelSpanHookTest {
         verify(span).setAttribute("feature_flag.value_type", "BOOLEAN");
         verify(span).setAttribute("feature_flag.flagset", "test-flag");
         
-        // Should not set any app metadata attributes
-        verify(span, never()).setAttribute(eq("feature_flag.project"), anyString());
-        verify(span, never()).setAttribute(eq("service.name"), anyString());
+        // Should not set client name attribute
+        verify(span, never()).setAttribute(eq("openfeature.client.name"), anyString());
     }
 }

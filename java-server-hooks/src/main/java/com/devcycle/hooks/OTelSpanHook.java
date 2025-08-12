@@ -26,107 +26,7 @@ public class OTelSpanHook implements Hook<Object> {
     private static final Logger log = LoggerFactory.getLogger(OTelSpanHook.class);
 
     private final Tracer tracer;
-    private final AppMetadata appMetadata;
     private final Map<HookContext<Object>, Span> spans = new ConcurrentHashMap<>();
-
-    /**
-     * Interface for providing application metadata to be included in spans.
-     * Implement this interface to provide application-specific metadata.
-     */
-    public interface AppMetadata {
-        /**
-         * @return The application/service name
-         */
-        String getName();
-
-        /**
-         * @return The application version
-         */
-        String getVersion();
-
-        /**
-         * @return The environment (e.g., development, staging, production)
-         */
-        String getEnvironment();
-
-        /**
-         * @return The project identifier
-         */
-        String getProject();
-
-        /**
-         * @return The environment ID
-         */
-        String getEnvironmentId();
-    }
-
-    /**
-     * Simple implementation of AppMetadata for basic use cases.
-     */
-    @RequiredArgsConstructor
-    public static class SimpleAppMetadata implements AppMetadata {
-        private final String name;
-        private final String version;
-        private final String environment;
-        private final String project;
-        private final String environmentId;
-
-        @Override
-        public String getName() { return name; }
-
-        @Override
-        public String getVersion() { return version; }
-
-        @Override
-        public String getEnvironment() { return environment; }
-
-        @Override
-        public String getProject() { return project; }
-
-        @Override
-        public String getEnvironmentId() { return environmentId; }
-
-        public static Builder builder() {
-            return new Builder();
-        }
-
-        public static class Builder {
-            private String name;
-            private String version;
-            private String environment;
-            private String project;
-            private String environmentId;
-
-            public Builder name(String name) {
-                this.name = name;
-                return this;
-            }
-
-            public Builder version(String version) {
-                this.version = version;
-                return this;
-            }
-
-            public Builder environment(String environment) {
-                this.environment = environment;
-                return this;
-            }
-
-            public Builder project(String project) {
-                this.project = project;
-                return this;
-            }
-
-            public Builder environmentId(String environmentId) {
-                this.environmentId = environmentId;
-                return this;
-            }
-
-            public SimpleAppMetadata build() {
-                return new SimpleAppMetadata(name, version, environment, project, environmentId);
-            }
-        }
-    }
 
     @Override
     public Optional<EvaluationContext> before(HookContext<Object> ctx, Map<String, Object> hints) {
@@ -138,31 +38,13 @@ public class OTelSpanHook implements Hook<Object> {
             span.setAttribute("feature_flag.key", ctx.getFlagKey());
             span.setAttribute("feature_flag.value_type", ctx.getType().name());
             span.setAttribute("feature_flag.flagset", ctx.getFlagKey());
-            
-            if (appMetadata != null) {
-                if (appMetadata.getProject() != null) {
-                    span.setAttribute("feature_flag.project", appMetadata.getProject());
-                }
-                if (appMetadata.getEnvironmentId() != null) {
-                    span.setAttribute("feature_flag.environment", appMetadata.getEnvironmentId());
-                }
-                if (appMetadata.getName() != null) {
-                    span.setAttribute("service.name", appMetadata.getName());
-                }
-                if (appMetadata.getVersion() != null) {
-                    span.setAttribute("service.version", appMetadata.getVersion());
-                }
-                if (appMetadata.getEnvironment() != null) {
-                    span.setAttribute("deployment.environment", appMetadata.getEnvironment());
-                }
-            }
 
             if (ctx.getClientMetadata() != null && ctx.getClientMetadata().getName() != null) {
                 span.setAttribute("openfeature.client.name", ctx.getClientMetadata().getName());
             }
 
             if (ctx.getProviderMetadata() != null && ctx.getProviderMetadata().getName() != null) {
-                span.setAttribute("openfeature.provider.name", ctx.getProviderMetadata().getName());
+                span.setAttribute("openfeature.provider.name", "devcycle");
             }
         }
 
