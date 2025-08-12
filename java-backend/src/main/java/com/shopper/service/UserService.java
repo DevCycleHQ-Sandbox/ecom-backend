@@ -6,7 +6,9 @@ import com.shopper.dto.RegisterDto;
 import com.shopper.entity.User;
 import com.shopper.repository.UserRepository;
 import com.shopper.security.JwtUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,6 +24,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@Slf4j
 public class UserService implements UserDetailsService {
 
     @Autowired
@@ -34,6 +37,7 @@ public class UserService implements UserDetailsService {
     private JwtUtil jwtUtil;
 
     @Autowired
+    @Lazy
     private AuthenticationManager authenticationManager;
 
     @Override
@@ -61,13 +65,15 @@ public class UserService implements UserDetailsService {
             throw new RuntimeException("Email already exists");
         }
         
-        // Create new user
+        // Create new user - assign ADMIN role if username is "admin"
+        User.Role userRole = "admin".equalsIgnoreCase(registerDto.getUsername()) ? User.Role.ADMIN : User.Role.USER;
+        
         User user = User.builder()
                 .id(UUID.randomUUID())
                 .username(registerDto.getUsername())
                 .email(registerDto.getEmail())
                 .password(passwordEncoder.encode(registerDto.getPassword()))
-                .role(User.Role.USER)
+                .role(userRole)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
@@ -99,6 +105,22 @@ public class UserService implements UserDetailsService {
         String token = jwtUtil.generateToken(userDetails);
         
         return new AuthResponseDto(token, user);
+    }
+    
+    private User findUserByUsernameOrEmail(String usernameOrEmail) {
+        // Try to find by username first
+        Optional<User> userByUsername = userRepository.findByUsername(usernameOrEmail);
+        if (userByUsername.isPresent()) {
+            return userByUsername.get();
+        }
+        
+        // If not found by username, try email
+        Optional<User> userByEmail = userRepository.findByEmail(usernameOrEmail);
+        if (userByEmail.isPresent()) {
+            return userByEmail.get();
+        }
+        
+        throw new UsernameNotFoundException("User not found with username or email: " + usernameOrEmail);
     }
 
     public User findByUsername(String username) {
@@ -186,5 +208,29 @@ public class UserService implements UserDetailsService {
         user.setPassword(passwordEncoder.encode(newPassword));
         user.setUpdatedAt(LocalDateTime.now());
         return userRepository.save(user);
+    }
+    
+    public User promoteToAdmin(String usernameOrEmail) {
+        User user = findUserByUsernameOrEmail(usernameOrEmail);
+        user.setRole(User.Role.ADMIN);
+        user.setUpdatedAt(LocalDateTime.now());
+        User updatedUser = userRepository.save(user);
+        log.info("User {} promoted to ADMIN role", usernameOrEmail);
+        return updatedUser;
+    }
+    
+    public void initializeAdminUser() {
+        // Check if admin user exists and fix their role if needed
+        try {
+            User adminUser = findUserByUsernameOrEmail("admin");
+            if (adminUser.getRole() != User.Role.ADMIN) {
+                promoteToAdmin("admin");
+                log.info("Existing admin user role updated to ADMIN");
+            }
+        } catch (UsernameNotFoundException e) {
+            // Admin user doesn't exist, create one
+            createUser("admin", "admin@example.com", "admin123", User.Role.ADMIN);
+            log.info("Admin user created with ADMIN role");
+        }
     }
 }

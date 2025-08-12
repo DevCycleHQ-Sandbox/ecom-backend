@@ -14,6 +14,7 @@
 /Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/dto/RegisterDto.java
 /Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/service/DualDatabaseStrategy.java
 /Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/controller/AuthController.java
+/Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/repository/primary/PrimaryUserRepository.java
 /Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/service/OrderService.java
 /Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/repository/OrderItemRepository.java
 /Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/entity/User.java
@@ -28,6 +29,7 @@
 /Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/entity/Order.java
 /Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/entity/OrderItem.java
 /Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/service/UserService.java
+/Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/repository/secondary/SecondaryUserRepository.java
 /Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/dto/AuthResponseDto.java
 /Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/repository/secondary/SecondaryProductRepository.java
 /Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/dto/UpdateCartItemDto.java

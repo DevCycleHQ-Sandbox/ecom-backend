@@ -12,12 +12,13 @@ import java.util.UUID;
 @AllArgsConstructor
 public class AuthResponseDto {
     
+    private String token;
     private String accessToken;
-    private String tokenType = "Bearer";
     private UserInfo user;
     
-    public AuthResponseDto(String accessToken, User user) {
-        this.accessToken = accessToken;
+    public AuthResponseDto(String token, User user) {
+        this.token = token;
+        this.accessToken = token;
         this.user = new UserInfo(user.getId(), user.getUsername(), user.getEmail(), user.getRole().getValue());
     }
     

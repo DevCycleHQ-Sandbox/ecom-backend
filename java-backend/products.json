@@ -1,0 +1,94 @@
+{
+  "products": [
+    {
+      "id": "product-1-smartphone",
+      "name": "Smartphone Pro 15",
+      "description": "Latest flagship smartphone with advanced camera system, 5G connectivity, and all-day battery life.",
+      "price": 899.99,
+      "image_url": "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=300",
+      "category": "Electronics",
+      "stock_quantity": 25
+    },
+    {
+      "id": "product-2-laptop",
+      "name": "UltraBook Pro 14",
+      "description": "Premium ultrabook with Intel i7 processor, 16GB RAM, 512GB SSD, and stunning 4K display.",
+      "price": 1299.99,
+      "image_url": "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=300",
+      "category": "Electronics",
+      "stock_quantity": 15
+    },
+    {
+      "id": "product-3-headphones",
+      "name": "Wireless Noise-Canceling Headphones",
+      "description": "Premium wireless headphones with active noise cancellation and 30-hour battery life.",
+      "price": 299.99,
+      "image_url": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300",
+      "category": "Electronics",
+      "stock_quantity": 40
+    },
+    {
+      "id": "product-4-watch",
+      "name": "Smart Fitness Watch",
+      "description": "Advanced fitness tracker with heart rate monitor, GPS, and 7-day battery life.",
+      "price": 199.99,
+      "image_url": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300",
+      "category": "Electronics",
+      "stock_quantity": 30
+    },
+    {
+      "id": "product-5-coffee-maker",
+      "name": "Premium Coffee Maker",
+      "description": "Professional-grade coffee maker with built-in grinder and programmable settings.",
+      "price": 249.99,
+      "image_url": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=300",
+      "category": "Home & Kitchen",
+      "stock_quantity": 20
+    },
+    {
+      "id": "product-6-backpack",
+      "name": "Travel Backpack 35L",
+      "description": "Durable travel backpack with multiple compartments, laptop sleeve, and water-resistant material.",
+      "price": 89.99,
+      "image_url": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=300",
+      "category": "Travel & Outdoors",
+      "stock_quantity": 50
+    },
+    {
+      "id": "product-7-sneakers",
+      "name": "Athletic Running Shoes",
+      "description": "Comfortable running shoes with advanced cushioning and breathable mesh upper.",
+      "price": 129.99,
+      "image_url": "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=300",
+      "category": "Fashion",
+      "stock_quantity": 60
+    },
+    {
+      "id": "product-8-tablet",
+      "name": "10-inch Tablet Pro",
+      "description": "High-performance tablet with stylus support, perfect for productivity and creativity.",
+      "price": 649.99,
+      "image_url": "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=300",
+      "category": "Electronics",
+      "stock_quantity": 18
+    },
+    {
+      "id": "product-9-desk-chair",
+      "name": "Ergonomic Office Chair",
+      "description": "Comfortable ergonomic chair with lumbar support and adjustable height.",
+      "price": 199.99,
+      "image_url": "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=300",
+      "category": "Home & Office",
+      "stock_quantity": 12
+    },
+    {
+      "id": "product-10-water-bottle",
+      "name": "Insulated Water Bottle",
+      "description": "Stainless steel water bottle that keeps drinks cold for 24 hours or hot for 12 hours.",
+      "price": 34.99,
+      "image_url": "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=300",
+      "category": "Sports & Outdoors",
+      "stock_quantity": 100
+    }
+  ]
+}

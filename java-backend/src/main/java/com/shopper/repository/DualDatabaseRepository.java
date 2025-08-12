@@ -160,6 +160,36 @@ public abstract class DualDatabaseRepository<T, ID> {
     }
     
     /**
+     * Delete all entities from both databases
+     */
+    protected void deleteAllDual() {
+        dualDatabaseStrategy.executeWrite(
+            () -> {
+                getPrimaryRepository().deleteAll();
+                return null;
+            },
+            () -> {
+                if (getSecondaryRepository() != null) {
+                    getSecondaryRepository().deleteAll();
+                }
+                return null;
+            }
+        );
+    }
+    
+    /**
+     * Count all entities using dual database strategy
+     * @return Total count of entities
+     */
+    protected long countDual() {
+        return dualDatabaseStrategy.executeRead(
+            "system",
+            () -> getPrimaryRepository().count(),
+            () -> getSecondaryRepository() != null ? getSecondaryRepository().count() : 0L
+        );
+    }
+    
+    /**
      * Check if secondary database is available
      * @return true if secondary database is available
      */

@@ -6,7 +6,9 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -34,4 +36,16 @@ public interface SecondaryCartItemRepository extends JpaRepository<CartItem, UUI
     
     @Query("SELECT SUM(ci.quantity) FROM CartItem ci WHERE ci.userId = :userId")
     Integer sumQuantityByUserId(@Param("userId") UUID userId);
+    
+    @Modifying
+    @Transactional
+    @Query(value = "MERGE INTO cart_items (id, user_id, product_id, quantity, created_at, updated_at) " +
+                   "VALUES (:id, :userId, :productId, :quantity, :createdAt, :updatedAt)", 
+           nativeQuery = true)
+    void saveWithSpecificId(@Param("id") String id,
+                          @Param("userId") String userId,
+                          @Param("productId") String productId,
+                          @Param("quantity") Integer quantity,
+                          @Param("createdAt") LocalDateTime createdAt,
+                          @Param("updatedAt") LocalDateTime updatedAt);
 } 

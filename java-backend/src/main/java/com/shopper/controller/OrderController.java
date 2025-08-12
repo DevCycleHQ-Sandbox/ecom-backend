@@ -4,6 +4,7 @@ import com.shopper.dto.CreateOrderDto;
 import com.shopper.entity.Order;
 import com.shopper.entity.User;
 import com.shopper.service.OrderService;
+import com.shopper.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -29,6 +30,7 @@ import java.util.UUID;
 public class OrderController {
     
     private final OrderService orderService;
+    private final UserService userService;
     
     @PostMapping
     @Operation(summary = "Create a new order")
@@ -116,8 +118,17 @@ public class OrderController {
     
     private UUID getCurrentUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof User) {
-            return ((User) authentication.getPrincipal()).getId();
+        if (authentication != null && authentication.isAuthenticated()) {
+            Object principal = authentication.getPrincipal();
+            
+            // Handle both UserDetails and User entity cases
+            if (principal instanceof User) {
+                return ((User) principal).getId();
+            } else if (principal instanceof org.springframework.security.core.userdetails.UserDetails) {
+                String username = ((org.springframework.security.core.userdetails.UserDetails) principal).getUsername();
+                User user = userService.findByUsername(username);
+                return user.getId();
+            }
         }
         throw new RuntimeException("User not authenticated");
     }

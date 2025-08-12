@@ -23,6 +23,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +32,7 @@ import java.util.UUID;
 import com.shopper.entity.CartItem;
 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/products")
 @RequiredArgsConstructor
 @Slf4j
 @Tag(name = "Products", description = "Product management endpoints")
@@ -168,6 +169,82 @@ public class ProductController {
         return ResponseEntity.ok(products);
     }
     
+    @PostMapping("/admin/bulk-import")
+    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Bulk import products from JSON file (Admin only)")
+    public ResponseEntity<Map<String, Object>> bulkImportProducts(
+            @RequestParam(defaultValue = "false") boolean clearExisting,
+            @RequestParam(defaultValue = "../data/products.json") String filePath) {
+        try {
+            List<Product> importedProducts = productService.bulkImportProducts(filePath, clearExisting);
+            
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("message", "Products imported successfully");
+            response.put("importedCount", importedProducts.size());
+            response.put("totalProducts", productService.getProductCount());
+            response.put("clearedExisting", clearExisting);
+            response.put("timestamp", LocalDateTime.now());
+            
+            return ResponseEntity.ok(response);
+            
+        } catch (Exception e) {
+            log.error("Failed to bulk import products: {}", e.getMessage());
+            
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("error", "Failed to import products");
+            errorResponse.put("message", e.getMessage());
+            errorResponse.put("timestamp", LocalDateTime.now());
+            
+            return ResponseEntity.status(500).body(errorResponse);
+        }
+    }
+    
+    @PostMapping("/admin/force-update")
+    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Force update all products from JSON file (Admin only)")
+    public ResponseEntity<Map<String, Object>> forceUpdateProducts(
+            @RequestParam(defaultValue = "../data/products.json") String filePath) {
+        try {
+            List<Product> updatedProducts = productService.forceUpdateProductsFromJson(filePath);
+            
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("message", "Products force updated successfully");
+            response.put("updatedCount", updatedProducts.size());
+            response.put("totalProducts", productService.getProductCount());
+            response.put("timestamp", LocalDateTime.now());
+            
+            return ResponseEntity.ok(response);
+            
+        } catch (Exception e) {
+            log.error("Failed to force update products: {}", e.getMessage());
+            
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("error", "Failed to force update products");
+            errorResponse.put("message", e.getMessage());
+            errorResponse.put("timestamp", LocalDateTime.now());
+            
+            return ResponseEntity.status(500).body(errorResponse);
+        }
+    }
+    
+    @GetMapping("/admin/stats")
+    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Get product statistics (Admin only)")
+    public ResponseEntity<Map<String, Object>> getProductStats() {
+        Map<String, Object> stats = new HashMap<>();
+        stats.put("totalProducts", productService.getProductCount());
+        stats.put("inStockProducts", productService.countInStockProducts());
+        stats.put("outOfStockProducts", productService.countOutOfStockProducts());
+        stats.put("categories", productService.findAllCategories());
+        stats.put("timestamp", LocalDateTime.now());
+        
+        return ResponseEntity.ok(stats);
+    }
+    
     @GetMapping("/debug/cart-items")
     public Map<String, Object> debugCartItems() {
         Map<String, Object> result = new HashMap<>();
@@ -202,8 +279,15 @@ public class ProductController {
     
     private String getCurrentUsername() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof User) {
-            return ((User) authentication.getPrincipal()).getUsername();
+        if (authentication != null && authentication.isAuthenticated()) {
+            Object principal = authentication.getPrincipal();
+            
+            // Handle both UserDetails and User entity cases
+            if (principal instanceof User) {
+                return ((User) principal).getUsername();
+            } else if (principal instanceof org.springframework.security.core.userdetails.UserDetails) {
+                return ((org.springframework.security.core.userdetails.UserDetails) principal).getUsername();
+            }
         }
         return "anonymous";
     }

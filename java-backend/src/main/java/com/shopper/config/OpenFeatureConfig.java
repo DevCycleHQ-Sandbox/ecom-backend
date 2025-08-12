@@ -1,10 +1,7 @@
 package com.shopper.config;
 
+import com.devcycle.sdk.server.common.model.DevCycleUser;
 import com.devcycle.sdk.server.local.api.DevCycleLocalClient;
-import com.devcycle.sdk.server.local.model.DevCycleLocalOptions;
-import dev.openfeature.sdk.OpenFeatureAPI;
-import dev.openfeature.sdk.Client;
-import dev.openfeature.sdk.FeatureProvider;
 import io.opentelemetry.api.trace.Tracer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,55 +20,51 @@ public class OpenFeatureConfig {
     private String devCycleServerSdkKey;
 
     private final Tracer tracer;
-    private final OpenTelemetryConfig.AppMetadata appMetadata;
-
+    private DevCycleLocalClient devCycleClient;
+    
     @PostConstruct
     public void initializeOpenFeature() {
         try {
-            if (devCycleServerSdkKey == null || devCycleServerSdkKey.isEmpty() || devCycleServerSdkKey.startsWith("your-")) {
-                log.warn("⚠️  DEVCYCLE_SERVER_SDK_KEY not provided, feature flags will use default values");
+            if (devCycleServerSdkKey == null || devCycleServerSdkKey.isEmpty() || 
+                devCycleServerSdkKey.equals("your-devcycle-server-sdk-key")) {
+                log.warn("⚠️  DEVCYCLE_SERVER_SDK_KEY not provided or using placeholder, feature flags will use default values");
+                log.info("🎯 Creating stub DevCycle client for fallback behavior");
+                // Create a stub client that will work but not connect to DevCycle
+                devCycleClient = null;
                 return;
             }
 
             // Create DevCycle client with default options
-            DevCycleLocalClient devCycleClient = new DevCycleLocalClient(devCycleServerSdkKey);
+            devCycleClient = new DevCycleLocalClient(devCycleServerSdkKey);
 
-            // Get OpenFeature provider from DevCycle client
-            FeatureProvider provider = devCycleClient.getOpenFeatureProvider();
-
-            // Add Dynatrace OpenTelemetry hook
-            DynatraceOtelLogHook hook = new DynatraceOtelLogHook(tracer, appMetadata);
-            OpenFeatureAPI.getInstance().addHooks(hook);
-
-            // Set the provider
-            OpenFeatureAPI.getInstance().setProviderAndWait(provider);
-
+            // Add Dynatrace OpenTelemetry hook for all variable types
+            DynatraceOtelLogHook hook = new DynatraceOtelLogHook(tracer);
+            devCycleClient.addHook(hook);
+            
             log.info("✅ OpenFeature with DevCycle provider initialized successfully");
+            log.info("🔍 DevCycle hook registered for telemetry spans");
 
-            // Test the provider
-            Client client = OpenFeatureAPI.getInstance().getClient();
-            log.info("OpenFeature client ready: {}", client.getMetadata().getName());
-
-            // Test the use-neon feature flag specifically
+            // Test the client with a sample evaluation
             try {
-                var context = new dev.openfeature.sdk.MutableContext("admin").add("user_id", "admin");
-                var useNeonResult = client.getBooleanValue("use-neon", false, context);
+                var user = DevCycleUser.builder().userId("admin").build();
+                var useNeonResult = devCycleClient.variableValue(user, "use-neon", false);
                 log.info("🎛️ DevCycle feature flag 'use-neon' evaluated to: {} for admin user", useNeonResult);
                 
-                // Test other sample flags
-                var newFlowResult = client.getBooleanValue("new-flow", false, context);
-                log.info("Sample feature flag 'new-flow' evaluated to: {}", newFlowResult);
+                var newFlowResult = devCycleClient.variableValue(user, "new-flow", false);
+                log.info("🎛️ DevCycle feature flag 'new-flow' evaluated to: {} for admin user", newFlowResult);
             } catch (Exception e) {
-                log.debug("Could not evaluate feature flags: {}", e.getMessage());
+                log.debug("Could not evaluate test feature flags: {}", e.getMessage());
             }
 
         } catch (Exception e) {
-            log.warn("OpenFeature with DevCycle provider not available: {}", e.getMessage());
+            log.warn("⚠️  OpenFeature with DevCycle provider not available: {}", e.getMessage());
+            devCycleClient = null;
         }
     }
 
     @Bean
-    public Client openFeatureClient() {
-        return OpenFeatureAPI.getInstance().getClient();
+    public DevCycleLocalClient openFeatureClient() {
+        // Return the initialized client or null if not available
+        return devCycleClient;
     }
 }

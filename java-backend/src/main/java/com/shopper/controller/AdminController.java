@@ -254,61 +254,7 @@ public class AdminController {
             ));
         }
     }
-    
-    @PostMapping("/feature-flags/{flagName}")
-    @Operation(summary = "Update a fallback feature flag")
-    public ResponseEntity<Map<String, Object>> updateFeatureFlag(
-            @PathVariable String flagName, 
-            @RequestBody Map<String, Object> request) {
-        try {
-            Object value = request.get("value");
-            featureFlagService.updateFeatureFlag(flagName, value);
-            return ResponseEntity.ok(Map.of(
-                "success", true,
-                "message", "Feature flag updated",
-                "flagName", flagName,
-                "value", value
-            ));
-        } catch (Exception e) {
-            log.error("Failed to update feature flag {}: {}", flagName, e.getMessage());
-            return ResponseEntity.status(500).body(Map.of(
-                "success", false,
-                "message", "Failed to update feature flag",
-                "error", e.getMessage()
-            ));
-        }
-    }
-    
-    @GetMapping("/feature-flags/{flagName}/test")
-    @Operation(summary = "Test feature flag evaluation for different users")
-    public ResponseEntity<Map<String, Object>> testFeatureFlag(
-            @PathVariable String flagName,
-            @RequestParam(defaultValue = "user1,user2,admin") String userIds) {
-        try {
-            Map<String, Object> results = new HashMap<>();
-            String[] users = userIds.split(",");
-            
-            for (String userId : users) {
-                boolean flagValue = featureFlagService.getBooleanValue(userId.trim(), flagName, false);
-                results.put(userId.trim(), flagValue);
-            }
-            
-            return ResponseEntity.ok(Map.of(
-                "success", true,
-                "flagName", flagName,
-                "results", results,
-                "source", featureFlagService.isInitialized() ? "DevCycle/OpenFeature" : "Fallback"
-            ));
-        } catch (Exception e) {
-            log.error("Failed to test feature flag {}: {}", flagName, e.getMessage());
-            return ResponseEntity.status(500).body(Map.of(
-                "success", false,
-                "message", "Failed to test feature flag",
-                "error", e.getMessage()
-            ));
-        }
-    }
-    
+        
     @GetMapping("/feature-flags/devcycle/status")
     @Operation(summary = "Check DevCycle integration status")
     public ResponseEntity<Map<String, Object>> getDevCycleStatus() {
