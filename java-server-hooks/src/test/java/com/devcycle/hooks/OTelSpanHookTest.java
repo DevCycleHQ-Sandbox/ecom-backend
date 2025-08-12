@@ -1,6 +1,5 @@
 package com.devcycle.hooks;
 
-import dev.openfeature.sdk.*;
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.SpanBuilder;
 import io.opentelemetry.api.trace.SpanKind;
@@ -11,11 +10,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.lenient;
 
 @ExtendWith(MockitoExtension.class)
 class OTelSpanHookTest {
@@ -29,129 +28,109 @@ class OTelSpanHookTest {
     @Mock
     private SpanBuilder spanBuilder;
 
-    @Mock
-    private HookContext<Object> hookContext;
-
-    @Mock
-    private FlagEvaluationDetails<Object> flagEvaluationDetails;
-
-    @Mock
-    private ClientMetadata clientMetadata;
-
     private OTelSpanHook hook;
 
     @BeforeEach
     void setUp() {
         hook = new OTelSpanHook(tracer);
 
-        // Setup mocks
-        when(tracer.spanBuilder(anyString())).thenReturn(spanBuilder);
-        when(spanBuilder.setSpanKind(any(SpanKind.class))).thenReturn(spanBuilder);
-        when(spanBuilder.startSpan()).thenReturn(span);
-        
-        when(hookContext.getFlagKey()).thenReturn("test-flag");
-        when(hookContext.getType()).thenReturn(FlagValueType.BOOLEAN);
+        // Setup mocks with lenient to avoid unnecessary stubbing exceptions
+        lenient().when(tracer.spanBuilder(anyString())).thenReturn(spanBuilder);
+        lenient().when(spanBuilder.setSpanKind(any(SpanKind.class))).thenReturn(spanBuilder);
+        lenient().when(spanBuilder.startSpan()).thenReturn(span);
     }
 
     @Test
     void testBeforeHook() {
-        Map<String, Object> hints = new HashMap<>();
+        String testContext = "test-flag";
         
-        // Setup client metadata for this test
-        when(hookContext.getClientMetadata()).thenReturn(clientMetadata);
-        when(clientMetadata.getName()).thenReturn("test-client");
-        
-        hook.before(hookContext, hints);
+        hook.before(testContext);
         
         verify(tracer).spanBuilder("feature_flag_evaluation.test-flag");
-        verify(spanBuilder).setSpanKind(SpanKind.SERVER);
+        verify(spanBuilder).setSpanKind(SpanKind.INTERNAL);
         verify(spanBuilder).startSpan();
         
         verify(span).setAttribute("feature_flag.key", "test-flag");
-        verify(span).setAttribute("feature_flag.value_type", "BOOLEAN");
-        verify(span).setAttribute("feature_flag.flagset", "test-flag");
-        verify(span).setAttribute("openfeature.client.name", "test-client");
+        verify(span).setAttribute("feature_flag.value_type", "Object");
+    }
+
+    @Test
+    void testOnFinallyWithVariable() {
+        String testContext = "test-flag";
+        String testVariable = "test-value";
+        String testMetadata = "metadata";
+        
+        // First call before to set up the span
+        hook.before(testContext);
+        
+        // Then call onFinally
+        hook.onFinally(testContext, Optional.of(testVariable), testMetadata);
+        
+        verify(span).setAttribute("feature_flag.value", "test-value");
+        verify(span).end();
+    }
+
+    @Test
+    void testOnFinallyWithoutVariable() {
+        String testContext = "test-flag";
+        String testMetadata = "metadata";
+        
+        // First call before to set up the span
+        hook.before(testContext);
+        
+        // Then call onFinally with empty Optional
+        hook.onFinally(testContext, Optional.empty(), testMetadata);
+        
+        verify(span).setAttribute("feature_flag.value", "null");
+        verify(span).setAttribute("feature_flag.reason", "evaluation_failed");
+        verify(span).end();
     }
 
     @Test
     void testAfterHook() {
-        Map<String, Object> hints = new HashMap<>();
+        String testContext = "test-flag";
+        String testVariable = "test-value";
+        String testMetadata = "metadata";
         
-        // Setup flag evaluation details
-        when(flagEvaluationDetails.getValue()).thenReturn(true);
-        when(flagEvaluationDetails.getReason()).thenReturn("TARGETING_MATCH");
-        when(flagEvaluationDetails.getVariant()).thenReturn("test-variant");
-        when(flagEvaluationDetails.getErrorCode()).thenReturn(null);
-        when(flagEvaluationDetails.getErrorMessage()).thenReturn(null);
+        // The after hook should just log and not affect spans
+        hook.after(testContext, Optional.of(testVariable), testMetadata);
         
-        // First call before to set up the span
-        hook.before(hookContext, hints);
-        
-        // Then call after
-        hook.after(hookContext, flagEvaluationDetails, hints);
-        
-        verify(span).setAttribute("feature_flag.value", "true");
-        verify(span).setAttribute("feature_flag.reason", "TARGETING_MATCH");
-        verify(span).setAttribute("feature_flag.variant", "test-variant");
-        verify(span).end();
+        // No span operations should occur in after
+        verify(span, never()).setAttribute(anyString(), anyString());
+        verify(span, never()).end();
     }
 
     @Test
     void testErrorHook() {
-        Map<String, Object> hints = new HashMap<>();
+        String testContext = "test-flag";
         Exception testException = new RuntimeException("Test error");
         
-        // First call before to set up the span
-        hook.before(hookContext, hints);
+        hook.error(testContext, testException);
         
-        // Then call error
-        hook.error(hookContext, testException, hints);
-        
-        verify(span).recordException(testException);
-        verify(span).setAttribute("feature_flag.error_message", "Test error");
-        verify(span).end();
+        // Error hook should just log, no span operations
+        verify(span, never()).setAttribute(anyString(), anyString());
+        verify(span, never()).end();
     }
 
     @Test
-    void testFinallyAfterHook() {
-        Map<String, Object> hints = new HashMap<>();
+    void testBeforeHookException() {
+        String testContext = "test-flag";
         
-        // First call before to set up the span
-        hook.before(hookContext, hints);
+        // Make spanBuilder throw an exception
+        when(tracer.spanBuilder(anyString())).thenThrow(new RuntimeException("Test error"));
         
-        // Then call finallyAfter
-        hook.finallyAfter(hookContext, hints);
+        Optional<Object> result = hook.before(testContext);
         
-        verify(span).end();
+        // Should return empty optional and not throw
+        assert result.isEmpty();
     }
 
     @Test
-    void testWithProviderMetadata() {
-        Map<String, Object> hints = new HashMap<>();
+    void testWithNullContext() {
+        hook.before(null);
         
-        // Mock provider metadata using generic interface
-        var mockProviderMetadata = mock(dev.openfeature.sdk.Metadata.class);
-        when(mockProviderMetadata.getName()).thenReturn("test-provider");
-        when(hookContext.getProviderMetadata()).thenReturn(mockProviderMetadata);
-        
-        hook.before(hookContext, hints);
-        
-        verify(span).setAttribute("openfeature.provider.name", "devcycle");
-    }
-
-    @Test
-    void testWithNullClientMetadata() {
-        Map<String, Object> hints = new HashMap<>();
-        when(hookContext.getClientMetadata()).thenReturn(null);
-        
-        hook.before(hookContext, hints);
-        
-        verify(tracer).spanBuilder("feature_flag_evaluation.test-flag");
-        verify(span).setAttribute("feature_flag.key", "test-flag");
-        verify(span).setAttribute("feature_flag.value_type", "BOOLEAN");
-        verify(span).setAttribute("feature_flag.flagset", "test-flag");
-        
-        // Should not set client name attribute
-        verify(span, never()).setAttribute(eq("openfeature.client.name"), anyString());
+        verify(tracer).spanBuilder("feature_flag_evaluation.unknown");
+        verify(span).setAttribute("feature_flag.key", "unknown");
+        verify(span).setAttribute("feature_flag.value_type", "Object");
     }
 }

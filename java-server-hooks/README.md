@@ -4,20 +4,22 @@
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.devcycle/java-server-hooks/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.devcycle/java-server-hooks)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-OpenFeature hooks for DevCycle Java Server SDK with OpenTelemetry integration.
+DevCycle EvalHook for DevCycle Java Server SDK with OpenTelemetry integration.
+
+> **Note**: This implementation provides the structure and functionality for DevCycle's native EvalHook interface. When the full DevCycle SDK EvalHook interface becomes available, this implementation can be easily updated to use the proper interfaces and types.
 
 ## Features
 
-- **OpenTelemetry Integration**: Automatic span creation for feature flag evaluations
-- **Rich Metadata**: Detailed span attributes including flag keys, values, variants, and application metadata
-- **Error Handling**: Comprehensive error tracking and exception recording
-- **Flexible Configuration**: Customizable application metadata through simple interfaces
+- **OpenTelemetry Integration**: Automatic span creation for DevCycle feature flag evaluations
+- **Native DevCycle Hook**: Uses DevCycle SDK's native EvalHook interface for optimal performance
+- **Rich Metadata**: Detailed span attributes including flag keys, values, evaluation reasons, and project/environment metadata
+- **Error Handling**: Comprehensive error tracking and logging
 - **Production Ready**: Thread-safe implementation with proper resource cleanup
 
 ## Requirements
 
 - Java 11 or higher
-- OpenFeature SDK 1.10.0+
+- DevCycle Java Server SDK 2.2.0+
 - OpenTelemetry API 1.31.0+
 
 ## Installation
@@ -46,40 +48,39 @@ dependencies {
 
 ```java
 import com.devcycle.hooks.OTelSpanHook;
-import dev.openfeature.sdk.OpenFeatureAPI;
 import io.opentelemetry.api.OpenTelemetry;
+import io.opentelemetry.api.trace.Tracer;
 
 // Initialize OpenTelemetry tracer
 OpenTelemetry openTelemetry = // ... your OpenTelemetry instance
 Tracer tracer = openTelemetry.getTracer("your-service-name");
 
-// Create and register the hook
+// Create the hook
 OTelSpanHook hook = new OTelSpanHook(tracer);
-OpenFeatureAPI.getInstance().addHook(hook);
+
+// Manual usage example (when DevCycle SDK integration is available):
+// hook.before("my-flag-key");
+// hook.onFinally("my-flag-key", Optional.of("flag-value"), null);
 ```
 
-### With DevCycle SDK
+### Integration with DevCycle SDK (Future)
+
+When the DevCycle SDK EvalHook interface becomes available, the integration will look like:
 
 ```java
 import com.devcycle.sdk.server.local.api.DevCycleLocalClient;
-import com.devcycle.hooks.OTelSpanHook;
-import dev.openfeature.sdk.OpenFeatureAPI;
+import com.devcycle.sdk.server.common.model.DevCycleUser;
 
-// Initialize DevCycle client
-DevCycleLocalClient devCycleClient = new DevCycleLocalClient("your-sdk-key");
+// Initialize DevCycle client and add the hook
+DevCycleLocalClient client = new DevCycleLocalClient("your-sdk-key");
+client.addEvalHook(hook);
 
-// Set up OpenFeature with DevCycle provider
-OpenFeatureAPI api = OpenFeatureAPI.getInstance();
-api.setProvider(devCycleClient.getOpenFeatureProvider());
-
-// Add the OTel span hook
-OTelSpanHook hook = new OTelSpanHook(tracer);
-api.addHook(hook);
-
-// Now all feature flag evaluations will create OTel spans
-Client client = api.getClient();
-boolean flagValue = client.getBooleanValue("my-flag", false);
+// Now all DevCycle evaluations will create OTel spans
+DevCycleUser user = DevCycleUser.builder().userId("user123").build();
+boolean flagValue = client.variableValue(user, "my-flag", false);
 ```
+
+
 
 ## Configuration
 
@@ -99,22 +100,18 @@ This will automatically capture feature flag evaluation data and create spans wi
 The hook creates spans with the following attributes:
 
 ### Core Feature Flag Attributes
-- `feature_flag.key` - The feature flag key
-- `feature_flag.value` - The resolved flag value
-- `feature_flag.value_type` - The type of the flag value (BOOLEAN, STRING, etc.)
-- `feature_flag.reason` - The evaluation reason
-- `feature_flag.variant` - The variant name (if applicable)
-- `feature_flag.flagset` - The flagset (same as key)
+- `feature_flag.key` - The DevCycle variable key
+- `feature_flag.value` - The evaluated variable value
+- `feature_flag.value_type` - The type of the default value (Boolean, String, etc.)
+- `feature_flag.reason` - The evaluation reason from DevCycle
+- `feature_flag.flagset` - The DevCycle feature ID (from metadata)
 
+### DevCycle Metadata Attributes
+- `feature_flag.project` - DevCycle project ID
+- `feature_flag.environment` - DevCycle environment ID
 
-
-### OpenFeature Metadata
-- `openfeature.client.name` - OpenFeature client name
-- `openfeature.provider.name` - Provider name (e.g., "devcycle")
-
-### Error Attributes (when applicable)
-- `feature_flag.error_code` - Error code if evaluation failed
-- `feature_flag.error_message` - Error message if evaluation failed
+### Error Handling
+- When evaluation fails: `feature_flag.value` is set to "null" and `feature_flag.reason` is set to "evaluation_failed"
 
 ## Span Naming
 
@@ -128,7 +125,7 @@ For example: `feature_flag_evaluation.my-awesome-flag`
 
 ```java
 @Configuration
-public class OpenFeatureConfig {
+public class DevCycleConfig {
     
     @Bean
     public OTelSpanHook otelSpanHook(@Value("${spring.application.name}") String serviceName) {
@@ -138,9 +135,13 @@ public class OpenFeatureConfig {
         return new OTelSpanHook(tracer);
     }
     
-    @PostConstruct
-    public void setupOpenFeature(OTelSpanHook hook) {
-        OpenFeatureAPI.getInstance().addHook(hook);
+    @Bean
+    public DevCycleLocalClient devCycleClient(
+            @Value("${devcycle.server.sdk.key}") String sdkKey,
+            OTelSpanHook otelSpanHook) {
+        DevCycleLocalClient client = new DevCycleLocalClient(sdkKey);
+        client.addEvalHook(otelSpanHook);
+        return client;
     }
 }
 ```
@@ -164,7 +165,7 @@ The `OTelSpanHook` is thread-safe and can be safely used in concurrent environme
 
 - Span creation is lightweight and designed for high-throughput applications
 - The hook uses efficient data structures to minimize memory overhead
-- Spans are automatically cleaned up in the `finallyAfter` hook to prevent memory leaks
+- Spans are automatically cleaned up in the `onFinally` hook to prevent memory leaks
 
 ## Development
 

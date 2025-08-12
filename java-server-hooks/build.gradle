@@ -22,8 +22,8 @@ repositories {
 }
 
 dependencies {
-    // OpenFeature SDK
-    api 'dev.openfeature:sdk:1.10.0'
+    // DevCycle Java SDK
+    api 'com.devcycle:java-server-sdk:2.2.0'
     
     // OpenTelemetry API
     api 'io.opentelemetry:opentelemetry-api:1.31.0'
@@ -74,7 +74,7 @@ publishing {
             
             pom {
                 name = 'DevCycle Java Server Hooks'
-                description = 'OpenFeature hooks for DevCycle Java Server SDK with OpenTelemetry integration'
+                description = 'DevCycle EvalHook for DevCycle Java Server SDK with OpenTelemetry integration'
                 url = 'https://github.com/DevCycleHQ/java-server-hooks'
                 
                 licenses {
