@@ -2,7 +2,7 @@ package com.shopper.config;
 
 import com.devcycle.sdk.server.common.model.DevCycleUser;
 import com.devcycle.sdk.server.local.api.DevCycleLocalClient;
-import com.dynatrace.oneagent.sdk.OneAgentSDK;
+import com.dynatrace.oneagent.sdk.api.OneAgentSDK;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

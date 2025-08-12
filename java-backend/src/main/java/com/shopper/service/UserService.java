@@ -1,6 +1,6 @@
 package com.shopper.service;
 
-import com.dynatrace.oneagent.sdk.OneAgentSDK;
+import com.dynatrace.oneagent.sdk.api.OneAgentSDK;
 import com.dynatrace.oneagent.sdk.api.CustomServiceTracer;
 import com.shopper.dto.AuthResponseDto;
 import com.shopper.dto.LoginDto;
@@ -61,8 +61,8 @@ public class UserService implements UserDetailsService {
 
     public AuthResponseDto register(RegisterDto registerDto) {
         CustomServiceTracer tracer = oneAgentSDK.traceCustomService("user_registration", "register");
-        tracer.addCustomRequestAttribute("username", registerDto.getUsername());
-        tracer.addCustomRequestAttribute("email", registerDto.getEmail());
+        oneAgentSDK.addCustomRequestAttribute("username", registerDto.getUsername());
+        oneAgentSDK.addCustomRequestAttribute("email", registerDto.getEmail());
         tracer.start();
         
         try {
@@ -80,7 +80,7 @@ public class UserService implements UserDetailsService {
             
             // Create new user - assign ADMIN role if username is "admin"
             User.Role userRole = "admin".equalsIgnoreCase(registerDto.getUsername()) ? User.Role.ADMIN : User.Role.USER;
-            tracer.addCustomRequestAttribute("assigned_role", userRole.name());
+            oneAgentSDK.addCustomRequestAttribute("assigned_role", userRole.name());
             
             User user = User.builder()
                     .id(UUID.randomUUID())
@@ -93,7 +93,7 @@ public class UserService implements UserDetailsService {
                     .build();
             
             User savedUser = userRepository.save(user);
-            tracer.addCustomRequestAttribute("user_id", savedUser.getId().toString());
+            oneAgentSDK.addCustomRequestAttribute("user_id", savedUser.getId().toString());
             
             // Generate JWT token
             UserDetails userDetails = loadUserByUsername(savedUser.getUsername());
@@ -111,7 +111,7 @@ public class UserService implements UserDetailsService {
     
     public AuthResponseDto login(LoginDto loginDto) {
         CustomServiceTracer tracer = oneAgentSDK.traceCustomService("user_authentication", "login");
-        tracer.addCustomRequestAttribute("username", loginDto.getUsername());
+        oneAgentSDK.addCustomRequestAttribute("username", loginDto.getUsername());
         tracer.start();
         
         try {
@@ -127,8 +127,8 @@ public class UserService implements UserDetailsService {
             User user = userRepository.findByUsername(loginDto.getUsername())
                     .orElseThrow(() -> new UsernameNotFoundException("User not found: " + loginDto.getUsername()));
             
-            tracer.addCustomRequestAttribute("user_id", user.getId().toString());
-            tracer.addCustomRequestAttribute("user_role", user.getRole().name());
+            oneAgentSDK.addCustomRequestAttribute("user_id", user.getId().toString());
+            oneAgentSDK.addCustomRequestAttribute("user_role", user.getRole().name());
             
             // Generate JWT token
             UserDetails userDetails = loadUserByUsername(user.getUsername());

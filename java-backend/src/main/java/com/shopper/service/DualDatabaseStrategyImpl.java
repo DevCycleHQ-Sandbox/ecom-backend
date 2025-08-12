@@ -1,7 +1,7 @@
 package com.shopper.service;
 
-import com.dynatrace.oneagent.sdk.OneAgentSDK;
-import com.dynatrace.oneagent.sdk.api.DatabaseInfo;
+import com.dynatrace.oneagent.sdk.api.OneAgentSDK;
+import com.dynatrace.oneagent.sdk.api.infos.DatabaseInfo;
 import com.dynatrace.oneagent.sdk.api.DatabaseRequestTracer;
 import com.dynatrace.oneagent.sdk.api.enums.ChannelType;
 import com.dynatrace.oneagent.sdk.api.enums.DatabaseVendor;

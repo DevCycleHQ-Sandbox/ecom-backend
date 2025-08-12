@@ -1,6 +1,6 @@
 package com.shopper.config;
 
-import com.dynatrace.oneagent.sdk.OneAgentSDK;
+import com.dynatrace.oneagent.sdk.api.OneAgentSDK;
 import com.dynatrace.oneagent.sdk.OneAgentSDKFactory;
 import com.dynatrace.oneagent.sdk.api.LoggingCallback;
 import lombok.extern.slf4j.Slf4j;
