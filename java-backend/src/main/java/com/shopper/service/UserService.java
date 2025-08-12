@@ -1,5 +1,7 @@
 package com.shopper.service;
 
+import com.dynatrace.oneagent.sdk.OneAgentSDK;
+import com.dynatrace.oneagent.sdk.api.CustomServiceTracer;
 import com.shopper.dto.AuthResponseDto;
 import com.shopper.dto.LoginDto;
 import com.shopper.dto.RegisterDto;
@@ -40,6 +42,9 @@ public class UserService implements UserDetailsService {
     @Lazy
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private OneAgentSDK oneAgentSDK;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username)
@@ -55,56 +60,89 @@ public class UserService implements UserDetailsService {
     }
 
     public AuthResponseDto register(RegisterDto registerDto) {
-        // Check if username already exists
-        if (existsByUsername(registerDto.getUsername())) {
-            throw new RuntimeException("Username already exists");
+        CustomServiceTracer tracer = oneAgentSDK.traceCustomService("user_registration", "register");
+        tracer.addCustomRequestAttribute("username", registerDto.getUsername());
+        tracer.addCustomRequestAttribute("email", registerDto.getEmail());
+        tracer.start();
+        
+        try {
+            // Check if username already exists
+            if (existsByUsername(registerDto.getUsername())) {
+                tracer.error("Username already exists");
+                throw new RuntimeException("Username already exists");
+            }
+            
+            // Check if email already exists
+            if (existsByEmail(registerDto.getEmail())) {
+                tracer.error("Email already exists");
+                throw new RuntimeException("Email already exists");
+            }
+            
+            // Create new user - assign ADMIN role if username is "admin"
+            User.Role userRole = "admin".equalsIgnoreCase(registerDto.getUsername()) ? User.Role.ADMIN : User.Role.USER;
+            tracer.addCustomRequestAttribute("assigned_role", userRole.name());
+            
+            User user = User.builder()
+                    .id(UUID.randomUUID())
+                    .username(registerDto.getUsername())
+                    .email(registerDto.getEmail())
+                    .password(passwordEncoder.encode(registerDto.getPassword()))
+                    .role(userRole)
+                    .createdAt(LocalDateTime.now())
+                    .updatedAt(LocalDateTime.now())
+                    .build();
+            
+            User savedUser = userRepository.save(user);
+            tracer.addCustomRequestAttribute("user_id", savedUser.getId().toString());
+            
+            // Generate JWT token
+            UserDetails userDetails = loadUserByUsername(savedUser.getUsername());
+            String token = jwtUtil.generateToken(userDetails);
+            
+            log.info("User registered successfully: {} with role: {}", savedUser.getUsername(), savedUser.getRole());
+            return new AuthResponseDto(token, savedUser);
+        } catch (Exception e) {
+            tracer.error(e.getMessage());
+            throw e;
+        } finally {
+            tracer.end();
         }
-        
-        // Check if email already exists
-        if (existsByEmail(registerDto.getEmail())) {
-            throw new RuntimeException("Email already exists");
-        }
-        
-        // Create new user - assign ADMIN role if username is "admin"
-        User.Role userRole = "admin".equalsIgnoreCase(registerDto.getUsername()) ? User.Role.ADMIN : User.Role.USER;
-        
-        User user = User.builder()
-                .id(UUID.randomUUID())
-                .username(registerDto.getUsername())
-                .email(registerDto.getEmail())
-                .password(passwordEncoder.encode(registerDto.getPassword()))
-                .role(userRole)
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
-                .build();
-        
-        User savedUser = userRepository.save(user);
-        
-        // Generate JWT token
-        UserDetails userDetails = loadUserByUsername(savedUser.getUsername());
-        String token = jwtUtil.generateToken(userDetails);
-        
-        return new AuthResponseDto(token, savedUser);
     }
     
     public AuthResponseDto login(LoginDto loginDto) {
-        // Authenticate user
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginDto.getUsername(),
-                        loginDto.getPassword()
-                )
-        );
+        CustomServiceTracer tracer = oneAgentSDK.traceCustomService("user_authentication", "login");
+        tracer.addCustomRequestAttribute("username", loginDto.getUsername());
+        tracer.start();
         
-        // Get user details
-        User user = userRepository.findByUsername(loginDto.getUsername())
-                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + loginDto.getUsername()));
-        
-        // Generate JWT token
-        UserDetails userDetails = loadUserByUsername(user.getUsername());
-        String token = jwtUtil.generateToken(userDetails);
-        
-        return new AuthResponseDto(token, user);
+        try {
+            // Authenticate user
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            loginDto.getUsername(),
+                            loginDto.getPassword()
+                    )
+            );
+            
+            // Get user details
+            User user = userRepository.findByUsername(loginDto.getUsername())
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found: " + loginDto.getUsername()));
+            
+            tracer.addCustomRequestAttribute("user_id", user.getId().toString());
+            tracer.addCustomRequestAttribute("user_role", user.getRole().name());
+            
+            // Generate JWT token
+            UserDetails userDetails = loadUserByUsername(user.getUsername());
+            String token = jwtUtil.generateToken(userDetails);
+            
+            log.info("User authenticated successfully: {} with role: {}", user.getUsername(), user.getRole());
+            return new AuthResponseDto(token, user);
+        } catch (Exception e) {
+            tracer.error(e.getMessage());
+            log.warn("Authentication failed for user: {}", loginDto.getUsername());
+            throw e;
+        } finally {
+            tracer.end();
+        }
     }
     
     private User findUserByUsernameOrEmail(String usernameOrEmail) {

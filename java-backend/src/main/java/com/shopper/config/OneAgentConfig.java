@@ -1,8 +1,8 @@
 package com.shopper.config;
 
-import io.opentelemetry.api.GlobalOpenTelemetry;
-import io.opentelemetry.api.OpenTelemetry;
-import io.opentelemetry.api.trace.Tracer;
+import com.dynatrace.oneagent.sdk.OneAgentSDK;
+import com.dynatrace.oneagent.sdk.OneAgentSDKFactory;
+import com.dynatrace.oneagent.sdk.api.LoggingCallback;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -12,19 +12,7 @@ import jakarta.annotation.PostConstruct;
 
 @Configuration
 @Slf4j
-public class OpenTelemetryConfig {
-
-    @Value("${app.telemetry.use-local-otlp:false}")
-    private boolean useLocalOtlp;
-
-    @Value("${app.telemetry.local-otlp-port:14499}")
-    private int localOtlpPort;
-
-    @Value("${app.telemetry.dynatrace.env-url:}")
-    private String dynatraceEnvUrl;
-
-    @Value("${app.telemetry.dynatrace.api-token:}")
-    private String dynatraceApiToken;
+public class OneAgentConfig {
 
     @Value("${spring.application.name}")
     private String serviceName;
@@ -43,49 +31,44 @@ public class OpenTelemetryConfig {
 
     @PostConstruct
     public void logTelemetryConfiguration() {
-        if (useLocalOtlp) {
-            String endpoint = String.format("http://localhost:%d/otlp", localOtlpPort);
-            log.info("🔗 OpenTelemetry configured for local OTLP endpoint: {}", endpoint);
-
-            // Set system properties for auto-instrumentation
-            System.setProperty("otel.exporter.otlp.endpoint", endpoint);
-            System.setProperty("otel.service.name", serviceName);
-            System.setProperty("otel.service.version", serviceVersion);
-            System.setProperty("otel.resource.attributes",
-                    String.format("service.name=%s,service.version=%s,deployment.environment=%s",
-                            serviceName, serviceVersion, environment));
-            System.setProperty("otel.exporter.otlp.metrics.temporality.preference", "delta");
-
-        } else if (dynatraceEnvUrl != null && !dynatraceEnvUrl.isEmpty() && dynatraceApiToken != null && !dynatraceApiToken.isEmpty()) {
-            String endpoint = dynatraceEnvUrl + "/api/v2/otlp";
-            log.info("🔗 OpenTelemetry configured for Dynatrace endpoint: {}", endpoint);
-
-            // Set system properties for auto-instrumentation
-            System.setProperty("otel.exporter.otlp.endpoint", endpoint);
-            System.setProperty("otel.exporter.otlp.headers", "Authorization=Api-Token " + dynatraceApiToken);
-            System.setProperty("otel.service.name", serviceName);
-            System.setProperty("otel.service.version", serviceVersion);
-            System.setProperty("otel.resource.attributes",
-                    String.format("service.name=%s,service.version=%s,deployment.environment=%s",
-                            serviceName, serviceVersion, environment));
-            System.setProperty("otel.exporter.otlp.metrics.temporality.preference", "delta");
-
-        } else {
-            log.info("⚠️  Neither local OTLP nor Dynatrace endpoints are configured. OpenTelemetry auto-instrumentation will use default settings.");
+        OneAgentSDK oneAgentSDK = OneAgentSDKFactory.createInstance();
+        
+        switch (oneAgentSDK.getCurrentState()) {
+            case ACTIVE:
+                log.info("✅ OneAgent SDK is active and ready for instrumentation");
+                log.info("📊 OneAgent SDK enabled for service: {} v{} ({})", 
+                        serviceName, serviceVersion, environment);
+                break;
+            case PERMANENTLY_INACTIVE:
+                log.warn("⚠️  OneAgent SDK is permanently inactive. Ensure Dynatrace OneAgent is installed and running.");
+                break;
+            case TEMPORARILY_INACTIVE:
+                log.warn("⚠️  OneAgent SDK is temporarily inactive. It may become active later.");
+                break;
+            default:
+                log.warn("⚠️  OneAgent SDK state is unknown.");
+                break;
         }
-
-        log.info("📊 OpenTelemetry Auto-Instrumentation enabled for service: {} v{} ({})",
-                serviceName, serviceVersion, environment);
     }
 
     @Bean
-    public OpenTelemetry openTelemetry() {
-        return GlobalOpenTelemetry.get();
-    }
+    public OneAgentSDK oneAgentSDK() {
+        OneAgentSDK oneAgentSDK = OneAgentSDKFactory.createInstance();
+        
+        // Set up logging callback for OneAgent SDK
+        oneAgentSDK.setLoggingCallback(new LoggingCallback() {
+            @Override
+            public void warn(String message) {
+                log.warn("OneAgent SDK: {}", message);
+            }
 
-    @Bean
-    public Tracer tracer(OpenTelemetry openTelemetry) {
-        return openTelemetry.getTracer(serviceName);
+            @Override
+            public void error(String message) {
+                log.error("OneAgent SDK: {}", message);
+            }
+        });
+
+        return oneAgentSDK;
     }
 
     @Bean
