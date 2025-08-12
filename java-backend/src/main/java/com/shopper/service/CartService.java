@@ -29,8 +29,8 @@ public class CartService {
     
     @Transactional
     public CartItem addToCart(UUID userId, AddToCartDto addToCartDto) {
-        // Check if product exists
-        Product product = productRepository.findById(addToCartDto.getProductId())
+        // Check if product exists (use user context for feature flag evaluation)
+        Product product = productRepository.findById(addToCartDto.getProductId(), userId.toString())
                 .orElseThrow(() -> new RuntimeException("Product not found"));
         
         // Check if product is in stock
@@ -60,6 +60,8 @@ public class CartService {
                     .quantity(addToCartDto.getQuantity())
                     .build();
             
+            log.info("Adding product {} to cart for user {} (will sync to both databases)", 
+                    addToCartDto.getProductId(), userId);
             return cartItemRepository.save(cartItem);
         }
     }
@@ -74,8 +76,8 @@ public class CartService {
             throw new RuntimeException("Cart item does not belong to user");
         }
         
-        // Check if product has enough stock
-        Product product = productRepository.findById(cartItem.getProductId())
+        // Check if product has enough stock (use user context for feature flag evaluation)
+        Product product = productRepository.findById(cartItem.getProductId(), userId.toString())
                 .orElseThrow(() -> new RuntimeException("Product not found"));
         
         if (product.getStockQuantity() < updateCartItemDto.getQuantity()) {

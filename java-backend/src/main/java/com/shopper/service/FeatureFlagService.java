@@ -1,9 +1,8 @@
 package com.shopper.service;
 
-import dev.openfeature.sdk.Client;
-import dev.openfeature.sdk.EvaluationContext;
-import dev.openfeature.sdk.FlagEvaluationDetails;
-import dev.openfeature.sdk.MutableContext;
+import com.devcycle.sdk.server.common.model.DevCycleUser;
+import com.devcycle.sdk.server.local.api.DevCycleLocalClient;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,7 +20,7 @@ public class FeatureFlagService {
     @Value("${app.devcycle.server-sdk-key}")
     private String devCycleServerSdkKey;
     
-    private final Client openFeatureClient;
+    private final DevCycleLocalClient devCycleLocalClient;
     private final Map<String, Object> fallbackFlags = new ConcurrentHashMap<>();
     private boolean initialized = false;
     
@@ -36,206 +35,140 @@ public class FeatureFlagService {
             
             initialized = true;
             log.info("Feature flags initialized with default values");
+            
+            if (devCycleLocalClient == null) {
+                log.info("🔄 DevCycle client not available, using fallback values for all feature flags");
+            }
         }
-    }
-
-    private EvaluationContext createEvaluationContext(String userId) {
-        return new MutableContext(userId).add("user_id", userId);
     }
 
     public boolean getBooleanValue(String userId, String key, boolean defaultValue) {
         ensureInitialized();
         
-        if (!isOpenFeatureAvailable()) {
-            return getFallbackBooleanValue(key, defaultValue);
+        if (devCycleLocalClient == null) {
+            log.debug("🔄 DevCycle client not available, using fallback for '{}': {}", key, defaultValue);
+            return defaultValue;
         }
         
         try {
-            EvaluationContext context = createEvaluationContext(userId);
-            FlagEvaluationDetails<Boolean> details = openFeatureClient.getBooleanDetails(key, defaultValue, context);
+            DevCycleUser user = DevCycleUser.builder().userId(userId).build();
+            Boolean details = devCycleLocalClient.variableValue(user, key, defaultValue);
             
-            boolean flagValue = details.getValue();
-            log.debug("🎛️ Feature flag '{}' evaluated to: {} for user: {} (reason: {})", 
-                     key, flagValue, userId, details.getReason());
+            boolean flagValue = details;
+            log.debug("🎛️ Feature flag '{}' evaluated to: {} for user: {}", 
+                     key, flagValue, userId);
             
             return flagValue;
             
         } catch (Exception e) {
-            log.warn("Error getting feature flag '{}' for user '{}': {}", key, userId, e.getMessage());
-            return getFallbackBooleanValue(key, defaultValue);
+            log.warn("Error getting feature flag '{}' for user '{}': {}, using default: {}", 
+                    key, userId, e.getMessage(), defaultValue);
+            return defaultValue;
         }
     }
     
     public String getStringValue(String userId, String key, String defaultValue) {
         ensureInitialized();
         
-        if (!isOpenFeatureAvailable()) {
-            return getFallbackStringValue(key, defaultValue);
+        if (devCycleLocalClient == null) {
+            log.debug("🔄 DevCycle client not available, using fallback for '{}': {}", key, defaultValue);
+            return defaultValue;
         }
         
         try {
-            EvaluationContext context = createEvaluationContext(userId);
-            FlagEvaluationDetails<String> details = openFeatureClient.getStringDetails(key, defaultValue, context);
+            DevCycleUser user = DevCycleUser.builder().userId(userId).build();
+            String flagValue = devCycleLocalClient.variableValue(user, key, defaultValue);
             
-            String flagValue = details.getValue();
-            log.debug("🎛️ Feature flag '{}' evaluated to: {} for user: {} (reason: {})", 
-                     key, flagValue, userId, details.getReason());
+            log.debug("🎛️ Feature flag '{}' evaluated to: {} for user: {}", 
+                        key, flagValue, userId);
             
             return flagValue;
             
         } catch (Exception e) {
-            log.warn("Error getting feature flag '{}' for user '{}': {}", key, userId, e.getMessage());
-            return getFallbackStringValue(key, defaultValue);
+            log.warn("Error getting feature flag '{}' for user '{}': {}, using default: {}", 
+                    key, userId, e.getMessage(), defaultValue);
+            return defaultValue;
         }
     }
     
     public Number getNumberValue(String userId, String key, Number defaultValue) {
         ensureInitialized();
-        
-        if (!isOpenFeatureAvailable()) {
-            return getFallbackNumberValue(key, defaultValue);
+
+        if (devCycleLocalClient == null) {
+            log.debug("🔄 DevCycle client not available, using fallback for '{}': {}", key, defaultValue);
+            return defaultValue;
         }
         
         try {
-            EvaluationContext context = createEvaluationContext(userId);
-            FlagEvaluationDetails<Double> details = openFeatureClient.getDoubleDetails(key, defaultValue.doubleValue(), context);
+            DevCycleUser user = DevCycleUser.builder().userId(userId).build();
+            Double flagValue = devCycleLocalClient.variableValue(user, key, defaultValue.doubleValue());
             
-            Number flagValue = details.getValue();
-            log.debug("🎛️ Feature flag '{}' evaluated to: {} for user: {} (reason: {})", 
-                     key, flagValue, userId, details.getReason());
+            log.debug("🎛️ Feature flag '{}' evaluated to: {} for user: {}", 
+                     key, flagValue, userId);
             
             return flagValue;
             
         } catch (Exception e) {
-            log.warn("Error getting feature flag '{}' for user '{}': {}", key, userId, e.getMessage());
-            return getFallbackNumberValue(key, defaultValue);
+            log.warn("Error getting feature flag '{}' for user '{}': {}, using default: {}", 
+                    key, userId, e.getMessage(), defaultValue);
+            return defaultValue;
         }
     }
     
     public Object getObjectValue(String userId, String key, Object defaultValue) {
         ensureInitialized();
         
-        if (!isOpenFeatureAvailable()) {
-            return getFallbackObjectValue(key, defaultValue);
+        if (devCycleLocalClient == null) {
+            log.debug("🔄 DevCycle client not available, using fallback for '{}': {}", key, defaultValue);
+            return defaultValue;
         }
         
         try {
-            EvaluationContext context = createEvaluationContext(userId);
-            FlagEvaluationDetails<dev.openfeature.sdk.Value> details = openFeatureClient.getObjectDetails(key, dev.openfeature.sdk.Value.objectToValue(defaultValue), context);
+            DevCycleUser user = DevCycleUser.builder().userId(userId).build();
+            Object flagValue = devCycleLocalClient.variableValue(user, key, defaultValue);
             
-            Object flagValue = details.getValue().asObject();
-            log.debug("🎛️ Feature flag '{}' evaluated to: {} for user: {} (reason: {})", 
-                     key, flagValue, userId, details.getReason());
+            log.debug("🎛️ Feature flag '{}' evaluated to: {} for user: {}", 
+                     key, flagValue, userId);
             
             return flagValue;
             
         } catch (Exception e) {
-            log.warn("Error getting feature flag '{}' for user '{}': {}", key, userId, e.getMessage());
-            return getFallbackObjectValue(key, defaultValue);
+            log.warn("Error getting feature flag '{}' for user '{}': {}, using default: {}", 
+                    key, userId, e.getMessage(), defaultValue);
+            return defaultValue;
         }
     }
     
     public Map<String, Object> getAllFeatures(String userId) {
         ensureInitialized();
         
-        if (!isOpenFeatureAvailable()) {
-            log.debug("OpenFeature not available, returning fallback features map");
+        if (devCycleLocalClient == null) {
+            log.debug("🔄 DevCycle client not available, returning fallback flags for user: {}", userId);
             return new HashMap<>(fallbackFlags);
         }
         
         try {
-            // OpenFeature doesn't have a direct getAllFeatures method
-            // We'll return common feature flags that we know about
             Map<String, Object> features = new HashMap<>();
             
-            EvaluationContext context = createEvaluationContext(userId);
+            DevCycleUser user = DevCycleUser.builder().userId(userId).build();
             
-            // Get known feature flags
-            features.put("new-flow", openFeatureClient.getBooleanValue("new-flow", false, context));
-            features.put("premium-features", openFeatureClient.getBooleanValue("premium-features", true, context));
-            features.put("enhanced-product-details", openFeatureClient.getBooleanValue("enhanced-product-details", true, context));
-            features.put("beta-features", openFeatureClient.getBooleanValue("beta-features", false, context));
-            features.put("use-neon", openFeatureClient.getBooleanValue("use-neon", false, context));
+            features.put("new-flow", devCycleLocalClient.variableValue(user, "new-flow", false));
+            features.put("premium-features", devCycleLocalClient.variableValue(user, "premium-features", true));
+            features.put("enhanced-product-details", devCycleLocalClient.variableValue(user, "enhanced-product-details", true));
+            features.put("beta-features", devCycleLocalClient.variableValue(user, "beta-features", false));
+            features.put("use-neon", devCycleLocalClient.variableValue(user, "use-neon", false));
             
             log.debug("All features for user '{}': {}", userId, features);
             return features;
             
         } catch (Exception e) {
-            log.warn("Error getting all features for user '{}': {}", userId, e.getMessage());
+            log.warn("Error getting all features for user '{}': {}, using fallbacks", userId, e.getMessage());
             return new HashMap<>(fallbackFlags);
         }
     }
     
     public boolean isInitialized() {
-        return initialized && isOpenFeatureAvailable();
+        return initialized && (devCycleLocalClient == null || devCycleLocalClient.isInitialized());
     }
     
-    private boolean isOpenFeatureAvailable() {
-        return openFeatureClient != null && 
-               devCycleServerSdkKey != null && 
-               !devCycleServerSdkKey.isEmpty() && 
-               !devCycleServerSdkKey.startsWith("your-");
-    }
-    
-    // Fallback methods when OpenFeature is not available
-    private boolean getFallbackBooleanValue(String key, boolean defaultValue) {
-        Object value = fallbackFlags.get(key);
-        if (value instanceof Boolean) {
-            boolean flagValue = (Boolean) value;
-            log.debug("Fallback feature flag '{}' evaluated to: {}", key, flagValue);
-            return flagValue;
-        }
-        log.debug("Fallback feature flag '{}' not found, returning default value: {}", key, defaultValue);
-        return defaultValue;
-    }
-    
-    private String getFallbackStringValue(String key, String defaultValue) {
-        Object value = fallbackFlags.get(key);
-        if (value instanceof String) {
-            String flagValue = (String) value;
-            log.debug("Fallback feature flag '{}' evaluated to: {}", key, flagValue);
-            return flagValue;
-        }
-        log.debug("Fallback feature flag '{}' not found, returning default value: {}", key, defaultValue);
-        return defaultValue;
-    }
-    
-    private Number getFallbackNumberValue(String key, Number defaultValue) {
-        Object value = fallbackFlags.get(key);
-        if (value instanceof Number) {
-            Number flagValue = (Number) value;
-            log.debug("Fallback feature flag '{}' evaluated to: {}", key, flagValue);
-            return flagValue;
-        }
-        log.debug("Fallback feature flag '{}' not found, returning default value: {}", key, defaultValue);
-        return defaultValue;
-    }
-    
-    private Object getFallbackObjectValue(String key, Object defaultValue) {
-        Object value = fallbackFlags.get(key);
-        if (value != null) {
-            log.debug("Fallback feature flag '{}' evaluated to: {}", key, value);
-            return value;
-        }
-        log.debug("Fallback feature flag '{}' not found, returning default value: {}", key, defaultValue);
-        return defaultValue;
-    }
-    
-    // Admin methods to update feature flags at runtime (for fallback flags)
-    public void updateFeatureFlag(String key, Object value) {
-        ensureInitialized();
-        fallbackFlags.put(key, value);
-        log.info("Fallback feature flag '{}' updated to: {}", key, value);
-    }
-    
-    public void removeFeatureFlag(String key) {
-        ensureInitialized();
-        fallbackFlags.remove(key);
-        log.info("Fallback feature flag '{}' removed", key);
-    }
-    
-    public Map<String, Object> getAllFeatureFlags() {
-        ensureInitialized();
-        return new HashMap<>(fallbackFlags);
-    }
 }

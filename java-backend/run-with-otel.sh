@@ -12,14 +12,14 @@ fi
 # Set default values for application
 export PORT=${PORT:-3002}
 export NODE_ENV=${NODE_ENV:-development}
-export JWT_SECRET=${JWT_SECRET:-your-jwt-secret-key-here-make-it-really-long-and-secure-enough-for-jwt-hmac-sha-algorithms-minimum-256-bits-required}
+export JWT_SECRET=${JWT_SECRET:-your-jwt-secret-key-here-make-it-really-long-and-secure-enough}
 export DATABASE_URL=${DATABASE_URL:-jdbc:sqlite:./database.sqlite}
 export FRONTEND_URL=${FRONTEND_URL:-http://localhost:3000}
 
 # Set default telemetry values
 export USE_LOCAL_OTLP=${USE_LOCAL_OTLP:-false}
 export LOCAL_OTLP_PORT=${LOCAL_OTLP_PORT:-14499}
-export DYNATRACE_ENV_URL=${DYNATRACE_ENV_URL:-}
+export DYNATRACE_ENV_URL=${DYNATRACE_ENV_URL:-https://dynatrace.com}
 export DYNATRACE_API_TOKEN=${DYNATRACE_API_TOKEN:-}
 
 # Determine the correct OTLP endpoint

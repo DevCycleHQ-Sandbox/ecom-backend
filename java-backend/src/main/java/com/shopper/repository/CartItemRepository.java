@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -105,9 +106,42 @@ public class CartItemRepository extends DualDatabaseRepository<CartItem, UUID> {
         );
     }
     
-    // Standard JpaRepository methods using dual database strategy
+    // Standard JpaRepository methods using dual database strategy with ID synchronization
     public CartItem save(CartItem cartItem) {
-        return saveDual(cartItem.getUserId().toString(), cartItem);
+        return saveDualWithIdSync(cartItem.getUserId().toString(), cartItem);
+    }
+    
+    // Helper method to save with proper ID synchronization
+    private CartItem saveDualWithIdSync(String userId, CartItem cartItem) {
+        // First save to primary database to get the generated ID
+        CartItem savedPrimary = primaryRepository.save(cartItem);
+        log.debug("CartItem saved to primary database with ID: {}", savedPrimary.getId());
+        
+        // Then save to secondary database with the same ID if available
+        if (isSecondaryAvailable()) {
+            try {
+                // Ensure timestamps are set
+                LocalDateTime now = LocalDateTime.now();
+                LocalDateTime createdAt = savedPrimary.getCreatedAt() != null ? savedPrimary.getCreatedAt() : now;
+                LocalDateTime updatedAt = savedPrimary.getUpdatedAt() != null ? savedPrimary.getUpdatedAt() : now;
+                
+                // Use native SQL to insert with the exact same ID
+                secondaryRepository.saveWithSpecificId(
+                    savedPrimary.getId().toString(),
+                    savedPrimary.getUserId().toString(),
+                    savedPrimary.getProductId().toString(),
+                    savedPrimary.getQuantity(),
+                    createdAt,
+                    updatedAt
+                );
+                log.debug("CartItem saved to secondary database with ID: {}", savedPrimary.getId());
+            } catch (Exception e) {
+                log.error("Failed to save cart item to secondary database for user {}: {}", userId, e.getMessage());
+                // Don't fail the operation, just log the error
+            }
+        }
+        
+        return savedPrimary;
     }
     
     public Optional<CartItem> findById(UUID id) {
@@ -134,5 +168,9 @@ public class CartItemRepository extends DualDatabaseRepository<CartItem, UUID> {
             () -> primaryRepository.count(),
             () -> secondaryRepository != null ? secondaryRepository.count() : 0L
         );
+    }
+    
+    public void deleteAll() {
+        deleteAllDual();
     }
 }

@@ -1,5 +1,8 @@
 package com.shopper.config;
 
+import io.opentelemetry.api.GlobalOpenTelemetry;
+import io.opentelemetry.api.OpenTelemetry;
+import io.opentelemetry.api.trace.Tracer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -43,36 +46,46 @@ public class OpenTelemetryConfig {
         if (useLocalOtlp) {
             String endpoint = String.format("http://localhost:%d/otlp", localOtlpPort);
             log.info("🔗 OpenTelemetry configured for local OTLP endpoint: {}", endpoint);
-            
+
             // Set system properties for auto-instrumentation
             System.setProperty("otel.exporter.otlp.endpoint", endpoint);
             System.setProperty("otel.service.name", serviceName);
             System.setProperty("otel.service.version", serviceVersion);
-            System.setProperty("otel.resource.attributes", 
-                String.format("service.name=%s,service.version=%s,deployment.environment=%s", 
-                    serviceName, serviceVersion, environment));
+            System.setProperty("otel.resource.attributes",
+                    String.format("service.name=%s,service.version=%s,deployment.environment=%s",
+                            serviceName, serviceVersion, environment));
             System.setProperty("otel.exporter.otlp.metrics.temporality.preference", "delta");
-            
-        } else if (!dynatraceEnvUrl.isEmpty() && !dynatraceApiToken.isEmpty()) {
+
+        } else if (dynatraceEnvUrl != null && !dynatraceEnvUrl.isEmpty() && dynatraceApiToken != null && !dynatraceApiToken.isEmpty()) {
             String endpoint = dynatraceEnvUrl + "/api/v2/otlp";
             log.info("🔗 OpenTelemetry configured for Dynatrace endpoint: {}", endpoint);
-            
+
             // Set system properties for auto-instrumentation
             System.setProperty("otel.exporter.otlp.endpoint", endpoint);
             System.setProperty("otel.exporter.otlp.headers", "Authorization=Api-Token " + dynatraceApiToken);
             System.setProperty("otel.service.name", serviceName);
             System.setProperty("otel.service.version", serviceVersion);
-            System.setProperty("otel.resource.attributes", 
-                String.format("service.name=%s,service.version=%s,deployment.environment=%s", 
-                    serviceName, serviceVersion, environment));
+            System.setProperty("otel.resource.attributes",
+                    String.format("service.name=%s,service.version=%s,deployment.environment=%s",
+                            serviceName, serviceVersion, environment));
             System.setProperty("otel.exporter.otlp.metrics.temporality.preference", "delta");
-            
+
         } else {
             log.info("⚠️  Neither local OTLP nor Dynatrace endpoints are configured. OpenTelemetry auto-instrumentation will use default settings.");
         }
-        
-        log.info("📊 OpenTelemetry Auto-Instrumentation enabled for service: {} v{} ({})", 
-            serviceName, serviceVersion, environment);
+
+        log.info("📊 OpenTelemetry Auto-Instrumentation enabled for service: {} v{} ({})",
+                serviceName, serviceVersion, environment);
+    }
+
+    @Bean
+    public OpenTelemetry openTelemetry() {
+        return GlobalOpenTelemetry.get();
+    }
+
+    @Bean
+    public Tracer tracer(OpenTelemetry openTelemetry) {
+        return openTelemetry.getTracer(serviceName);
     }
 
     @Bean

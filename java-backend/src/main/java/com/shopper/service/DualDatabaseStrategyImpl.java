@@ -18,7 +18,7 @@ public class DualDatabaseStrategyImpl implements DualDatabaseStrategy {
     
     private final FeatureFlagService featureFlagService;
     
-    @Value("${secondary.datasource.enabled:false}")
+    @Value("${secondary.datasource.enabled:true}")
     private boolean secondaryDatabaseEnabled;
     
     private static final String USE_NEON_FLAG = "use-neon";
@@ -58,7 +58,7 @@ public class DualDatabaseStrategyImpl implements DualDatabaseStrategy {
         Exception primaryException = null;
         Exception secondaryException = null;
         
-        // Always execute primary operation
+        // Always execute primary operation first to get the generated ID
         try {
             primaryResult = primaryOperation.get();
             log.debug("Primary database write completed successfully for user: {}", userId);
@@ -67,35 +67,27 @@ public class DualDatabaseStrategyImpl implements DualDatabaseStrategy {
             log.error("Primary database write failed for user {}: {}", userId, e.getMessage());
         }
         
-        // Execute secondary operation if enabled
-        if (isSecondaryDatabaseEnabled()) {
+        // Execute secondary operation if enabled and primary succeeded
+        if (isSecondaryDatabaseEnabled() && primaryResult != null) {
             try {
                 secondaryResult = secondaryOperation.get();
                 log.debug("Secondary database write completed successfully for user: {}", userId);
             } catch (Exception e) {
                 secondaryException = e;
                 log.error("Secondary database write failed for user {}: {}", userId, e.getMessage());
+                // Don't fail the entire operation if secondary fails, just log it
             }
         }
         
-        // Determine which result to return based on feature flag
-        boolean useNeon = shouldUseSecondaryForRead(userId);
-        
-        if (useNeon && secondaryResult != null) {
-            if (secondaryException != null) {
-                log.warn("Secondary database had issues but returning secondary result for user: {}", userId);
-            }
-            return secondaryResult;
-        } else {
-            if (primaryResult != null) {
-                return primaryResult;
-            } else if (primaryException != null) {
-                throw new RuntimeException("Primary database operation failed", primaryException);
-            }
+        // Always return the primary result since it's the source of truth for IDs
+        if (primaryResult != null) {
+            return primaryResult;
+        } else if (primaryException != null) {
+            throw new RuntimeException("Primary database operation failed", primaryException);
         }
         
         // Fallback - this shouldn't happen
-        throw new RuntimeException("Both database operations failed");
+        throw new RuntimeException("Primary database operation failed");
     }
     
     @Override

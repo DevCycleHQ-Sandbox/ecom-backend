@@ -15,7 +15,6 @@ import java.util.UUID;
 public class AddToCartDto {
     
     @NotNull(message = "Product ID is required")
-    @JsonAlias("product_id")
     private UUID productId;
     
     @NotNull(message = "Quantity is required")

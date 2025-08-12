@@ -1,11 +1,16 @@
 package com.shopper.config;
 
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
-import com.shopper.repository.CartItemRepository;
+import com.shopper.repository.primary.PrimaryCartItemRepository;
+import com.shopper.repository.primary.PrimaryProductRepository;
+import com.shopper.repository.primary.PrimaryUserRepository;
 import com.shopper.repository.secondary.SecondaryCartItemRepository;
-import org.springframework.beans.factory.annotation.Value;
+import com.shopper.repository.secondary.SecondaryProductRepository;
+import com.shopper.repository.secondary.SecondaryUserRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -16,228 +21,115 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
-import java.util.Properties;
+import java.util.HashMap;
+import java.util.Map;
 
 @Configuration
+@EnableTransactionManagement
+@Slf4j
 public class DatabaseConfig {
 
-    @Value("${spring.datasource.url}")
-    private String primaryUrl;
-
-    @Value("${spring.datasource.driver-class-name}")
-    private String primaryDriverClassName;
-
-    @Value("${spring.datasource.hikari.maximum-pool-size:10}")
-    private int primaryMaxPoolSize;
-
-    @Value("${spring.datasource.hikari.minimum-idle:5}")
-    private int primaryMinIdle;
-
-    @Value("${spring.datasource.hikari.connection-timeout:20000}")
-    private long primaryConnectionTimeout;
-
-    @Value("${spring.datasource.hikari.idle-timeout:300000}")
-    private long primaryIdleTimeout;
-
-    @Value("${spring.datasource.hikari.max-lifetime:1200000}")
-    private long primaryMaxLifetime;
-
-    @Value("${secondary.datasource.url:}")
-    private String secondaryUrl;
-
-    @Value("${secondary.datasource.username:}")
-    private String secondaryUsername;
-
-    @Value("${secondary.datasource.password:}")
-    private String secondaryPassword;
-
-    @Value("${secondary.datasource.driver-class-name:org.postgresql.Driver}")
-    private String secondaryDriverClassName;
-
-    @Value("${secondary.datasource.hikari.maximum-pool-size:5}")
-    private int secondaryMaxPoolSize;
-
-    @Value("${secondary.datasource.hikari.minimum-idle:2}")
-    private int secondaryMinIdle;
-
-    @Value("${secondary.datasource.hikari.connection-timeout:30000}")
-    private long secondaryConnectionTimeout;
-
-    @Value("${secondary.datasource.hikari.idle-timeout:600000}")
-    private long secondaryIdleTimeout;
-
-    @Value("${secondary.datasource.hikari.max-lifetime:1800000}")
-    private long secondaryMaxLifetime;
-
-    @Value("${secondary.datasource.hikari.leak-detection-threshold:60000}")
-    private long secondaryLeakDetectionThreshold;
-
-    @Bean
-    @Primary
-    public DataSource primaryDataSource() {
-        HikariConfig config = new HikariConfig();
-        config.setJdbcUrl(primaryUrl);
-        config.setDriverClassName(primaryDriverClassName);
-        config.setMaximumPoolSize(primaryMaxPoolSize);
-        config.setMinimumIdle(primaryMinIdle);
-        config.setConnectionTimeout(primaryConnectionTimeout);
-        config.setIdleTimeout(primaryIdleTimeout);
-        config.setMaxLifetime(primaryMaxLifetime);
-        config.setPoolName("PrimaryHikariPool");
-        
-        return new HikariDataSource(config);
-    }
-
-    @Bean
-    @ConditionalOnProperty(name = "secondary.datasource.enabled", havingValue = "true")
-    public DataSource secondaryDataSource() {
-        HikariConfig config = new HikariConfig();
-        
-        // Parse Neon URL format: postgresql://user:pass@host:port/db?params
-        String jdbcUrl = secondaryUrl;
-        String username = secondaryUsername;
-        String password = secondaryPassword;
-        
-        if (jdbcUrl.startsWith("postgresql://")) {
-            // Extract credentials from URL if present
-            String url = jdbcUrl.substring("postgresql://".length());
-            if (url.contains("@")) {
-                String[] parts = url.split("@", 2);
-                String credentials = parts[0];
-                String hostAndRest = parts[1];
-                
-                if (credentials.contains(":")) {
-                    String[] credParts = credentials.split(":", 2);
-                    username = credParts[0];
-                    password = credParts[1];
-                }
-                
-                // Reconstruct URL without credentials
-                jdbcUrl = "jdbc:postgresql://" + hostAndRest;
-            } else {
-                jdbcUrl = "jdbc:" + jdbcUrl;
-            }
-        }
-        
-        config.setJdbcUrl(jdbcUrl);
-        config.setUsername(username);
-        config.setPassword(password);
-        config.setDriverClassName(secondaryDriverClassName);
-        config.setMaximumPoolSize(secondaryMaxPoolSize);
-        config.setMinimumIdle(secondaryMinIdle);
-        config.setConnectionTimeout(secondaryConnectionTimeout);
-        config.setIdleTimeout(secondaryIdleTimeout);
-        config.setMaxLifetime(secondaryMaxLifetime);
-        config.setLeakDetectionThreshold(secondaryLeakDetectionThreshold);
-        config.setPoolName("NeonHikariPool");
-        
-        // Neon-specific optimizations
-        config.addDataSourceProperty("reWriteBatchedInserts", "true");
-        config.addDataSourceProperty("prepareThreshold", "1");
-        config.addDataSourceProperty("cachePrepStmts", "true");
-        config.addDataSourceProperty("prepStmtCacheSize", "250");
-        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-        config.addDataSourceProperty("useServerPrepStmts", "true");
-        config.addDataSourceProperty("useLocalSessionState", "true");
-        config.addDataSourceProperty("rewriteBatchedStatements", "true");
-        
-        return new HikariDataSource(config);
-    }
-
-    @Bean
-    @Primary
-    public LocalContainerEntityManagerFactoryBean primaryEntityManagerFactory() {
-        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-        em.setDataSource(primaryDataSource());
-        em.setPackagesToScan("com.shopper.entity");
-        
-        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        em.setJpaVendorAdapter(vendorAdapter);
-        
-        Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto", "update");
-        properties.setProperty("hibernate.dialect", "org.hibernate.community.dialect.SQLiteDialect");
-        properties.setProperty("hibernate.show_sql", "true");
-        properties.setProperty("hibernate.format_sql", "true");
-        properties.setProperty("logging.level.org.hibernate.SQL", "DEBUG");
-        properties.setProperty("logging.level.org.hibernate.type.descriptor.sql.BasicBinder", "TRACE");
-        
-        // Fix UUID handling for SQLite
-        properties.setProperty("hibernate.type.preferred_uuid_jdbc_type", "CHAR");
-        properties.setProperty("hibernate.id.uuid_gen_strategy_class", "uuid2");
-        
-        em.setJpaProperties(properties);
-        return em;
-    }
-
-    @Bean
-    @Primary
-    public PlatformTransactionManager primaryTransactionManager() {
-        JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(primaryEntityManagerFactory().getObject());
-        return transactionManager;
-    }
-
-    @Bean
-    @ConditionalOnProperty(name = "secondary.datasource.enabled", havingValue = "true")
-    public LocalContainerEntityManagerFactoryBean secondaryEntityManagerFactory() {
-        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-        em.setDataSource(secondaryDataSource());
-        em.setPackagesToScan("com.shopper.entity");
-        
-        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        em.setJpaVendorAdapter(vendorAdapter);
-        
-        Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto", "update");
-        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
-        properties.setProperty("hibernate.show_sql", "false");
-        
-        em.setJpaProperties(properties);
-        return em;
-    }
-
-    @Bean
-    @ConditionalOnProperty(name = "secondary.datasource.enabled", havingValue = "true")
-    public PlatformTransactionManager secondaryTransactionManager() {
-        JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(secondaryEntityManagerFactory().getObject());
-        return transactionManager;
-    }
-    
-    // Primary database repository configuration
+    // Primary Database (SQLite) Configuration
     @Configuration
     @EnableJpaRepositories(
-        basePackages = {"com.shopper.repository.primary"},
-        entityManagerFactoryRef = "primaryEntityManagerFactory",
-        transactionManagerRef = "primaryTransactionManager"
+            basePackages = "com.shopper.repository.primary",
+            entityManagerFactoryRef = "primaryEntityManagerFactory",
+            transactionManagerRef = "primaryTransactionManager"
     )
     static class PrimaryRepositoryConfig {
+
+        @Bean
+        @Primary
+        public DataSource primaryDataSource() {
+            return DataSourceBuilder.create()
+                    .url("jdbc:sqlite:database.sqlite")
+                    .driverClassName("org.sqlite.JDBC")
+                    .build();
+        }
+
+        @Bean
+        @Primary
+        public LocalContainerEntityManagerFactoryBean primaryEntityManagerFactory(
+                @Qualifier("primaryDataSource") DataSource dataSource) {
+            
+            LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+            em.setDataSource(dataSource);
+            em.setPackagesToScan("com.shopper.entity");
+            em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+
+            Map<String, Object> properties = new HashMap<>();
+            properties.put("hibernate.hbm2ddl.auto", "update");
+            properties.put("hibernate.dialect", "org.hibernate.community.dialect.SQLiteDialect");
+            em.setJpaPropertyMap(properties);
+
+            return em;
+        }
+
+        @Bean
+        @Primary
+        public PlatformTransactionManager primaryTransactionManager(
+                @Qualifier("primaryEntityManagerFactory") LocalContainerEntityManagerFactoryBean primaryEntityManagerFactory) {
+            return new JpaTransactionManager(primaryEntityManagerFactory.getObject());
+        }
     }
-    
-    // Secondary database repository configuration
-    @ConditionalOnProperty(name = "secondary.datasource.enabled", havingValue = "true")
+
+    // Secondary Database (Neon PostgreSQL) Configuration
     @Configuration
+    @ConditionalOnProperty(name = "secondary.datasource.enabled", havingValue = "true")
     @EnableJpaRepositories(
-        basePackages = "com.shopper.repository.secondary",
-        entityManagerFactoryRef = "secondaryEntityManagerFactory",
-        transactionManagerRef = "secondaryTransactionManager"
+            basePackages = "com.shopper.repository.secondary",
+            entityManagerFactoryRef = "secondaryEntityManagerFactory",
+            transactionManagerRef = "secondaryTransactionManager"
     )
     static class SecondaryRepositoryConfig {
+
+        @Bean
+        @ConfigurationProperties(prefix = "secondary.datasource")
+        public DataSource secondaryDataSource() {
+            return DataSourceBuilder.create().build();
+        }
+
+        @Bean
+        public LocalContainerEntityManagerFactoryBean secondaryEntityManagerFactory(
+                @Qualifier("secondaryDataSource") DataSource dataSource) {
+            
+            LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+            em.setDataSource(dataSource);
+            em.setPackagesToScan("com.shopper.entity");
+            em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+
+            Map<String, Object> properties = new HashMap<>();
+            properties.put("hibernate.hbm2ddl.auto", "update");
+            properties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
+            em.setJpaPropertyMap(properties);
+
+            return em;
+        }
+
+        @Bean
+        public PlatformTransactionManager secondaryTransactionManager(
+                @Qualifier("secondaryEntityManagerFactory") LocalContainerEntityManagerFactoryBean secondaryEntityManagerFactory) {
+            return new JpaTransactionManager(secondaryEntityManagerFactory.getObject());
+        }
     }
-    
-    // Regular repository configuration (for repositories that don't use dual database)
+
+    // Regular repositories (non-primary, non-secondary)
     @Configuration
     @EnableJpaRepositories(
-        basePackages = "com.shopper.repository",
-        entityManagerFactoryRef = "primaryEntityManagerFactory",
-        transactionManagerRef = "primaryTransactionManager",
-        excludeFilters = {
-            @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {CartItemRepository.class}),
-            @ComponentScan.Filter(type = FilterType.REGEX, pattern = "com\\.shopper\\.repository\\.(primary|secondary)\\..*")
-        }
+            basePackages = "com.shopper.repository",
+            excludeFilters = {
+                    @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = PrimaryProductRepository.class),
+                    @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = PrimaryUserRepository.class),
+                    @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = PrimaryCartItemRepository.class),
+                    @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = SecondaryProductRepository.class),
+                    @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = SecondaryUserRepository.class),
+                    @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = SecondaryCartItemRepository.class)
+            },
+            entityManagerFactoryRef = "primaryEntityManagerFactory",
+            transactionManagerRef = "primaryTransactionManager"
     )
     static class RegularRepositoryConfig {
     }

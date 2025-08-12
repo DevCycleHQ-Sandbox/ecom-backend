@@ -56,15 +56,23 @@ public class AuthController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         
         if (authentication != null && authentication.isAuthenticated()) {
-            User user = (User) authentication.getPrincipal();
+            Object principal = authentication.getPrincipal();
             
-            return ResponseEntity.ok(new VerifyResponse(
-                    "Token is valid",
-                    new UserInfo(user.getId(), user.getUsername(), user.getEmail(), user.getRole().getValue())
-            ));
+            // Handle both UserDetails and User entity cases
+            User user = null;
+            if (principal instanceof User) {
+                user = (User) principal;
+            } else if (principal instanceof org.springframework.security.core.userdetails.UserDetails) {
+                String username = ((org.springframework.security.core.userdetails.UserDetails) principal).getUsername();
+                user = userService.findByUsername(username);
+            }
+            
+            if (user != null) {
+                return ResponseEntity.ok(new UserInfo(user.getId(), user.getUsername(), user.getEmail(), user.getRole().getValue()));
+            }
         }
         
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.status(401).build();
     }
     
     // Helper classes for response
@@ -98,5 +106,17 @@ public class AuthController {
         public String getUsername() { return username; }
         public String getEmail() { return email; }
         public String getRole() { return role; }
+    }
+    
+    @PostMapping("/init-admin")
+    @Operation(summary = "Initialize admin user (for setup purposes)")
+    public ResponseEntity<?> initializeAdmin() {
+        try {
+            userService.initializeAdminUser();
+            return ResponseEntity.ok().body("{\"message\": \"Admin user initialized successfully\"}");
+        } catch (Exception e) {
+            log.error("Admin initialization failed: {}", e.getMessage());
+            return ResponseEntity.badRequest().body("{\"error\": \"" + e.getMessage() + "\"}");
+        }
     }
 }

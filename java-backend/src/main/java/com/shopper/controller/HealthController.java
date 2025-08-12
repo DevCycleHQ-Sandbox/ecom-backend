@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/health")
+@RequestMapping("/health")
 @RequiredArgsConstructor
 @Slf4j
 public class HealthController {
