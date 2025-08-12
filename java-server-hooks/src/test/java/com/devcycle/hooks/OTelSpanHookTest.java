@@ -51,14 +51,15 @@ class OTelSpanHookTest {
         
         when(hookContext.getFlagKey()).thenReturn("test-flag");
         when(hookContext.getType()).thenReturn(FlagValueType.BOOLEAN);
-        when(hookContext.getClientMetadata()).thenReturn(clientMetadata);
-        
-        when(clientMetadata.getName()).thenReturn("test-client");
     }
 
     @Test
     void testBeforeHook() {
         Map<String, Object> hints = new HashMap<>();
+        
+        // Setup client metadata for this test
+        when(hookContext.getClientMetadata()).thenReturn(clientMetadata);
+        when(clientMetadata.getName()).thenReturn("test-client");
         
         hook.before(hookContext, hints);
         
@@ -128,8 +129,8 @@ class OTelSpanHookTest {
     void testWithProviderMetadata() {
         Map<String, Object> hints = new HashMap<>();
         
-        // Mock provider metadata
-        var mockProviderMetadata = mock(dev.openfeature.sdk.ProviderMetadata.class);
+        // Mock provider metadata using generic interface
+        var mockProviderMetadata = mock(dev.openfeature.sdk.Metadata.class);
         when(mockProviderMetadata.getName()).thenReturn("test-provider");
         when(hookContext.getProviderMetadata()).thenReturn(mockProviderMetadata);
         

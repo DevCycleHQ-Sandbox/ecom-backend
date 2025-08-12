@@ -53,17 +53,8 @@ import io.opentelemetry.api.OpenTelemetry;
 OpenTelemetry openTelemetry = // ... your OpenTelemetry instance
 Tracer tracer = openTelemetry.getTracer("your-service-name");
 
-// Create application metadata
-OTelSpanHook.AppMetadata appMetadata = OTelSpanHook.SimpleAppMetadata.builder()
-    .name("my-service")
-    .version("1.0.0")
-    .environment("production")
-    .project("my-project")
-    .environmentId("prod-env-123")
-    .build();
-
 // Create and register the hook
-OTelSpanHook hook = new OTelSpanHook(tracer, appMetadata);
+OTelSpanHook hook = new OTelSpanHook(tracer);
 OpenFeatureAPI.getInstance().addHook(hook);
 ```
 
@@ -82,7 +73,7 @@ OpenFeatureAPI api = OpenFeatureAPI.getInstance();
 api.setProvider(devCycleClient.getOpenFeatureProvider());
 
 // Add the OTel span hook
-OTelSpanHook hook = new OTelSpanHook(tracer, appMetadata);
+OTelSpanHook hook = new OTelSpanHook(tracer);
 api.addHook(hook);
 
 // Now all feature flag evaluations will create OTel spans
@@ -92,47 +83,16 @@ boolean flagValue = client.getBooleanValue("my-flag", false);
 
 ## Configuration
 
-### Application Metadata
+### Simple Configuration
 
-The `AppMetadata` interface allows you to provide application-specific information that will be included in spans:
-
-```java
-public interface AppMetadata {
-    String getName();        // Service/application name
-    String getVersion();     // Application version
-    String getEnvironment(); // Environment (dev, staging, prod)
-    String getProject();     // Project identifier
-    String getEnvironmentId(); // Environment ID
-}
-```
-
-### Custom Metadata Implementation
-
-You can implement your own `AppMetadata`:
+The `OTelSpanHook` requires only a `Tracer` instance from your OpenTelemetry setup:
 
 ```java
-public class MyAppMetadata implements OTelSpanHook.AppMetadata {
-    @Override
-    public String getName() {
-        return System.getProperty("app.name", "my-service");
-    }
-    
-    @Override
-    public String getVersion() {
-        return getClass().getPackage().getImplementationVersion();
-    }
-    
-    // ... implement other methods
-}
+// Create the hook with your tracer
+OTelSpanHook hook = new OTelSpanHook(tracer);
 ```
 
-### Minimal Configuration
-
-If you don't need application metadata, you can pass `null`:
-
-```java
-OTelSpanHook hook = new OTelSpanHook(tracer, null);
-```
+This will automatically capture feature flag evaluation data and create spans with relevant attributes.
 
 ## Span Attributes
 
@@ -146,12 +106,7 @@ The hook creates spans with the following attributes:
 - `feature_flag.variant` - The variant name (if applicable)
 - `feature_flag.flagset` - The flagset (same as key)
 
-### Application Metadata Attributes
-- `service.name` - Application/service name
-- `service.version` - Application version
-- `deployment.environment` - Deployment environment
-- `feature_flag.project` - Project identifier
-- `feature_flag.environment` - Environment ID
+
 
 ### OpenFeature Metadata
 - `openfeature.client.name` - OpenFeature client name
@@ -176,23 +131,11 @@ For example: `feature_flag_evaluation.my-awesome-flag`
 public class OpenFeatureConfig {
     
     @Bean
-    public OTelSpanHook otelSpanHook(
-            @Value("${spring.application.name}") String serviceName,
-            @Value("${app.version:1.0.0}") String version,
-            @Value("${spring.profiles.active:development}") String environment
-    ) {
+    public OTelSpanHook otelSpanHook(@Value("${spring.application.name}") String serviceName) {
         OpenTelemetry openTelemetry = GlobalOpenTelemetry.get();
         Tracer tracer = openTelemetry.getTracer(serviceName);
         
-        OTelSpanHook.AppMetadata metadata = OTelSpanHook.SimpleAppMetadata.builder()
-            .name(serviceName)
-            .version(version)
-            .environment(environment)
-            .project("my-project")
-            .environmentId("env-123")
-            .build();
-            
-        return new OTelSpanHook(tracer, metadata);
+        return new OTelSpanHook(tracer);
     }
     
     @PostConstruct

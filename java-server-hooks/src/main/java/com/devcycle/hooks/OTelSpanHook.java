@@ -8,8 +8,7 @@ import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.SpanKind;
 import io.opentelemetry.api.trace.Tracer;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
 import java.util.Optional;
@@ -21,9 +20,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * providing observability into feature flag usage and performance.
  */
 @RequiredArgsConstructor
+@Slf4j
 public class OTelSpanHook implements Hook<Object> {
-
-    private static final Logger log = LoggerFactory.getLogger(OTelSpanHook.class);
 
     private final Tracer tracer;
     private final Map<HookContext<Object>, Span> spans = new ConcurrentHashMap<>();
