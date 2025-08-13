@@ -76,16 +76,11 @@ app:
     client-sdk-key: ${DEVCYCLE_CLIENT_SDK_KEY:your-devcycle-client-sdk-key}
 
   telemetry:
-    use-local-otlp: ${USE_LOCAL_OTLP:false}
-    local-otlp-port: ${LOCAL_OTLP_PORT:14499}
     project: ${TELEMETRY_PROJECT:new-parth-project}
     environment-id: ${TELEMETRY_ENVIRONMENT_ID:66ccc3628c118d9a6da306e0}
-    dynatrace:
-      env-url: ${DYNATRACE_ENV_URL:}
-      api-token: ${DYNATRACE_API_TOKEN:}
 
-# OpenTelemetry configuration is handled by the Java agent
-# Environment variables are set in run-with-otel.sh script
+# OneAgent SDK configuration is handled automatically by the OneAgent
+# Ensure Dynatrace OneAgent is installed and running on the host
 
 logging:
   level:

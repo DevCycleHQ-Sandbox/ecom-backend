@@ -20,9 +20,9 @@
 /Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/entity/User.java
 /Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/controller/ProductController.java
 /Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/controller/OrderController.java
+/Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/config/DynatraceOneAgentLogHook.java
 /Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/config/AuthenticationConfig.java
 /Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/service/ProductService.java
-/Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/config/DynatraceOtelLogHook.java
 /Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/dto/CreateOrderDto.java
 /Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/service/AdminService.java
 /Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/config/SecurityConfig.java
@@ -33,7 +33,6 @@
 /Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/dto/AuthResponseDto.java
 /Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/repository/secondary/SecondaryProductRepository.java
 /Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/dto/UpdateCartItemDto.java
-/Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/config/OpenTelemetryConfig.java
 /Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/entity/CartItem.java
 /Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/service/DualDatabaseStrategyImpl.java
 /Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/dto/LoginDto.java
@@ -41,6 +40,7 @@
 /Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/security/JwtAuthenticationFilter.java
 /Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/interceptor/LoggingInterceptor.java
 /Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/config/BeanConfig.java
+/Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/config/OneAgentConfig.java
 /Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/repository/ProductRepository.java
 /Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/controller/HealthController.java
 /Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/dto/UpdateProductDto.java
