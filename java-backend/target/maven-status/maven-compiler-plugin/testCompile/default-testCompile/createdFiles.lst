@@ -1,7 +1,0 @@
-com/shopper/BaseIntegrationTest.class
-com/shopper/integration/DualDatabaseSyncTest.class
-com/shopper/integration/AuthenticationIntegrationTest.class
-com/shopper/service/DualDatabaseStrategyTest.class
-com/shopper/integration/FeatureFlagIntegrationTest.class
-com/shopper/service/FeatureFlagServiceTest.class
-com/shopper/SimpleAuthTest.class
