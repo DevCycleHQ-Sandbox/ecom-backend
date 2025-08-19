@@ -32,6 +32,7 @@ public class DynatraceOneAgentLogHook implements EvalHook<Object> {
                     .startSpan();
 
             if (span != null) {
+                span.setAttribute("feature_flag.provider.name", "devcycle");
                 span.setAttribute("feature_flag.key", ctx.getKey());
                 span.setAttribute("feature_flag.value_type", ctx.getDefaultValue().getClass().getSimpleName());
 
@@ -73,14 +74,14 @@ public class DynatraceOneAgentLogHook implements EvalHook<Object> {
 
                 if (variable.isPresent()) {
                     Variable<Object> var = variable.get();
-                    span.setAttribute("feature_flag.value", String.valueOf(var.getValue()));
+                    span.setAttribute("feature_flag.result.value", String.valueOf(var.getValue()));
 
                     if (var.getEval() != null && var.getEval().getReason() != null) {
-                        span.setAttribute("feature_flag.reason", var.getEval().getReason());
+                        span.setAttribute("feature_flag.result.reason", var.getEval().getReason());
                     }
 
                     if (variableMetadata != null && variableMetadata.featureId != null) {
-                        span.setAttribute("feature_flag.flagset", variableMetadata.featureId);
+                        span.setAttribute("feature_flag.set.id", variableMetadata.featureId);
                     }
 
                     log.debug("Feature flag span completed: {} = {}", var.getKey(), var.getValue());
