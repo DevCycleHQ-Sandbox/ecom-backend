@@ -1,0 +1,154 @@
+-------------------------------------------------------------------------------
+Test set: com.shopper.service.DualDatabaseStrategyTest
+-------------------------------------------------------------------------------
+Tests run: 18, Failures: 0, Errors: 13, Skipped: 0, Time elapsed: 0.097 s <<< FAILURE! -- in com.shopper.service.DualDatabaseStrategyTest
+com.shopper.service.DualDatabaseStrategyTest.testUsePrimaryWhenFeatureFlagFalse -- Time elapsed: 0.028 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "com.dynatrace.oneagent.sdk.api.OneAgentSDK.createDatabaseInfo(String, String, com.dynatrace.oneagent.sdk.api.enums.ChannelType, String)" because "this.oneAgentSDK" is null
+	at com.shopper.service.DualDatabaseStrategyImpl.createDatabaseInfo(DualDatabaseStrategyImpl.java:156)
+	at com.shopper.service.DualDatabaseStrategyImpl.traceDatabaseOperation(DualDatabaseStrategyImpl.java:128)
+	at com.shopper.service.DualDatabaseStrategyImpl.executeRead(DualDatabaseStrategyImpl.java:54)
+	at com.shopper.service.DualDatabaseStrategyTest.testUsePrimaryWhenFeatureFlagFalse(DualDatabaseStrategyTest.java:67)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+com.shopper.service.DualDatabaseStrategyTest.testDifferentUserIds -- Time elapsed: 0.003 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "com.dynatrace.oneagent.sdk.api.OneAgentSDK.createDatabaseInfo(String, String, com.dynatrace.oneagent.sdk.api.enums.ChannelType, String)" because "this.oneAgentSDK" is null
+	at com.shopper.service.DualDatabaseStrategyImpl.createDatabaseInfo(DualDatabaseStrategyImpl.java:156)
+	at com.shopper.service.DualDatabaseStrategyImpl.traceDatabaseOperation(DualDatabaseStrategyImpl.java:128)
+	at com.shopper.service.DualDatabaseStrategyImpl.executeRead(DualDatabaseStrategyImpl.java:50)
+	at com.shopper.service.DualDatabaseStrategyTest.testDifferentUserIds(DualDatabaseStrategyTest.java:312)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+com.shopper.service.DualDatabaseStrategyTest.testFallbackToPrimaryOnSecondaryFailure -- Time elapsed: 0.001 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "com.dynatrace.oneagent.sdk.api.OneAgentSDK.createDatabaseInfo(String, String, com.dynatrace.oneagent.sdk.api.enums.ChannelType, String)" because "this.oneAgentSDK" is null
+	at com.shopper.service.DualDatabaseStrategyImpl.createDatabaseInfo(DualDatabaseStrategyImpl.java:156)
+	at com.shopper.service.DualDatabaseStrategyImpl.traceDatabaseOperation(DualDatabaseStrategyImpl.java:128)
+	at com.shopper.service.DualDatabaseStrategyImpl.executeRead(DualDatabaseStrategyImpl.java:50)
+	at com.shopper.service.DualDatabaseStrategyTest.testFallbackToPrimaryOnSecondaryFailure(DualDatabaseStrategyTest.java:99)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+com.shopper.service.DualDatabaseStrategyTest.testHandleSecondaryWriteFailure -- Time elapsed: 0.002 s <<< ERROR!
+java.lang.RuntimeException: Primary database operation failed
+	at com.shopper.service.DualDatabaseStrategyImpl.executeWriteWithUser(DualDatabaseStrategyImpl.java:95)
+	at com.shopper.service.DualDatabaseStrategyTest.testHandleSecondaryWriteFailure(DualDatabaseStrategyTest.java:195)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+Caused by: java.lang.NullPointerException: Cannot invoke "com.dynatrace.oneagent.sdk.api.OneAgentSDK.createDatabaseInfo(String, String, com.dynatrace.oneagent.sdk.api.enums.ChannelType, String)" because "this.oneAgentSDK" is null
+	at com.shopper.service.DualDatabaseStrategyImpl.createDatabaseInfo(DualDatabaseStrategyImpl.java:156)
+	at com.shopper.service.DualDatabaseStrategyImpl.traceDatabaseOperation(DualDatabaseStrategyImpl.java:128)
+	at com.shopper.service.DualDatabaseStrategyImpl.executeWriteWithUser(DualDatabaseStrategyImpl.java:72)
+	... 4 more
+
+com.shopper.service.DualDatabaseStrategyTest.testHandlePrimaryWriteFailure -- Time elapsed: 0.001 s <<< ERROR!
+java.lang.RuntimeException: Primary database operation failed
+	at com.shopper.service.DualDatabaseStrategyImpl.executeWriteWithUser(DualDatabaseStrategyImpl.java:95)
+	at com.shopper.service.DualDatabaseStrategyTest.testHandlePrimaryWriteFailure(DualDatabaseStrategyTest.java:161)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+Caused by: java.lang.NullPointerException: Cannot invoke "com.dynatrace.oneagent.sdk.api.OneAgentSDK.createDatabaseInfo(String, String, com.dynatrace.oneagent.sdk.api.enums.ChannelType, String)" because "this.oneAgentSDK" is null
+	at com.shopper.service.DualDatabaseStrategyImpl.createDatabaseInfo(DualDatabaseStrategyImpl.java:156)
+	at com.shopper.service.DualDatabaseStrategyImpl.traceDatabaseOperation(DualDatabaseStrategyImpl.java:128)
+	at com.shopper.service.DualDatabaseStrategyImpl.executeWriteWithUser(DualDatabaseStrategyImpl.java:72)
+	... 4 more
+
+com.shopper.service.DualDatabaseStrategyTest.testThrowExceptionWhenPrimaryFailsAndFeatureFlagFalse -- Time elapsed: 0.006 s <<< ERROR!
+org.mockito.exceptions.misusing.UnnecessaryStubbingException: 
+
+Unnecessary stubbings detected.
+Clean & maintainable test code requires zero unnecessary code.
+Following stubbings are unnecessary (click to navigate to relevant line of code):
+  1. -> at com.shopper.service.DualDatabaseStrategyTest.testThrowExceptionWhenPrimaryFailsAndFeatureFlagFalse(DualDatabaseStrategyTest.java:170)
+Please remove unnecessary stubbings or use 'lenient' strictness. More info: javadoc for UnnecessaryStubbingException class.
+	at org.mockito.junit.jupiter.MockitoExtension.afterEach(MockitoExtension.java:192)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+com.shopper.service.DualDatabaseStrategyTest.testWriteReturnsPrimaryWhenFeatureFlagFalse -- Time elapsed: 0.002 s <<< ERROR!
+java.lang.RuntimeException: Primary database operation failed
+	at com.shopper.service.DualDatabaseStrategyImpl.executeWriteWithUser(DualDatabaseStrategyImpl.java:95)
+	at com.shopper.service.DualDatabaseStrategyTest.testWriteReturnsPrimaryWhenFeatureFlagFalse(DualDatabaseStrategyTest.java:144)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+Caused by: java.lang.NullPointerException: Cannot invoke "com.dynatrace.oneagent.sdk.api.OneAgentSDK.createDatabaseInfo(String, String, com.dynatrace.oneagent.sdk.api.enums.ChannelType, String)" because "this.oneAgentSDK" is null
+	at com.shopper.service.DualDatabaseStrategyImpl.createDatabaseInfo(DualDatabaseStrategyImpl.java:156)
+	at com.shopper.service.DualDatabaseStrategyImpl.traceDatabaseOperation(DualDatabaseStrategyImpl.java:128)
+	at com.shopper.service.DualDatabaseStrategyImpl.executeWriteWithUser(DualDatabaseStrategyImpl.java:72)
+	... 4 more
+
+com.shopper.service.DualDatabaseStrategyTest.testHandleFeatureFlagServiceFailure -- Time elapsed: 0.002 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "com.dynatrace.oneagent.sdk.api.OneAgentSDK.createDatabaseInfo(String, String, com.dynatrace.oneagent.sdk.api.enums.ChannelType, String)" because "this.oneAgentSDK" is null
+	at com.shopper.service.DualDatabaseStrategyImpl.createDatabaseInfo(DualDatabaseStrategyImpl.java:156)
+	at com.shopper.service.DualDatabaseStrategyImpl.traceDatabaseOperation(DualDatabaseStrategyImpl.java:128)
+	at com.shopper.service.DualDatabaseStrategyImpl.executeRead(DualDatabaseStrategyImpl.java:54)
+	at com.shopper.service.DualDatabaseStrategyTest.testHandleFeatureFlagServiceFailure(DualDatabaseStrategyTest.java:230)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+com.shopper.service.DualDatabaseStrategyTest.testMultipleOperationsConsistency -- Time elapsed: 0.002 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "com.dynatrace.oneagent.sdk.api.OneAgentSDK.createDatabaseInfo(String, String, com.dynatrace.oneagent.sdk.api.enums.ChannelType, String)" because "this.oneAgentSDK" is null
+	at com.shopper.service.DualDatabaseStrategyImpl.createDatabaseInfo(DualDatabaseStrategyImpl.java:156)
+	at com.shopper.service.DualDatabaseStrategyImpl.traceDatabaseOperation(DualDatabaseStrategyImpl.java:128)
+	at com.shopper.service.DualDatabaseStrategyImpl.executeRead(DualDatabaseStrategyImpl.java:50)
+	at com.shopper.service.DualDatabaseStrategyTest.testMultipleOperationsConsistency(DualDatabaseStrategyTest.java:291)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+com.shopper.service.DualDatabaseStrategyTest.testWriteWithUserContext -- Time elapsed: 0.001 s <<< ERROR!
+java.lang.RuntimeException: Primary database operation failed
+	at com.shopper.service.DualDatabaseStrategyImpl.executeWriteWithUser(DualDatabaseStrategyImpl.java:95)
+	at com.shopper.service.DualDatabaseStrategyTest.testWriteWithUserContext(DualDatabaseStrategyTest.java:128)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+Caused by: java.lang.NullPointerException: Cannot invoke "com.dynatrace.oneagent.sdk.api.OneAgentSDK.createDatabaseInfo(String, String, com.dynatrace.oneagent.sdk.api.enums.ChannelType, String)" because "this.oneAgentSDK" is null
+	at com.shopper.service.DualDatabaseStrategyImpl.createDatabaseInfo(DualDatabaseStrategyImpl.java:156)
+	at com.shopper.service.DualDatabaseStrategyImpl.traceDatabaseOperation(DualDatabaseStrategyImpl.java:128)
+	at com.shopper.service.DualDatabaseStrategyImpl.executeWriteWithUser(DualDatabaseStrategyImpl.java:72)
+	... 4 more
+
+com.shopper.service.DualDatabaseStrategyTest.testUseSecondaryWhenFeatureFlagTrue -- Time elapsed: 0.002 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "com.dynatrace.oneagent.sdk.api.OneAgentSDK.createDatabaseInfo(String, String, com.dynatrace.oneagent.sdk.api.enums.ChannelType, String)" because "this.oneAgentSDK" is null
+	at com.shopper.service.DualDatabaseStrategyImpl.createDatabaseInfo(DualDatabaseStrategyImpl.java:156)
+	at com.shopper.service.DualDatabaseStrategyImpl.traceDatabaseOperation(DualDatabaseStrategyImpl.java:128)
+	at com.shopper.service.DualDatabaseStrategyImpl.executeRead(DualDatabaseStrategyImpl.java:50)
+	at com.shopper.service.DualDatabaseStrategyTest.testUseSecondaryWhenFeatureFlagTrue(DualDatabaseStrategyTest.java:82)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+com.shopper.service.DualDatabaseStrategyTest.testWriteToBothDatabases -- Time elapsed: 0.001 s <<< ERROR!
+java.lang.RuntimeException: Primary database operation failed
+	at com.shopper.service.DualDatabaseStrategyImpl.executeWriteWithUser(DualDatabaseStrategyImpl.java:95)
+	at com.shopper.service.DualDatabaseStrategyImpl.executeWrite(DualDatabaseStrategyImpl.java:60)
+	at com.shopper.service.DualDatabaseStrategyTest.testWriteToBothDatabases(DualDatabaseStrategyTest.java:114)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+Caused by: java.lang.NullPointerException: Cannot invoke "com.dynatrace.oneagent.sdk.api.OneAgentSDK.createDatabaseInfo(String, String, com.dynatrace.oneagent.sdk.api.enums.ChannelType, String)" because "this.oneAgentSDK" is null
+	at com.shopper.service.DualDatabaseStrategyImpl.createDatabaseInfo(DualDatabaseStrategyImpl.java:156)
+	at com.shopper.service.DualDatabaseStrategyImpl.traceDatabaseOperation(DualDatabaseStrategyImpl.java:128)
+	at com.shopper.service.DualDatabaseStrategyImpl.executeWriteWithUser(DualDatabaseStrategyImpl.java:72)
+	... 5 more
+
+com.shopper.service.DualDatabaseStrategyTest.testThrowExceptionWhenBothWritesFail -- Time elapsed: 0.002 s <<< ERROR!
+org.mockito.exceptions.misusing.UnnecessaryStubbingException: 
+
+Unnecessary stubbings detected.
+Clean & maintainable test code requires zero unnecessary code.
+Following stubbings are unnecessary (click to navigate to relevant line of code):
+  1. -> at com.shopper.service.DualDatabaseStrategyTest.testThrowExceptionWhenBothWritesFail(DualDatabaseStrategyTest.java:204)
+Please remove unnecessary stubbings or use 'lenient' strictness. More info: javadoc for UnnecessaryStubbingException class.
+	at org.mockito.junit.jupiter.MockitoExtension.afterEach(MockitoExtension.java:192)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+

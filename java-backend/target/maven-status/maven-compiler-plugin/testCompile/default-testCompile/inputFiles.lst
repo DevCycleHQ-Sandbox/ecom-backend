@@ -1,7 +1,7 @@
-/Users/suthar/dev/shopper/backend/java-backend/src/test/java/com/shopper/BaseIntegrationTest.java
-/Users/suthar/dev/shopper/backend/java-backend/src/test/java/com/shopper/service/DualDatabaseStrategyTest.java
-/Users/suthar/dev/shopper/backend/java-backend/src/test/java/com/shopper/service/FeatureFlagServiceTest.java
-/Users/suthar/dev/shopper/backend/java-backend/src/test/java/com/shopper/integration/DualDatabaseSyncTest.java
-/Users/suthar/dev/shopper/backend/java-backend/src/test/java/com/shopper/integration/FeatureFlagIntegrationTest.java
-/Users/suthar/dev/shopper/backend/java-backend/src/test/java/com/shopper/integration/AuthenticationIntegrationTest.java
-/Users/suthar/dev/shopper/backend/java-backend/src/test/java/com/shopper/SimpleAuthTest.java
+/Users/jasonsalaber/Main/ecom-backend/java-backend/src/test/java/com/shopper/integration/FeatureFlagIntegrationTest.java
+/Users/jasonsalaber/Main/ecom-backend/java-backend/src/test/java/com/shopper/integration/DualDatabaseSyncTest.java
+/Users/jasonsalaber/Main/ecom-backend/java-backend/src/test/java/com/shopper/BaseIntegrationTest.java
+/Users/jasonsalaber/Main/ecom-backend/java-backend/src/test/java/com/shopper/service/FeatureFlagServiceTest.java
+/Users/jasonsalaber/Main/ecom-backend/java-backend/src/test/java/com/shopper/integration/AuthenticationIntegrationTest.java
+/Users/jasonsalaber/Main/ecom-backend/java-backend/src/test/java/com/shopper/service/DualDatabaseStrategyTest.java
+/Users/jasonsalaber/Main/ecom-backend/java-backend/src/test/java/com/shopper/SimpleAuthTest.java

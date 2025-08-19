@@ -3,9 +3,11 @@ package com.shopper.config;
 import com.dynatrace.oneagent.sdk.api.OneAgentSDK;
 import com.dynatrace.oneagent.sdk.api.IncomingRemoteCallTracer;
 import com.dynatrace.oneagent.sdk.api.CustomServiceTracer;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -21,28 +23,40 @@ public class DynatraceOneAgentLogHook implements EvalHook<Object> {
 
     private final OneAgentSDK oneAgentSDK;
     private final Map<HookContext<Object>, CustomServiceTracer> tracers = new ConcurrentHashMap<>();
+    private final Map<HookContext<Object>, Map> attributes = new ConcurrentHashMap<>();
 
     public Optional<HookContext<Object>> before(HookContext<Object> ctx) {
         try {
             // Create a custom service tracer for feature flag evaluation
             CustomServiceTracer tracer = oneAgentSDK.traceCustomService("feature_flag_evaluation", ctx.getKey());
-            
+
+            // log.debug("Feature flag structured header created: {}", featureFlagJson);
             if (tracer != null) {
                 tracer.start();
                 
-                // Add custom request attributes
-                oneAgentSDK.addCustomRequestAttribute("feature_flag.key", ctx.getKey());
-                oneAgentSDK.addCustomRequestAttribute("feature_flag.value_type", ctx.getDefaultValue().getClass().getSimpleName());
+                // // Add custom request attributes
+                // oneAgentSDK.addCustomRequestAttribute("feature_flag.key", ctx.getKey());
+                // oneAgentSDK.addCustomRequestAttribute("feature_flag.value_type", ctx.getDefaultValue().getClass().getSimpleName());
                 
+                // if (ctx.getMetadata() != null) {
+                //     if (ctx.getMetadata().project != null && ctx.getMetadata().project.id != null) {
+                //         oneAgentSDK.addCustomRequestAttribute("feature_flag.project", ctx.getMetadata().project.id);
+                //     }
+                //     if (ctx.getMetadata().environment != null && ctx.getMetadata().environment.id != null) {
+                //         oneAgentSDK.addCustomRequestAttribute("feature_flag.environment", ctx.getMetadata().environment.id);
+                //     }
+                // }
+
+                Map<String, String> featureFlagData = new HashMap<>();
+                featureFlagData.put("key", ctx.getKey());
+                featureFlagData.put("value_type", ctx.getDefaultValue().getClass().getSimpleName());
+
                 if (ctx.getMetadata() != null) {
-                    if (ctx.getMetadata().project != null && ctx.getMetadata().project.id != null) {
-                        oneAgentSDK.addCustomRequestAttribute("feature_flag.project", ctx.getMetadata().project.id);
-                    }
-                    if (ctx.getMetadata().environment != null && ctx.getMetadata().environment.id != null) {
-                        oneAgentSDK.addCustomRequestAttribute("feature_flag.environment", ctx.getMetadata().environment.id);
-                    }
+                    featureFlagData.put("project", ctx.getMetadata().project.id);
+                    featureFlagData.put("environment", ctx.getMetadata().environment.id);
                 }
 
+                attributes.put(ctx, featureFlagData);
                 log.debug("Feature flag evaluation tracer started for key: {}", ctx.getKey());
             }
 
@@ -65,30 +79,31 @@ public class DynatraceOneAgentLogHook implements EvalHook<Object> {
     public void onFinally(HookContext<Object> ctx, Optional<Variable<Object>> variable, VariableMetadata variableMetadata) {
         try {
             CustomServiceTracer tracer = tracers.remove(ctx);
-
+            Map attributeMap = attributes.remove(ctx);
             if (tracer != null) {
                 log.debug("Completing feature flag evaluation tracer for key: {}", ctx.getKey());
                 log.warn("variableMetadata: {}", variableMetadata != null ? variableMetadata.toString() : "null");
 
-                if (variable.isPresent()) {
-                    Variable<Object> var = variable.get();
-                    oneAgentSDK.addCustomRequestAttribute("feature_flag.value", String.valueOf(var.getValue()));
-                    
-                    if (var.getEval() != null && var.getEval().getReason() != null) {
-                        oneAgentSDK.addCustomRequestAttribute("feature_flag.reason", var.getEval().getReason());
-                    }
-                    
-                    if (variableMetadata != null && variableMetadata.featureId != null) {
-                        oneAgentSDK.addCustomRequestAttribute("feature_flag.flagset", variableMetadata.featureId);
-                    }
-                    
-                    log.debug("Feature flag tracer completed: {} = {}", var.getKey(), var.getValue());
-                } else {
-                    oneAgentSDK.addCustomRequestAttribute("feature_flag.value", "null");
-                    oneAgentSDK.addCustomRequestAttribute("feature_flag.reason", "evaluation_failed");
-                    tracer.error("Feature flag evaluation failed");
-                    log.debug("Feature flag evaluation failed for key: {}", ctx.getKey());
-                }
+//                if (variable.isPresent()) {
+//                    Variable<Object> var = variable.get();
+//                    oneAgentSDK.addCustomRequestAttribute("feature_flag.value", String.valueOf(var.getValue()));
+//
+//                    if (var.getEval() != null && var.getEval().getReason() != null) {
+//                        oneAgentSDK.addCustomRequestAttribute("feature_flag.reason", var.getEval().getReason());
+//                    }
+//
+//                    if (variableMetadata != null && variableMetadata.featureId != null) {
+//                        oneAgentSDK.addCustomRequestAttribute("feature_flag.flagset", variableMetadata.featureId);
+//                    }
+//
+//                    log.debug("Feature flag tracer completed: {} = {}", var.getKey(), var.getValue());
+//                } else {
+//                    oneAgentSDK.addCustomRequestAttribute("feature_flag.value", "null");
+//                    oneAgentSDK.addCustomRequestAttribute("feature_flag.reason", "evaluation_failed");
+//                    tracer.error("Feature flag evaluation failed");
+//                    log.debug("Feature flag evaluation failed for key: {}", ctx.getKey());
+//                }
+                oneAgentSDK.addCustomRequestAttribute("feature_flag", attributeMap.toString());
                 
                 tracer.end();
                 log.debug("Feature flag tracer ended for key: {}", ctx.getKey());
