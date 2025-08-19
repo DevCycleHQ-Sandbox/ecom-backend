@@ -7,36 +7,8 @@
     <list default="true" id="cdfb54ea-d408-4d84-bdc7-12d998769151" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/shopper/config/DynatraceOneAgentLogHook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shopper/config/DynatraceOneAgentLogHook.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/shopper/config/OneAgentConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shopper/config/OneAgentConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/shopper/JavaBackendApplication.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/shopper/config/AuthenticationConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/shopper/config/BeanConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/shopper/config/DynatraceOneAgentLogHook.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/shopper/config/OneAgentConfig$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/shopper/config/OneAgentConfig$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/shopper/config/OneAgentConfig$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/shopper/config/OneAgentConfig$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/shopper/config/OneAgentConfig$AppMetadata$Builder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/shopper/config/OneAgentConfig$AppMetadata$Builder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/shopper/config/OneAgentConfig$AppMetadata.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/shopper/config/OneAgentConfig$AppMetadata.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/shopper/config/OneAgentConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/shopper/config/OneAgentConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/shopper/config/OpenFeatureConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/shopper/service/DualDatabaseStrategyImpl.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/java-backend-1.0.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/java-backend-1.0.0.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/java-backend-1.0.0.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/target/java-backend-1.0.0.jar.original" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.shopper.SimpleAuthTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.shopper.SimpleAuthTest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.shopper.integration.AuthenticationIntegrationTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.shopper.integration.AuthenticationIntegrationTest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.shopper.integration.DualDatabaseSyncTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.shopper.integration.DualDatabaseSyncTest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.shopper.integration.FeatureFlagIntegrationTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.shopper.integration.FeatureFlagIntegrationTest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.shopper.service.DualDatabaseStrategyTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.shopper.service.DualDatabaseStrategyTest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.shopper.service.FeatureFlagServiceTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.shopper.service.FeatureFlagServiceTest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/com.shopper.SimpleAuthTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/com.shopper.SimpleAuthTest.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/com.shopper.integration.AuthenticationIntegrationTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/com.shopper.integration.AuthenticationIntegrationTest.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/com.shopper.integration.DualDatabaseSyncTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/com.shopper.integration.DualDatabaseSyncTest.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/com.shopper.integration.FeatureFlagIntegrationTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/com.shopper.integration.FeatureFlagIntegrationTest.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/com.shopper.service.DualDatabaseStrategyTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/com.shopper.service.DualDatabaseStrategyTest.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/com.shopper.service.FeatureFlagServiceTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/com.shopper.service.FeatureFlagServiceTest.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

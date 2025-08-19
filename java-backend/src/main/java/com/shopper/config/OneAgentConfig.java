@@ -14,18 +14,6 @@ import jakarta.annotation.PostConstruct;
 @Slf4j
 public class OneAgentConfig {
 
-//    @Value("${app.telemetry.use-local-otlp:false}")
-//    private boolean useLocalOtlp;
-//
-//    @Value("${app.telemetry.local-otlp-port:14499}")
-//    private int localOtlpPort;
-//
-//    @Value("${app.telemetry.dynatrace.env-url:}")
-//    private String dynatraceEnvUrl;
-//
-//    @Value("${app.telemetry.dynatrace.api-token:}")
-//    private String dynatraceApiToken;
-
     @Value("${spring.application.name}")
     private String serviceName;
 
@@ -61,24 +49,6 @@ public class OneAgentConfig {
                 log.warn("⚠️  OneAgent SDK state is unknown.");
                 break;
         }
-
-//        if (dynatraceEnvUrl != null && !dynatraceEnvUrl.isEmpty() && dynatraceApiToken != null && !dynatraceApiToken.isEmpty()) {
-//            String endpoint = dynatraceEnvUrl + "/api/v2/otlp";
-//            log.info("🔗 OpenTelemetry configured for Dynatrace endpoint: {}", endpoint);
-//
-//            // Set system properties for auto-instrumentation
-//            System.setProperty("otel.exporter.otlp.endpoint", endpoint);
-//            System.setProperty("otel.exporter.otlp.headers", "Authorization=Api-Token " + dynatraceApiToken);
-//            System.setProperty("otel.service.name", serviceName);
-//            System.setProperty("otel.service.version", serviceVersion);
-//            System.setProperty("otel.resource.attributes",
-//                    String.format("service.name=%s,service.version=%s,deployment.environment=%s",
-//                            serviceName, serviceVersion, environment));
-//            System.setProperty("otel.exporter.otlp.metrics.temporality.preference", "delta");
-//
-//        } else {
-//            log.info("⚠️  Neither local OTLP nor Dynatrace endpoints are configured. OpenTelemetry auto-instrumentation will use default settings.");
-//        }
 
         log.info("📊 OpenTelemetry Auto-Instrumentation enabled for service: {} v{} ({})",
                 serviceName, serviceVersion, environment);

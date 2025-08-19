@@ -38,7 +38,7 @@ public class OpenFeatureConfig {
             devCycleClient = new DevCycleLocalClient(devCycleServerSdkKey);
 
             // Add Dynatrace OneAgent SDK hook for all variable types
-            DynatraceOneAgentLogHook hook = new DynatraceOneAgentLogHook(oneAgentSDK);
+            DynatraceOneAgentLogHook hook = new DynatraceOneAgentLogHook();
             devCycleClient.addHook(hook);
             
             log.info("✅ OpenFeature with DevCycle provider initialized successfully");
