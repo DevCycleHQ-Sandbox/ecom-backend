@@ -35,6 +35,7 @@ public class DynatraceOneAgentLogHook implements EvalHook<Object> {
                 span.setAttribute("feature_flag.provider.name", "devcycle");
                 span.setAttribute("feature_flag.key", ctx.getKey());
                 span.setAttribute("feature_flag.value_type", ctx.getDefaultValue().getClass().getSimpleName());
+                span.setAttribute("feature_flag.context.id", ctx.getUser().getUserId());
 
                 if (ctx.getMetadata() != null) {
                     if (ctx.getMetadata().project != null && ctx.getMetadata().project.id != null) {
