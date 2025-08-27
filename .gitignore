@@ -9,3 +9,5 @@ dist/
 */target/*
 
 .idea/*
+
+!java-backend/target/*.jar
