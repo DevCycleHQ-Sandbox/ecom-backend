@@ -90,8 +90,8 @@ public class DynatraceOneAgentHook implements EvalHook<Object> {
 
                     log.debug("Feature flag span completed: {} = {}", var.getKey(), var.getValue());
                 } else {
-                    span.setAttribute("feature_flag.value", "null");
-                    span.setAttribute("feature_flag.reason", "evaluation_failed");
+                    span.setAttribute("feature_flag.result.value", "null");
+                    span.setAttribute("feature_flag.result.reason", "evaluation_failed");
                     log.debug("Feature flag evaluation failed for key: {}", ctx.getKey());
                 }
 
