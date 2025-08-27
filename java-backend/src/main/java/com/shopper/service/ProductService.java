@@ -37,7 +37,7 @@ public class ProductService {
         
         if (newFlow) {
             log.info("✅ New flow enabled for user: {}", username);
-            boolean shouldError = Math.random() < 0.01;
+            boolean shouldError = Math.random() < 0.2;
             if (shouldError) {
                 throw new RuntimeException("Error in findAll");
             }
