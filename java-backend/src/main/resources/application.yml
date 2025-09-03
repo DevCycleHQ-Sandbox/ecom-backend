@@ -79,8 +79,19 @@ app:
     project: ${TELEMETRY_PROJECT:new-parth-project}
     environment-id: ${TELEMETRY_ENVIRONMENT_ID:66ccc3628c118d9a6da306e0}
 
-# OneAgent SDK configuration is handled automatically by the OneAgent
-# Ensure Dynatrace OneAgent is installed and running on the host
+# OpenTelemetry configuration
+otel:
+  exporter:
+    otlp:
+      endpoint: ${OTEL_EXPORTER_OTLP_ENDPOINT:http://localhost:14499/otlp}
+      headers: ${OTEL_EXPORTER_OTLP_HEADERS:}
+      metrics:
+        temporality:
+          preference: delta
+  resource:
+    attributes: "service.name=${spring.application.name},service.version=${app.version:1.0.0},deployment.environment=${spring.profiles.active:development}"
+  service:
+    name: ${spring.application.name}
 
 logging:
   level:

@@ -2,7 +2,7 @@ package com.shopper.config;
 
 import com.devcycle.sdk.server.common.model.DevCycleUser;
 import com.devcycle.sdk.server.local.api.DevCycleLocalClient;
-import com.dynatrace.oneagent.sdk.api.OneAgentSDK;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,7 +19,7 @@ public class OpenFeatureConfig {
     @Value("${app.devcycle.server-sdk-key}")
     private String devCycleServerSdkKey;
 
-    private final OneAgentSDK oneAgentSDK;
+
     private DevCycleLocalClient devCycleClient;
     
     @PostConstruct
@@ -37,12 +37,12 @@ public class OpenFeatureConfig {
             // Create DevCycle client with default options
             devCycleClient = new DevCycleLocalClient(devCycleServerSdkKey);
 
-            // Add Dynatrace OneAgent SDK hook for all variable types
+            // Add DevCycle hook for feature flag tracing (uses OpenTelemetry API)
             DynatraceOneAgentHook hook = new DynatraceOneAgentHook();
             devCycleClient.addHook(hook);
             
             log.info("✅ OpenFeature with DevCycle provider initialized successfully");
-            log.info("🔍 DevCycle hook registered for OneAgent SDK tracing");
+            log.info("🔍 DevCycle hook registered for OpenTelemetry tracing");
 
             // Test the client with a sample evaluation
             try {

@@ -1,10 +1,6 @@
 package com.shopper.service;
 
-import com.dynatrace.oneagent.sdk.api.OneAgentSDK;
-import com.dynatrace.oneagent.sdk.api.infos.DatabaseInfo;
-import com.dynatrace.oneagent.sdk.api.DatabaseRequestTracer;
-import com.dynatrace.oneagent.sdk.api.enums.ChannelType;
-import com.dynatrace.oneagent.sdk.api.enums.DatabaseVendor;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +20,7 @@ public class DualDatabaseStrategyImpl implements DualDatabaseStrategy {
     
     private final FeatureFlagService featureFlagService;
     
-    @Autowired
-    private OneAgentSDK oneAgentSDK;
+
     
     @Value("${secondary.datasource.enabled:true}")
     private boolean secondaryDatabaseEnabled;
@@ -44,14 +39,14 @@ public class DualDatabaseStrategyImpl implements DualDatabaseStrategy {
         if (useNeon) {
             try {
                 log.debug("Using secondary (Neon) database for read operation for user: {}", userId);
-                return traceDatabaseOperation("SELECT", "secondary", secondaryOperation);
+                return secondaryOperation.get();
             } catch (Exception e) {
                 log.warn("Error reading from secondary database for user {}, falling back to primary: {}", userId, e.getMessage());
-                return traceDatabaseOperation("SELECT (fallback)", "primary", primaryOperation);
+                return primaryOperation.get();
             }
         } else {
             log.debug("Using primary database for read operation for user: {}", userId);
-            return traceDatabaseOperation("SELECT", "primary", primaryOperation);
+            return primaryOperation.get();
         }
     }
     
@@ -69,7 +64,7 @@ public class DualDatabaseStrategyImpl implements DualDatabaseStrategy {
         
         // Always execute primary operation first to get the generated ID
         try {
-            primaryResult = traceDatabaseOperation("INSERT/UPDATE", "primary", primaryOperation);
+            primaryResult = primaryOperation.get();
             log.debug("Primary database write completed successfully for user: {}", userId);
         } catch (Exception e) {
             primaryException = e;
@@ -79,7 +74,7 @@ public class DualDatabaseStrategyImpl implements DualDatabaseStrategy {
         // Execute secondary operation if enabled and primary succeeded
         if (isSecondaryDatabaseEnabled() && primaryResult != null) {
             try {
-                secondaryResult = traceDatabaseOperation("INSERT/UPDATE", "secondary", secondaryOperation);
+                secondaryResult = secondaryOperation.get();
                 log.debug("Secondary database write completed successfully for user: {}", userId);
             } catch (Exception e) {
                 secondaryException = e;
@@ -121,42 +116,5 @@ public class DualDatabaseStrategyImpl implements DualDatabaseStrategy {
         }
     }
     
-    /**
-     * Execute database operation with OneAgent SDK tracing
-     */
-    private <T> T traceDatabaseOperation(String operationType, String databaseType, Supplier<T> operation) {
-        DatabaseInfo databaseInfo = createDatabaseInfo(databaseType);
-        DatabaseRequestTracer tracer = oneAgentSDK.traceSqlDatabaseRequest(databaseInfo, operationType);
-        tracer.start();
-        
-        try {
-            T result = operation.get();
-            // For successful operations, we don't set error status
-            return result;
-        } catch (Exception e) {
-            tracer.error(e.getMessage());
-            throw e;
-        } finally {
-            tracer.end();
-        }
-    }
-    
-    /**
-     * Create DatabaseInfo for OneAgent SDK tracing
-     */
-    private DatabaseInfo createDatabaseInfo(String databaseType) {
-        if ("secondary".equals(databaseType)) {
-            // Neon (PostgreSQL) database
-            return oneAgentSDK.createDatabaseInfo("Neon PostgreSQL", 
-                    DatabaseVendor.POSTGRESQL.getVendorName(), 
-                    ChannelType.TCP_IP, 
-                    "neon-db:5432");
-        } else {
-            // Primary SQLite database
-            return oneAgentSDK.createDatabaseInfo("Primary SQLite", 
-                    DatabaseVendor.SQLITE.getVendorName(), 
-                    ChannelType.OTHER, 
-                    "local-sqlite");
-        }
-    }
+
 } 
