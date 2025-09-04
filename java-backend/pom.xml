@@ -24,9 +24,9 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-        <opentelemetry.version>1.31.0</opentelemetry.version>
     </properties>
+
+
 
     <dependencies>
         <!-- Spring Boot Starters -->
@@ -92,31 +92,19 @@
             <artifactId>spring-security-crypto</artifactId>
         </dependency>
 
-        <!-- OpenTelemetry Dependencies -->
-        <dependency>
-            <groupId>io.opentelemetry</groupId>
-            <artifactId>opentelemetry-sdk</artifactId>
-            <version>${opentelemetry.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.opentelemetry</groupId>
-            <artifactId>opentelemetry-exporter-otlp</artifactId>
-            <version>${opentelemetry.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.opentelemetry</groupId>
-            <artifactId>opentelemetry-sdk-trace</artifactId>
-            <version>${opentelemetry.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.opentelemetry.instrumentation</groupId>
-            <artifactId>opentelemetry-spring-boot-starter</artifactId>
-            <version>2.6.0-alpha</version>
-        </dependency>
+        <!-- OpenTelemetry Dependencies - Using Java Agent for instrumentation -->
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-tracing-bridge-otel</artifactId>
         </dependency>
+        
+        <!-- OpenTelemetry API for manual instrumentation -->
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-api</artifactId>
+            <version>1.32.0</version>
+        </dependency>
+        
 
         <!-- DevCycle Java SDK (includes OpenFeature provider) -->
         <dependency>
@@ -171,12 +159,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Otel -->
-        <dependency>
-            <groupId>io.opentelemetry</groupId>
-            <artifactId>opentelemetry-api</artifactId>
-            <version>${opentelemetry.version}</version>
-        </dependency>
+
     </dependencies>
 
     <build>
