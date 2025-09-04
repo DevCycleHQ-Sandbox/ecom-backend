@@ -1,0 +1,156 @@
+🚀 Starting Java Backend Server with OpenTelemetry...
+📋 Loading environment variables from .env file...
+📡 Using DYNATRACE OTLP endpoint: https://xtc47953.live.dynatrace.com/api/v2/otlp
+📊 Enabled OTLP export for traces, metrics, and logs
+🔧 Configuration:
+  Port: 3002
+  Environment: development
+  Database: ./database.sqlite
+  Frontend URL: http://localhost:3000
+  OTLP Endpoint: https://xtc47953.live.dynatrace.com/api/v2/otlp
+
+🔍 Checking dependencies...
+✅ Starting with OpenTelemetry instrumentation...
+
+💡 Running Maven with Spring Boot and OpenTelemetry agent...
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------------< com.shopper:java-backend >----------------------
+[INFO] Building Java Backend 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.3.2:clean (default-clean) @ java-backend ---
+[INFO] Deleting /Users/suthar/dev/shopper/backend/java-backend/target
+[INFO] 
+[INFO] >>> spring-boot:3.2.0:run (default-cli) > test-compile @ java-backend >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ java-backend ---
+[INFO] Copying 4 resources from src/main/resources to target/classes
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ java-backend ---
+[INFO] Changes detected - recompiling the module! :source
+[INFO] Compiling 55 source files with javac [debug release 17] to target/classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ java-backend ---
+[INFO] Copying 1 resource from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ java-backend ---
+[INFO] Changes detected - recompiling the module! :dependency
+[INFO] Compiling 7 source files with javac [debug release 17] to target/test-classes
+[INFO] 
+[INFO] <<< spring-boot:3.2.0:run (default-cli) < test-compile @ java-backend <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.2.0:run (default-cli) @ java-backend ---
+[INFO] Attaching agents: []
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+[otel.javaagent 2025-09-04 13:58:49:742 -0400] [main] INFO io.opentelemetry.javaagent.tooling.VersionLogger - opentelemetry-javaagent - version: 2.17.1
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.0)
+
+2025-09-04T13:58:59.572-04:00  INFO 41401 --- [java-backend] [           main] [                                                 ] com.shopper.JavaBackendApplication       : Starting JavaBackendApplication using Java 18.0.2 with PID 41401 (/Users/suthar/dev/shopper/backend/java-backend/target/classes started by suthar in /Users/suthar/dev/shopper/backend/java-backend)
+2025-09-04T13:58:59.589-04:00 DEBUG 41401 --- [java-backend] [           main] [                                                 ] com.shopper.JavaBackendApplication       : Running with Spring Boot v3.2.0, Spring v6.1.1
+2025-09-04T13:58:59.590-04:00  INFO 41401 --- [java-backend] [           main] [                                                 ] com.shopper.JavaBackendApplication       : The following 1 profile is active: "development"
+2025-09-04T13:59:00.980-04:00  INFO 41401 --- [java-backend] [           main] [                                                 ] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-09-04T13:59:01.031-04:00  INFO 41401 --- [java-backend] [           main] [                                                 ] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 42 ms. Found 3 JPA repository interfaces.
+2025-09-04T13:59:01.034-04:00  INFO 41401 --- [java-backend] [           main] [                                                 ] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-09-04T13:59:01.049-04:00  INFO 41401 --- [java-backend] [           main] [                                                 ] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 14 ms. Found 2 JPA repository interfaces.
+2025-09-04T13:59:03.113-04:00  INFO 41401 --- [java-backend] [           main] [                                                 ] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 3002 (http)
+2025-09-04T13:59:03.207-04:00  INFO 41401 --- [java-backend] [           main] [                                                 ] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-09-04T13:59:03.208-04:00  INFO 41401 --- [java-backend] [           main] [                                                 ] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.16]
+2025-09-04T13:59:03.296-04:00  INFO 41401 --- [java-backend] [           main] [                                                 ] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2025-09-04T13:59:03.300-04:00  INFO 41401 --- [java-backend] [           main] [                                                 ] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3628 ms
+2025-09-04T13:59:04.339-04:00  INFO 41401 --- [java-backend] [           main] [                                                 ] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-09-04T13:59:04.423-04:00  INFO 41401 --- [java-backend] [           main] [                                                 ] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.3.1.Final
+2025-09-04T13:59:04.469-04:00  INFO 41401 --- [java-backend] [           main] [                                                 ] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-09-04T13:59:04.684-04:00  INFO 41401 --- [java-backend] [           main] [                                                 ] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-09-04T13:59:04.743-04:00  INFO 41401 --- [java-backend] [           main] [                                                 ] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-09-04T13:59:05.364-04:00  INFO 41401 --- [java-backend] [           main] [                                                 ] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.sqlite.jdbc4.JDBC4Connection@40a923e6
+2025-09-04T13:59:05.380-04:00  INFO 41401 --- [java-backend] [           main] [                                                 ] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-09-04T13:59:06.642-04:00  INFO 41401 --- [java-backend] [           main] [                                                 ] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-09-04T13:59:06.743-04:00  INFO 41401 --- [java-backend] [           main] [                                                 ] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-09-04T13:59:07.355-04:00  INFO 41401 --- [java-backend] [           main] [                                                 ] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+[otel.javaagent 2025-09-04 13:59:07:856 -0400] [OkHttp https://xtc47953.live.dynatrace.com/...] ERROR io.opentelemetry.exporter.internal.http.HttpExporter - Failed to export logs. The request could not be executed. Full error message: xtc47953.live.dynatrace.com
+java.net.UnknownHostException: xtc47953.live.dynatrace.com
+	at java.base/java.net.InetAddress$CachedAddresses.get(InetAddress.java:948)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1638)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1504)
+	at okhttp3.Dns$Companion$DnsSystem.lookup(Dns.kt:49)
+	at okhttp3.internal.connection.RouteSelector.resetNextInetSocketAddress(RouteSelector.kt:169)
+	at okhttp3.internal.connection.RouteSelector.nextProxy(RouteSelector.kt:131)
+	at okhttp3.internal.connection.RouteSelector.next(RouteSelector.kt:73)
+	at okhttp3.internal.connection.ExchangeFinder.findConnection(ExchangeFinder.kt:205)
+	at okhttp3.internal.connection.ExchangeFinder.findHealthyConnection(ExchangeFinder.kt:106)
+	at okhttp3.internal.connection.ExchangeFinder.find(ExchangeFinder.kt:74)
+	at okhttp3.internal.connection.RealCall.initExchange$okhttp(RealCall.kt:255)
+	at okhttp3.internal.connection.ConnectInterceptor.intercept(ConnectInterceptor.kt:32)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:95)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at io.opentelemetry.exporter.sender.okhttp.internal.RetryInterceptor.intercept(RetryInterceptor.java:96)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201)
+	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:517)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2025-09-04T13:59:14.265-04:00  INFO 41401 --- [java-backend] [           main] [                                                 ] com.shopper.config.OpenFeatureConfig     : ✅ OpenFeature with DevCycle provider initialized successfully
+2025-09-04T13:59:14.269-04:00  INFO 41401 --- [java-backend] [           main] [                                                 ] com.shopper.config.OpenFeatureConfig     : 🔍 DevCycle hooks registered for OpenTelemetry tracing and logging
+Variable called before DevCycleLocalClient has initialized, returning default value
+2025-09-04T13:59:14.329-04:00  INFO 41401 --- [java-backend] [           main] [                                                 ] com.shopper.config.OpenFeatureConfig     : 🎛️ DevCycle feature flag 'use-neon' evaluated to: false for admin user
+Variable called before DevCycleLocalClient has initialized, returning default value
+2025-09-04T13:59:14.331-04:00  INFO 41401 --- [java-backend] [           main] [                                                 ] com.shopper.config.OpenFeatureConfig     : 🎛️ DevCycle feature flag 'new-flow' evaluated to: false for admin user
+2025-09-04T13:59:14.409-04:00  WARN 41401 --- [java-backend] [           main] [                                                 ] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final void org.springframework.web.filter.OncePerRequestFilter.doFilter(jakarta.servlet.ServletRequest,jakarta.servlet.ServletResponse,jakarta.servlet.FilterChain) throws jakarta.servlet.ServletException,java.io.IOException] because it is marked as final, consider using interface-based JDK proxies instead.
+2025-09-04T13:59:14.410-04:00  WARN 41401 --- [java-backend] [           main] [                                                 ] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final void org.springframework.web.filter.GenericFilterBean.init(jakarta.servlet.FilterConfig) throws jakarta.servlet.ServletException] because it is marked as final, consider using interface-based JDK proxies instead.
+2025-09-04T13:59:14.512-04:00 DEBUG 41401 --- [java-backend] [           main] [                                                 ] c.s.security.JwtAuthenticationFilter     : Filter 'jwtAuthenticationFilter' configured for use
+2025-09-04T13:59:14.513-04:00 DEBUG 41401 --- [java-backend] [           main] [                                                 ] o.s.w.f.ServerHttpObservationFilter      : Filter 'webMvcObservationFilter' configured for use
+2025-09-04T13:59:14.563-04:00  INFO 41401 --- [java-backend] [           main] [                                                 ] com.shopper.config.OpenTelemetryConfig   : 📊 OpenTelemetry Java Agent enabled for service: java-backend v1.0.0 (development)
+2025-09-04T13:59:14.563-04:00  INFO 41401 --- [java-backend] [           main] [                                                 ] com.shopper.config.OpenTelemetryConfig   : 🔗 OpenTelemetry configured for OTLP endpoint: https://xtc47953.live.dynatrace.com/api/v2/otlp
+2025-09-04T13:59:14.563-04:00  INFO 41401 --- [java-backend] [           main] [                                                 ] com.shopper.config.OpenTelemetryConfig   : 🔐 OTLP headers configured for authentication
+2025-09-04T13:59:14.563-04:00  INFO 41401 --- [java-backend] [           main] [                                                 ] com.shopper.config.OpenTelemetryConfig   : ✅ Using OpenTelemetry Java Agent for auto-instrumentation
+2025-09-04T13:59:15.541-04:00  WARN 41401 --- [java-backend] [           main] [                                                 ] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-09-04T13:59:16.054-04:00 DEBUG 41401 --- [java-backend] [           main] [                                                 ] s.w.s.m.m.a.RequestMappingHandlerMapping : 49 mappings in 'requestMappingHandlerMapping'
+2025-09-04T13:59:16.514-04:00 DEBUG 41401 --- [java-backend] [           main] [                                                 ] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2025-09-04T13:59:16.709-04:00  INFO 41401 --- [java-backend] [           main] [                                                 ] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 3 endpoint(s) beneath base path '/actuator'
+2025-09-04T13:59:16.779-04:00  INFO 41401 --- [java-backend] [           main] [                                                 ] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3236f72a, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@66bafca5, org.springframework.security.web.context.SecurityContextHolderFilter@34a51ba5, org.springframework.security.web.header.HeaderWriterFilter@7217b6b9, org.springframework.web.filter.CorsFilter@10f277c8, org.springframework.security.web.authentication.logout.LogoutFilter@6f2f7397, com.shopper.security.JwtAuthenticationFilter@57ddbe75, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3265ef81, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1180e245, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6a614868, org.springframework.security.web.session.SessionManagementFilter@9c2e017, org.springframework.security.web.access.ExceptionTranslationFilter@4b904d1a, org.springframework.security.web.access.intercept.AuthorizationFilter@fe3a6ef]
+2025-09-04T13:59:16.930-04:00 DEBUG 41401 --- [java-backend] [           main] [                                                 ] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-09-04T13:59:16.986-04:00 DEBUG 41401 --- [java-backend] [           main] [                                                 ] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-09-04T13:59:17.505-04:00  INFO 41401 --- [java-backend] [           main] [                                                 ] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 3002 (http) with context path '/api'
+2025-09-04T13:59:17.528-04:00  INFO 41401 --- [java-backend] [           main] [                                                 ] com.shopper.JavaBackendApplication       : Started JavaBackendApplication in 18.74 seconds (process running for 28.552)
+🚀 Java Backend Server is running!
+[otel.javaagent 2025-09-04 13:59:28:277 -0400] [OkHttp https://xtc47953.live.dynatrace.com/...] ERROR io.opentelemetry.exporter.internal.http.HttpExporter - Failed to export logs. The request could not be executed. Full error message: timeout
+java.io.InterruptedIOException: timeout
+	at okhttp3.internal.connection.RealCall.timeoutExit(RealCall.kt:398)
+	at okhttp3.internal.connection.RealCall.callDone(RealCall.kt:360)
+	at okhttp3.internal.connection.RealCall.noMoreExchanges$okhttp(RealCall.kt:325)
+	at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:209)
+	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:517)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.io.IOException: Canceled
+	at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:72)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at io.opentelemetry.exporter.sender.okhttp.internal.RetryInterceptor.intercept(RetryInterceptor.java:96)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201)
+	... 4 more
+Error reading event
+Stream closed by client
+2025-09-04T14:00:27.946-04:00  INFO 41401 --- [java-backend] [ionShutdownHook] [                                                 ] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-09-04T14:00:27.950-04:00  INFO 41401 --- [java-backend] [ionShutdownHook] [                                                 ] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-09-04T14:00:27.956-04:00  INFO 41401 --- [java-backend] [ionShutdownHook] [                                                 ] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+
+🧹 Cleaning up...

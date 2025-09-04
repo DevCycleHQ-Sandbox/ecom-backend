@@ -24,15 +24,34 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <oneagent-sdk.version>1.9.0</oneagent-sdk.version>
-        <opentelemetry.version>1.31.0</opentelemetry.version>
     </properties>
+
+
 
     <dependencies>
         <!-- Spring Boot Starters -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <!-- Exclude Logback to use Log4j2 -->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        
+        <!-- Log4j2 starter -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
+        
+        <!-- Log4j2 JSON Template Layout for structured logging -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-layout-template-json</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -92,12 +111,26 @@
             <artifactId>spring-security-crypto</artifactId>
         </dependency>
 
-        <!-- Dynatrace OneAgent SDK -->
+        <!-- OpenTelemetry Dependencies - Using Java Agent for instrumentation -->
         <dependency>
-            <groupId>com.dynatrace.oneagent.sdk.java</groupId>
-            <artifactId>oneagent-sdk</artifactId>
-            <version>${oneagent-sdk.version}</version>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-tracing-bridge-otel</artifactId>
         </dependency>
+        
+        <!-- OpenTelemetry API for manual instrumentation -->
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-api</artifactId>
+            <version>1.32.0</version>
+        </dependency>
+        
+        <!-- OpenTelemetry Log4j2 Appender - Bridge for structured logs to OTel API -->
+        <dependency>
+            <groupId>io.opentelemetry.instrumentation</groupId>
+            <artifactId>opentelemetry-log4j-appender-2.17</artifactId>
+            <version>1.32.0-alpha</version>
+        </dependency>
+        
 
         <!-- DevCycle Java SDK (includes OpenFeature provider) -->
         <dependency>
@@ -152,12 +185,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Otel -->
-        <dependency>
-            <groupId>io.opentelemetry</groupId>
-            <artifactId>opentelemetry-api</artifactId>
-            <version>${opentelemetry.version}</version>
-        </dependency>
+
     </dependencies>
 
     <build>

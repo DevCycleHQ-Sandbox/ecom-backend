@@ -1,0 +1,736 @@
+🚀 Starting Java Backend Server with OpenTelemetry...
+📋 Loading environment variables from .env file...
+📡 Using DYNATRACE OTLP endpoint: https://xtc47953.live.dynatrace.com/api/v2/otlp
+📊 Enabled OTLP export for traces, metrics, and logs with bridge
+🔧 Configuration:
+  Port: 3002
+  Environment: development
+  Database: ./database.sqlite
+  Frontend URL: http://localhost:3000
+  OTLP Endpoint: https://xtc47953.live.dynatrace.com/api/v2/otlp
+
+🔍 Checking dependencies...
+✅ Starting with OpenTelemetry instrumentation...
+
+💡 Running Maven with Spring Boot and OpenTelemetry agent...
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------------< com.shopper:java-backend >----------------------
+[INFO] Building Java Backend 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.3.2:clean (default-clean) @ java-backend ---
+[INFO] Deleting /Users/suthar/dev/shopper/backend/java-backend/target
+[INFO] 
+[INFO] >>> spring-boot:3.2.0:run (default-cli) > test-compile @ java-backend >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ java-backend ---
+[INFO] Copying 4 resources from src/main/resources to target/classes
+[INFO] Copying 2 resources from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ java-backend ---
+[INFO] Changes detected - recompiling the module! :source
+[INFO] Compiling 55 source files with javac [debug release 17] to target/classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ java-backend ---
+[INFO] Copying 1 resource from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ java-backend ---
+[INFO] Changes detected - recompiling the module! :dependency
+[INFO] Compiling 7 source files with javac [debug release 17] to target/test-classes
+[INFO] 
+[INFO] <<< spring-boot:3.2.0:run (default-cli) < test-compile @ java-backend <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.2.0:run (default-cli) @ java-backend ---
+[INFO] Attaching agents: []
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+[otel.javaagent 2025-09-04 14:12:40:217 -0400] [main] INFO io.opentelemetry.javaagent.tooling.VersionLogger - opentelemetry-javaagent - version: 2.17.1
+14:12:49,156 |-INFO in ch.qos.logback.classic.LoggerContext[default] - This is logback-classic version 1.4.11
+14:12:49,160 |-INFO in ch.qos.logback.classic.util.ContextInitializer@5d2e6f62 - Here is a list of configurators discovered as a service, by rank: 
+14:12:49,160 |-INFO in ch.qos.logback.classic.util.ContextInitializer@5d2e6f62 -   org.springframework.boot.logging.logback.RootLogLevelConfigurator
+14:12:49,160 |-INFO in ch.qos.logback.classic.util.ContextInitializer@5d2e6f62 - They will be invoked in order until ExecutionStatus.DO_NOT_INVOKE_NEXT_IF_ANY is returned.
+14:12:49,160 |-INFO in ch.qos.logback.classic.util.ContextInitializer@5d2e6f62 - Constructed configurator of type class org.springframework.boot.logging.logback.RootLogLevelConfigurator
+14:12:49,171 |-INFO in ch.qos.logback.classic.util.ContextInitializer@5d2e6f62 - org.springframework.boot.logging.logback.RootLogLevelConfigurator.configure() call lasted 0 milliseconds. ExecutionStatus=INVOKE_NEXT_IF_ANY
+14:12:49,172 |-INFO in ch.qos.logback.classic.util.ContextInitializer@5d2e6f62 - Trying to configure with ch.qos.logback.classic.joran.SerializedModelConfigurator
+14:12:49,174 |-INFO in ch.qos.logback.classic.util.ContextInitializer@5d2e6f62 - Constructed configurator of type class ch.qos.logback.classic.joran.SerializedModelConfigurator
+14:12:49,202 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.scmo]
+14:12:49,203 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback.scmo]
+14:12:49,203 |-INFO in ch.qos.logback.classic.util.ContextInitializer@5d2e6f62 - ch.qos.logback.classic.joran.SerializedModelConfigurator.configure() call lasted 29 milliseconds. ExecutionStatus=INVOKE_NEXT_IF_ANY
+14:12:49,203 |-INFO in ch.qos.logback.classic.util.ContextInitializer@5d2e6f62 - Trying to configure with ch.qos.logback.classic.util.DefaultJoranConfigurator
+14:12:49,204 |-INFO in ch.qos.logback.classic.util.ContextInitializer@5d2e6f62 - Constructed configurator of type class ch.qos.logback.classic.util.DefaultJoranConfigurator
+14:12:49,204 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.xml]
+14:12:49,204 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback.xml]
+14:12:49,204 |-INFO in ch.qos.logback.classic.util.ContextInitializer@5d2e6f62 - ch.qos.logback.classic.util.DefaultJoranConfigurator.configure() call lasted 0 milliseconds. ExecutionStatus=INVOKE_NEXT_IF_ANY
+14:12:49,204 |-INFO in ch.qos.logback.classic.util.ContextInitializer@5d2e6f62 - Trying to configure with ch.qos.logback.classic.BasicConfigurator
+14:12:49,205 |-INFO in ch.qos.logback.classic.util.ContextInitializer@5d2e6f62 - Constructed configurator of type class ch.qos.logback.classic.BasicConfigurator
+14:12:49,205 |-INFO in ch.qos.logback.classic.BasicConfigurator@77ff14ce - Setting up default configuration.
+14:12:49,227 |-INFO in ch.qos.logback.classic.util.ContextInitializer@5d2e6f62 - ch.qos.logback.classic.BasicConfigurator.configure() call lasted 22 milliseconds. ExecutionStatus=NEUTRAL
+14:12:50,140 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - Processing appender named [CONSOLE]
+14:12:50,140 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - About to instantiate appender of type [ch.qos.logback.core.ConsoleAppender]
+14:12:50,161 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - Processing appender named [OTEL]
+14:12:50,161 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - About to instantiate appender of type [io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender]
+14:12:50,168 |-WARN in ch.qos.logback.core.model.processor.ImplicitModelHandler - Ignoring unknown property [includeInstrumentationScopeInfo] in [io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender]
+14:12:50,177 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [com.shopper.config.DevCycleLoggingHook] to INFO
+14:12:50,177 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@733fae8 - Propagating INFO level on Logger[com.shopper.config.DevCycleLoggingHook] onto the JUL framework
+14:12:50,182 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting additivity of logger [com.shopper.config.DevCycleLoggingHook] to false
+14:12:50,182 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [CONSOLE] to Logger[com.shopper.config.DevCycleLoggingHook]
+14:12:50,182 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [OTEL] to Logger[com.shopper.config.DevCycleLoggingHook]
+14:12:50,182 |-INFO in ch.qos.logback.classic.model.processor.RootLoggerModelHandler - Setting level of ROOT logger to INFO
+14:12:50,182 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@733fae8 - Propagating INFO level on Logger[ROOT] onto the JUL framework
+14:12:50,182 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [CONSOLE] to Logger[ROOT]
+14:12:50,182 |-INFO in ch.qos.logback.core.model.processor.DefaultProcessor@5a8d676e - End of configuration.
+14:12:50,182 |-INFO in org.springframework.boot.logging.logback.SpringBootJoranConfigurator@74764622 - Registering current configuration as safe fallback point
+
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.0)
+
+2025-09-04 14:12:50 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2025-09-04 14:12:50 [main] INFO  com.shopper.JavaBackendApplication - Starting JavaBackendApplication using Java 18.0.2 with PID 88354 (/Users/suthar/dev/shopper/backend/java-backend/target/classes started by suthar in /Users/suthar/dev/shopper/backend/java-backend)
+2025-09-04 14:12:50 [main] DEBUG com.shopper.JavaBackendApplication - Running with Spring Boot v3.2.0, Spring v6.1.1
+2025-09-04 14:12:50 [main] INFO  com.shopper.JavaBackendApplication - The following 1 profile is active: "development"
+2025-09-04 14:12:51 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-09-04 14:12:51 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 46 ms. Found 3 JPA repository interfaces.
+2025-09-04 14:12:51 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-09-04 14:12:51 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 13 ms. Found 2 JPA repository interfaces.
+2025-09-04 14:12:53 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 3002 (http)
+2025-09-04 14:12:53 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-3002"]
+2025-09-04 14:12:53 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-09-04 14:12:53 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.16]
+2025-09-04 14:12:54 [main] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2025-09-04 14:12:54 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3540 ms
+2025-09-04 14:12:55 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-09-04 14:12:55 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.3.1.Final
+2025-09-04 14:12:55 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-09-04 14:12:55 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-09-04 14:12:55 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-09-04 14:12:56 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.sqlite.jdbc4.JDBC4Connection@15c900be
+2025-09-04 14:12:56 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-09-04 14:12:58 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-09-04 14:12:58 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-09-04 14:12:58 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-09-04 14:13:06 [main] INFO  c.shopper.config.OpenFeatureConfig - ✅ OpenFeature with DevCycle provider initialized successfully
+2025-09-04 14:13:06 [main] INFO  c.shopper.config.OpenFeatureConfig - 🔍 DevCycle hooks registered for OpenTelemetry tracing and logging
+Variable called before DevCycleLocalClient has initialized, returning default value
+2025-09-04 14:13:06 [main] INFO  c.shopper.config.OpenFeatureConfig - 🎛️ DevCycle feature flag 'use-neon' evaluated to: false for admin user
+Variable called before DevCycleLocalClient has initialized, returning default value
+2025-09-04 14:13:06 [main] INFO  c.shopper.config.OpenFeatureConfig - 🎛️ DevCycle feature flag 'new-flow' evaluated to: false for admin user
+2025-09-04 14:13:06 [main] WARN  o.s.aop.framework.CglibAopProxy - Unable to proxy interface-implementing method [public final void org.springframework.web.filter.OncePerRequestFilter.doFilter(jakarta.servlet.ServletRequest,jakarta.servlet.ServletResponse,jakarta.servlet.FilterChain) throws jakarta.servlet.ServletException,java.io.IOException] because it is marked as final, consider using interface-based JDK proxies instead.
+2025-09-04 14:13:06 [main] WARN  o.s.aop.framework.CglibAopProxy - Unable to proxy interface-implementing method [public final void org.springframework.web.filter.GenericFilterBean.init(jakarta.servlet.FilterConfig) throws jakarta.servlet.ServletException] because it is marked as final, consider using interface-based JDK proxies instead.
+2025-09-04 14:13:06 [main] DEBUG c.s.security.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2025-09-04 14:13:06 [main] DEBUG o.s.w.f.ServerHttpObservationFilter - Filter 'webMvcObservationFilter' configured for use
+2025-09-04 14:13:06 [main] INFO  c.shopper.config.OpenTelemetryConfig - 📊 OpenTelemetry Java Agent enabled for service: java-backend v1.0.0 (development)
+2025-09-04 14:13:06 [main] INFO  c.shopper.config.OpenTelemetryConfig - 🔗 OpenTelemetry configured for OTLP endpoint: https://xtc47953.live.dynatrace.com/api/v2/otlp
+2025-09-04 14:13:06 [main] INFO  c.shopper.config.OpenTelemetryConfig - 🔐 OTLP headers configured for authentication
+2025-09-04 14:13:06 [main] INFO  c.shopper.config.OpenTelemetryConfig - ✅ Using OpenTelemetry Java Agent for auto-instrumentation
+2025-09-04 14:13:07 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-09-04 14:13:07 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 49 mappings in 'requestMappingHandlerMapping'
+2025-09-04 14:13:08 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2025-09-04 14:13:08 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 3 endpoint(s) beneath base path '/actuator'
+2025-09-04 14:13:08 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5a595cad, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@66d87874, org.springframework.security.web.context.SecurityContextHolderFilter@2b5dfb1b, org.springframework.security.web.header.HeaderWriterFilter@36885534, org.springframework.web.filter.CorsFilter@1bfcf859, org.springframework.security.web.authentication.logout.LogoutFilter@621b834, com.shopper.security.JwtAuthenticationFilter@45dab1cd, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@72d4ff34, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1869639d, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@38729b3d, org.springframework.security.web.session.SessionManagementFilter@7156c7e5, org.springframework.security.web.access.ExceptionTranslationFilter@6de21950, org.springframework.security.web.access.intercept.AuthorizationFilter@4d6c4bd5]
+2025-09-04 14:13:08 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-09-04 14:13:08 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-09-04 14:13:09 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-3002"]
+2025-09-04 14:13:09 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 3002 (http) with context path '/api'
+2025-09-04 14:13:09 [main] INFO  com.shopper.JavaBackendApplication - Started JavaBackendApplication in 19.937 seconds (process running for 29.653)
+🚀 Java Backend Server is running!
+2025-09-04 14:15:03 [http-nio-3002-exec-1] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-09-04 14:15:03 [http-nio-3002-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-09-04 14:15:03 [http-nio-3002-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2025-09-04 14:15:03 [http-nio-3002-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2025-09-04 14:15:03 [http-nio-3002-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2025-09-04 14:15:03 [http-nio-3002-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@673dbe6a
+2025-09-04 14:15:03 [http-nio-3002-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@a35b137
+2025-09-04 14:15:03 [http-nio-3002-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2025-09-04 14:15:03 [http-nio-3002-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2025-09-04 14:15:03 [http-nio-3002-exec-1] DEBUG o.s.security.web.FilterChainProxy - Securing POST /auth/login
+2025-09-04 14:15:03 [http-nio-3002-exec-2] DEBUG o.s.security.web.FilterChainProxy - Securing POST /auth/login
+2025-09-04 14:15:03 [http-nio-3002-exec-1] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-04 14:15:03 [http-nio-3002-exec-2] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-04 14:15:03 [http-nio-3002-exec-2] WARN  o.s.w.s.h.HandlerMappingIntrospector - Cache miss for REQUEST dispatch to '/api/auth/login' (previous null). Performing MatchableHandlerMapping lookup. This is logged once only at WARN level, and every time at TRACE.
+2025-09-04 14:15:03 [http-nio-3002-exec-2] DEBUG o.s.security.web.FilterChainProxy - Secured POST /auth/login
+2025-09-04 14:15:03 [http-nio-3002-exec-1] DEBUG o.s.security.web.FilterChainProxy - Secured POST /auth/login
+2025-09-04 14:15:03 [http-nio-3002-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/auth/login", parameters={}
+2025-09-04 14:15:03 [http-nio-3002-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/auth/login", parameters={}
+2025-09-04 14:15:03 [http-nio-3002-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.shopper.controller.AuthController#login(LoginDto)
+2025-09-04 14:15:03 [http-nio-3002-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.shopper.controller.AuthController#login(LoginDto)
+2025-09-04 14:15:03 [http-nio-3002-exec-2] INFO  c.s.interceptor.LoggingInterceptor - 🔄 POST /api/auth/login [Anonymous] - Request started
+2025-09-04 14:15:03 [http-nio-3002-exec-1] INFO  c.s.interceptor.LoggingInterceptor - 🔄 POST /api/auth/login [Anonymous] - Request started
+2025-09-04 14:15:03 [http-nio-3002-exec-2] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [LoginDto(username=admin, password=password)]
+2025-09-04 14:15:03 [http-nio-3002-exec-1] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [LoginDto(username=user, password=password)]
+2025-09-04 14:15:04 [http-nio-3002-exec-1] DEBUG c.s.service.DualDatabaseStrategyImpl - Secondary database not enabled, using primary for read operation
+2025-09-04 14:15:04 [http-nio-3002-exec-2] DEBUG c.s.service.DualDatabaseStrategyImpl - Secondary database not enabled, using primary for read operation
+2025-09-04 14:15:04 [http-nio-3002-exec-2] DEBUG org.hibernate.SQL - select u1_0.id,u1_0.created_at,u1_0.email,u1_0.password,u1_0.role,u1_0.updated_at,u1_0.username from users u1_0 where u1_0.username=?
+2025-09-04 14:15:04 [http-nio-3002-exec-1] DEBUG org.hibernate.SQL - select u1_0.id,u1_0.created_at,u1_0.email,u1_0.password,u1_0.role,u1_0.updated_at,u1_0.username from users u1_0 where u1_0.username=?
+2025-09-04 14:15:04 [http-nio-3002-exec-2] DEBUG o.s.s.a.d.DaoAuthenticationProvider - Authenticated user
+2025-09-04 14:15:04 [http-nio-3002-exec-1] DEBUG o.s.s.a.d.DaoAuthenticationProvider - Authenticated user
+2025-09-04 14:15:04 [http-nio-3002-exec-1] DEBUG c.s.service.DualDatabaseStrategyImpl - Secondary database not enabled, using primary for read operation
+2025-09-04 14:15:04 [http-nio-3002-exec-2] DEBUG c.s.service.DualDatabaseStrategyImpl - Secondary database not enabled, using primary for read operation
+2025-09-04 14:15:04 [http-nio-3002-exec-2] DEBUG org.hibernate.SQL - select u1_0.id,u1_0.created_at,u1_0.email,u1_0.password,u1_0.role,u1_0.updated_at,u1_0.username from users u1_0 where u1_0.username=?
+2025-09-04 14:15:04 [http-nio-3002-exec-1] DEBUG org.hibernate.SQL - select u1_0.id,u1_0.created_at,u1_0.email,u1_0.password,u1_0.role,u1_0.updated_at,u1_0.username from users u1_0 where u1_0.username=?
+2025-09-04 14:15:04 [http-nio-3002-exec-1] DEBUG c.s.service.DualDatabaseStrategyImpl - Secondary database not enabled, using primary for read operation
+2025-09-04 14:15:04 [http-nio-3002-exec-2] DEBUG c.s.service.DualDatabaseStrategyImpl - Secondary database not enabled, using primary for read operation
+2025-09-04 14:15:04 [http-nio-3002-exec-1] DEBUG org.hibernate.SQL - select u1_0.id,u1_0.created_at,u1_0.email,u1_0.password,u1_0.role,u1_0.updated_at,u1_0.username from users u1_0 where u1_0.username=?
+2025-09-04 14:15:04 [http-nio-3002-exec-2] DEBUG org.hibernate.SQL - select u1_0.id,u1_0.created_at,u1_0.email,u1_0.password,u1_0.role,u1_0.updated_at,u1_0.username from users u1_0 where u1_0.username=?
+2025-09-04 14:15:04 [http-nio-3002-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-09-04 14:15:04 [http-nio-3002-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-09-04 14:15:04 [http-nio-3002-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [AuthResponseDto(token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc1NzAwOTcwNCwiZXhwIjoxNzU3M (truncated)...]
+2025-09-04 14:15:04 [http-nio-3002-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [AuthResponseDto(token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwiaWF0IjoxNzU3MDA5NzA0LCJleHAiOjE3NTcwO (truncated)...]
+2025-09-04 14:15:04 [http-nio-3002-exec-1] INFO  c.s.interceptor.LoggingInterceptor - ✅ POST /api/auth/login [Anonymous] - 200 (712ms)
+2025-09-04 14:15:04 [http-nio-3002-exec-2] INFO  c.s.interceptor.LoggingInterceptor - ✅ POST /api/auth/login [Anonymous] - 200 (712ms)
+2025-09-04 14:15:04 [http-nio-3002-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-04 14:15:04 [http-nio-3002-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-04 14:15:04 [http-nio-3002-exec-3] DEBUG o.s.security.web.FilterChainProxy - Securing GET /products
+2025-09-04 14:15:04 [http-nio-3002-exec-3] INFO  c.s.security.JwtAuthenticationFilter - JWT token extracted, username: user
+2025-09-04 14:15:04 [http-nio-3002-exec-3] INFO  c.s.security.JwtAuthenticationFilter - Loading user details for username: user
+2025-09-04 14:15:04 [http-nio-3002-exec-3] DEBUG c.s.service.DualDatabaseStrategyImpl - Secondary database not enabled, using primary for read operation
+2025-09-04 14:15:04 [http-nio-3002-exec-3] DEBUG org.hibernate.SQL - select u1_0.id,u1_0.created_at,u1_0.email,u1_0.password,u1_0.role,u1_0.updated_at,u1_0.username from users u1_0 where u1_0.username=?
+2025-09-04 14:15:04 [http-nio-3002-exec-3] INFO  c.s.security.JwtAuthenticationFilter - User details loaded successfully for: user
+2025-09-04 14:15:04 [http-nio-3002-exec-3] INFO  c.s.security.JwtAuthenticationFilter - JWT token validation successful for user: user
+2025-09-04 14:15:04 [http-nio-3002-exec-3] INFO  c.s.security.JwtAuthenticationFilter - Authentication set in SecurityContext for user: user
+2025-09-04 14:15:04 [http-nio-3002-exec-3] DEBUG o.s.security.web.FilterChainProxy - Secured GET /products
+2025-09-04 14:15:04 [http-nio-3002-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/products", parameters={}
+2025-09-04 14:15:04 [http-nio-3002-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.shopper.controller.ProductController#getAllProducts()
+2025-09-04 14:15:04 [http-nio-3002-exec-3] INFO  c.s.interceptor.LoggingInterceptor - 🔄 GET /api/products [User: user] - Request started
+2025-09-04 14:15:04 [http-nio-3002-exec-3] INFO  c.shopper.service.FeatureFlagService - Feature flags initialized with default values
+2025-09-04 14:15:05 [http-nio-3002-exec-4] DEBUG o.s.security.web.FilterChainProxy - Securing GET /products
+2025-09-04 14:15:05 [http-nio-3002-exec-4] INFO  c.s.security.JwtAuthenticationFilter - JWT token extracted, username: user
+2025-09-04 14:15:05 [http-nio-3002-exec-4] INFO  c.s.security.JwtAuthenticationFilter - Loading user details for username: user
+2025-09-04 14:15:05 [http-nio-3002-exec-4] DEBUG c.s.service.DualDatabaseStrategyImpl - Secondary database not enabled, using primary for read operation
+2025-09-04 14:15:05 [http-nio-3002-exec-4] DEBUG org.hibernate.SQL - select u1_0.id,u1_0.created_at,u1_0.email,u1_0.password,u1_0.role,u1_0.updated_at,u1_0.username from users u1_0 where u1_0.username=?
+2025-09-04 14:15:05 [http-nio-3002-exec-4] INFO  c.s.security.JwtAuthenticationFilter - User details loaded successfully for: user
+2025-09-04 14:15:05 [http-nio-3002-exec-4] INFO  c.s.security.JwtAuthenticationFilter - JWT token validation successful for user: user
+2025-09-04 14:15:05 [http-nio-3002-exec-4] INFO  c.s.security.JwtAuthenticationFilter - Authentication set in SecurityContext for user: user
+2025-09-04 14:15:05 [http-nio-3002-exec-4] DEBUG o.s.security.web.FilterChainProxy - Secured GET /products
+2025-09-04 14:15:05 [http-nio-3002-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/products", parameters={}
+2025-09-04 14:15:05 [http-nio-3002-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.shopper.controller.ProductController#getAllProducts()
+2025-09-04 14:15:05 [http-nio-3002-exec-4] INFO  c.s.interceptor.LoggingInterceptor - 🔄 GET /api/products [User: user] - Request started
+2025-09-04 14:15:09 [http-nio-3002-exec-3] INFO  c.shopper.config.DevCycleLoggingHook - Feature flag evaluation completed for key: new-flow
+2025-09-04 14:15:09 [http-nio-3002-exec-3] DEBUG c.shopper.service.FeatureFlagService - 🎛️ Feature flag 'new-flow' evaluated to: true for user: user
+2025-09-04 14:15:09 [http-nio-3002-exec-3] INFO  com.shopper.service.ProductService - ✅ New flow enabled for user: user
+2025-09-04 14:15:09 [http-nio-3002-exec-3] DEBUG c.s.service.DualDatabaseStrategyImpl - Secondary database not enabled, using primary for read operation
+2025-09-04 14:15:09 [http-nio-3002-exec-3] DEBUG org.hibernate.SQL - select p1_0.id,p1_0.category,p1_0.created_at,p1_0.description,p1_0.image_url,p1_0.name,p1_0.price,p1_0.stock_quantity,p1_0.updated_at from products p1_0 where p1_0.stock_quantity>0
+2025-09-04 14:15:10 [http-nio-3002-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-09-04 14:15:10 [http-nio-3002-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[Product(id=65336362-3637-3733-2d33-3135312d3463, name=Wireless Bluetooth Headphones, description=Hi (truncated)...]
+2025-09-04 14:15:10 [http-nio-3002-exec-5] DEBUG o.s.security.web.FilterChainProxy - Securing GET /products
+2025-09-04 14:15:10 [http-nio-3002-exec-5] INFO  c.s.security.JwtAuthenticationFilter - JWT token extracted, username: admin
+2025-09-04 14:15:10 [http-nio-3002-exec-5] INFO  c.s.security.JwtAuthenticationFilter - Loading user details for username: admin
+2025-09-04 14:15:10 [http-nio-3002-exec-5] DEBUG c.s.service.DualDatabaseStrategyImpl - Secondary database not enabled, using primary for read operation
+2025-09-04 14:15:10 [http-nio-3002-exec-5] DEBUG org.hibernate.SQL - select u1_0.id,u1_0.created_at,u1_0.email,u1_0.password,u1_0.role,u1_0.updated_at,u1_0.username from users u1_0 where u1_0.username=?
+2025-09-04 14:15:10 [http-nio-3002-exec-5] INFO  c.s.security.JwtAuthenticationFilter - User details loaded successfully for: admin
+2025-09-04 14:15:10 [http-nio-3002-exec-5] INFO  c.s.security.JwtAuthenticationFilter - JWT token validation successful for user: admin
+2025-09-04 14:15:10 [http-nio-3002-exec-5] INFO  c.s.security.JwtAuthenticationFilter - Authentication set in SecurityContext for user: admin
+2025-09-04 14:15:10 [http-nio-3002-exec-5] DEBUG o.s.security.web.FilterChainProxy - Secured GET /products
+2025-09-04 14:15:10 [http-nio-3002-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/products", parameters={}
+2025-09-04 14:15:10 [http-nio-3002-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.shopper.controller.ProductController#getAllProducts()
+2025-09-04 14:15:10 [http-nio-3002-exec-5] INFO  c.s.interceptor.LoggingInterceptor - 🔄 GET /api/products [User: admin] - Request started
+2025-09-04 14:15:10 [http-nio-3002-exec-5] INFO  c.shopper.config.DevCycleLoggingHook - Feature flag evaluation completed for key: new-flow
+2025-09-04 14:15:10 [http-nio-3002-exec-5] DEBUG c.shopper.service.FeatureFlagService - 🎛️ Feature flag 'new-flow' evaluated to: true for user: admin
+2025-09-04 14:15:10 [http-nio-3002-exec-5] INFO  com.shopper.service.ProductService - ✅ New flow enabled for user: admin
+2025-09-04 14:15:10 [http-nio-3002-exec-5] DEBUG c.s.service.DualDatabaseStrategyImpl - Secondary database not enabled, using primary for read operation
+2025-09-04 14:15:10 [http-nio-3002-exec-5] DEBUG org.hibernate.SQL - select p1_0.id,p1_0.category,p1_0.created_at,p1_0.description,p1_0.image_url,p1_0.name,p1_0.price,p1_0.stock_quantity,p1_0.updated_at from products p1_0 where p1_0.stock_quantity>0
+2025-09-04 14:15:10 [http-nio-3002-exec-3] INFO  c.s.interceptor.LoggingInterceptor - ✅ GET /api/products [User: user] - 200 (5385ms)
+2025-09-04 14:15:10 [http-nio-3002-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-04 14:15:10 [http-nio-3002-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-09-04 14:15:10 [http-nio-3002-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[Product(id=65336362-3637-3733-2d33-3135312d3463, name=Wireless Bluetooth Headphones, description=Hi (truncated)...]
+2025-09-04 14:15:10 [http-nio-3002-exec-5] INFO  c.s.interceptor.LoggingInterceptor - ✅ GET /api/products [User: admin] - 200 (39ms)
+2025-09-04 14:15:10 [http-nio-3002-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-04 14:15:10 [http-nio-3002-exec-4] INFO  c.shopper.config.DevCycleLoggingHook - Feature flag evaluation completed for key: new-flow
+2025-09-04 14:15:10 [http-nio-3002-exec-4] DEBUG c.shopper.service.FeatureFlagService - 🎛️ Feature flag 'new-flow' evaluated to: true for user: user
+2025-09-04 14:15:10 [http-nio-3002-exec-4] INFO  com.shopper.service.ProductService - ✅ New flow enabled for user: user
+2025-09-04 14:15:10 [http-nio-3002-exec-4] DEBUG c.s.service.DualDatabaseStrategyImpl - Secondary database not enabled, using primary for read operation
+2025-09-04 14:15:10 [http-nio-3002-exec-4] DEBUG org.hibernate.SQL - select p1_0.id,p1_0.category,p1_0.created_at,p1_0.description,p1_0.image_url,p1_0.name,p1_0.price,p1_0.stock_quantity,p1_0.updated_at from products p1_0 where p1_0.stock_quantity>0
+2025-09-04 14:15:10 [http-nio-3002-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-09-04 14:15:10 [http-nio-3002-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[Product(id=65336362-3637-3733-2d33-3135312d3463, name=Wireless Bluetooth Headphones, description=Hi (truncated)...]
+2025-09-04 14:15:10 [http-nio-3002-exec-4] INFO  c.s.interceptor.LoggingInterceptor - ✅ GET /api/products [User: user] - 200 (5042ms)
+2025-09-04 14:15:10 [http-nio-3002-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-04 14:15:12 [http-nio-3002-exec-6] DEBUG o.s.security.web.FilterChainProxy - Securing GET /products
+2025-09-04 14:15:12 [http-nio-3002-exec-6] INFO  c.s.security.JwtAuthenticationFilter - JWT token extracted, username: user
+2025-09-04 14:15:12 [http-nio-3002-exec-6] INFO  c.s.security.JwtAuthenticationFilter - Loading user details for username: user
+2025-09-04 14:15:12 [http-nio-3002-exec-6] DEBUG c.s.service.DualDatabaseStrategyImpl - Secondary database not enabled, using primary for read operation
+2025-09-04 14:15:12 [http-nio-3002-exec-6] DEBUG org.hibernate.SQL - select u1_0.id,u1_0.created_at,u1_0.email,u1_0.password,u1_0.role,u1_0.updated_at,u1_0.username from users u1_0 where u1_0.username=?
+2025-09-04 14:15:12 [http-nio-3002-exec-6] INFO  c.s.security.JwtAuthenticationFilter - User details loaded successfully for: user
+2025-09-04 14:15:12 [http-nio-3002-exec-6] INFO  c.s.security.JwtAuthenticationFilter - JWT token validation successful for user: user
+2025-09-04 14:15:12 [http-nio-3002-exec-6] INFO  c.s.security.JwtAuthenticationFilter - Authentication set in SecurityContext for user: user
+2025-09-04 14:15:12 [http-nio-3002-exec-6] DEBUG o.s.security.web.FilterChainProxy - Secured GET /products
+2025-09-04 14:15:12 [http-nio-3002-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/products", parameters={}
+2025-09-04 14:15:12 [http-nio-3002-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.shopper.controller.ProductController#getAllProducts()
+2025-09-04 14:15:12 [http-nio-3002-exec-6] INFO  c.s.interceptor.LoggingInterceptor - 🔄 GET /api/products [User: user] - Request started
+2025-09-04 14:15:12 [http-nio-3002-exec-6] INFO  c.shopper.config.DevCycleLoggingHook - Feature flag evaluation completed for key: new-flow
+2025-09-04 14:15:12 [http-nio-3002-exec-6] DEBUG c.shopper.service.FeatureFlagService - 🎛️ Feature flag 'new-flow' evaluated to: true for user: user
+2025-09-04 14:15:12 [http-nio-3002-exec-6] INFO  com.shopper.service.ProductService - ✅ New flow enabled for user: user
+2025-09-04 14:15:12 [http-nio-3002-exec-6] DEBUG c.s.service.DualDatabaseStrategyImpl - Secondary database not enabled, using primary for read operation
+2025-09-04 14:15:12 [http-nio-3002-exec-6] DEBUG org.hibernate.SQL - select p1_0.id,p1_0.category,p1_0.created_at,p1_0.description,p1_0.image_url,p1_0.name,p1_0.price,p1_0.stock_quantity,p1_0.updated_at from products p1_0 where p1_0.stock_quantity>0
+2025-09-04 14:15:12 [http-nio-3002-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-09-04 14:15:12 [http-nio-3002-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[Product(id=65336362-3637-3733-2d33-3135312d3463, name=Wireless Bluetooth Headphones, description=Hi (truncated)...]
+2025-09-04 14:15:12 [http-nio-3002-exec-6] INFO  c.s.interceptor.LoggingInterceptor - ✅ GET /api/products [User: user] - 200 (26ms)
+2025-09-04 14:15:12 [http-nio-3002-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-04 14:15:15 [http-nio-3002-exec-7] DEBUG o.s.security.web.FilterChainProxy - Securing GET /products
+2025-09-04 14:15:15 [http-nio-3002-exec-7] INFO  c.s.security.JwtAuthenticationFilter - JWT token extracted, username: admin
+2025-09-04 14:15:15 [http-nio-3002-exec-7] INFO  c.s.security.JwtAuthenticationFilter - Loading user details for username: admin
+2025-09-04 14:15:15 [http-nio-3002-exec-7] DEBUG c.s.service.DualDatabaseStrategyImpl - Secondary database not enabled, using primary for read operation
+2025-09-04 14:15:15 [http-nio-3002-exec-7] DEBUG org.hibernate.SQL - select u1_0.id,u1_0.created_at,u1_0.email,u1_0.password,u1_0.role,u1_0.updated_at,u1_0.username from users u1_0 where u1_0.username=?
+2025-09-04 14:15:15 [http-nio-3002-exec-7] INFO  c.s.security.JwtAuthenticationFilter - User details loaded successfully for: admin
+2025-09-04 14:15:15 [http-nio-3002-exec-7] INFO  c.s.security.JwtAuthenticationFilter - JWT token validation successful for user: admin
+2025-09-04 14:15:15 [http-nio-3002-exec-7] INFO  c.s.security.JwtAuthenticationFilter - Authentication set in SecurityContext for user: admin
+2025-09-04 14:15:15 [http-nio-3002-exec-7] DEBUG o.s.security.web.FilterChainProxy - Secured GET /products
+2025-09-04 14:15:15 [http-nio-3002-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/products", parameters={}
+2025-09-04 14:15:15 [http-nio-3002-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.shopper.controller.ProductController#getAllProducts()
+2025-09-04 14:15:15 [http-nio-3002-exec-7] INFO  c.s.interceptor.LoggingInterceptor - 🔄 GET /api/products [User: admin] - Request started
+2025-09-04 14:15:18 [http-nio-3002-exec-8] DEBUG o.s.security.web.FilterChainProxy - Securing GET /products
+2025-09-04 14:15:18 [http-nio-3002-exec-8] INFO  c.s.security.JwtAuthenticationFilter - JWT token extracted, username: user
+2025-09-04 14:15:18 [http-nio-3002-exec-8] INFO  c.s.security.JwtAuthenticationFilter - Loading user details for username: user
+2025-09-04 14:15:18 [http-nio-3002-exec-8] DEBUG c.s.service.DualDatabaseStrategyImpl - Secondary database not enabled, using primary for read operation
+2025-09-04 14:15:18 [http-nio-3002-exec-8] DEBUG org.hibernate.SQL - select u1_0.id,u1_0.created_at,u1_0.email,u1_0.password,u1_0.role,u1_0.updated_at,u1_0.username from users u1_0 where u1_0.username=?
+2025-09-04 14:15:18 [http-nio-3002-exec-8] INFO  c.s.security.JwtAuthenticationFilter - User details loaded successfully for: user
+2025-09-04 14:15:18 [http-nio-3002-exec-8] INFO  c.s.security.JwtAuthenticationFilter - JWT token validation successful for user: user
+2025-09-04 14:15:18 [http-nio-3002-exec-8] INFO  c.s.security.JwtAuthenticationFilter - Authentication set in SecurityContext for user: user
+2025-09-04 14:15:18 [http-nio-3002-exec-8] DEBUG o.s.security.web.FilterChainProxy - Secured GET /products
+2025-09-04 14:15:18 [http-nio-3002-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/products", parameters={}
+2025-09-04 14:15:18 [http-nio-3002-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.shopper.controller.ProductController#getAllProducts()
+2025-09-04 14:15:18 [http-nio-3002-exec-8] INFO  c.s.interceptor.LoggingInterceptor - 🔄 GET /api/products [User: user] - Request started
+2025-09-04 14:15:20 [http-nio-3002-exec-7] INFO  c.shopper.config.DevCycleLoggingHook - Feature flag evaluation completed for key: new-flow
+2025-09-04 14:15:20 [http-nio-3002-exec-7] DEBUG c.shopper.service.FeatureFlagService - 🎛️ Feature flag 'new-flow' evaluated to: true for user: admin
+2025-09-04 14:15:20 [http-nio-3002-exec-7] INFO  com.shopper.service.ProductService - ✅ New flow enabled for user: admin
+2025-09-04 14:15:20 [http-nio-3002-exec-7] INFO  c.s.interceptor.LoggingInterceptor - ❌ GET /api/products [User: admin] - 200 (5016ms) [Error in findAll]
+2025-09-04 14:15:20 [http-nio-3002-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Failed to complete request: java.lang.RuntimeException: Error in findAll
+2025-09-04 14:15:20 [http-nio-3002-exec-7] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [/api] threw exception [Request processing failed: java.lang.RuntimeException: Error in findAll] with root cause
+java.lang.RuntimeException: Error in findAll
+	at com.shopper.service.ProductService.findAll(ProductService.java:42)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:577)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:352)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:713)
+	at com.shopper.service.ProductService$$SpringCGLIB$$0.findAll(<generated>)
+	at com.shopper.controller.ProductController.getAllProducts(ProductController.java:59)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:577)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:352)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:713)
+	at com.shopper.controller.ProductController$$SpringCGLIB$$0.getAllProducts(<generated>)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:577)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:254)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:182)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:917)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:829)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:564)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:205)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:110)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:231)
+	at org.springframework.security.web.ObservationFilterChainDecorator$FilterObservation$SimpleFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:479)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:340)
+	at org.springframework.security.web.ObservationFilterChainDecorator.lambda$wrapSecured$0(ObservationFilterChainDecorator.java:82)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:128)
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:100)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:131)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:85)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at com.shopper.security.JwtAuthenticationFilter.doFilterInternal(JwtAuthenticationFilter.java:83)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:577)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:352)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:713)
+	at com.shopper.security.JwtAuthenticationFilter$$SpringCGLIB$$0.doFilterInternal(<generated>)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$0(ObservationFilterChainDecorator.java:323)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:224)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:352)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:268)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.servlet.v6_0.OpenTelemetryHandlerMappingFilter.doFilter(OpenTelemetryHandlerMappingFilter.java:78)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:109)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2025-09-04 14:15:20 [http-nio-3002-exec-7] DEBUG o.s.security.web.FilterChainProxy - Securing GET /error
+2025-09-04 14:15:20 [http-nio-3002-exec-7] DEBUG o.s.security.web.FilterChainProxy - Secured GET /error
+2025-09-04 14:15:20 [http-nio-3002-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - "ERROR" dispatch for GET "/api/error", parameters={}
+2025-09-04 14:15:20 [http-nio-3002-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
+2025-09-04 14:15:20 [http-nio-3002-exec-7] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-04 14:15:20 [http-nio-3002-exec-7] INFO  c.s.interceptor.LoggingInterceptor - 🔄 GET /api/error [Anonymous] - Request started
+2025-09-04 14:15:20 [http-nio-3002-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-09-04 14:15:20 [http-nio-3002-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [{timestamp=Thu Sep 04 14:15:20 EDT 2025, status=500, error=Internal Server Error, path=/api/products (truncated)...]
+2025-09-04 14:15:20 [http-nio-3002-exec-7] INFO  c.s.interceptor.LoggingInterceptor - ✅ GET /api/error [Anonymous] - 500 (8ms)
+2025-09-04 14:15:20 [http-nio-3002-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Exiting from "ERROR" dispatch, status 500
+2025-09-04 14:15:21 [http-nio-3002-exec-9] DEBUG o.s.security.web.FilterChainProxy - Securing GET /products
+2025-09-04 14:15:21 [http-nio-3002-exec-9] INFO  c.s.security.JwtAuthenticationFilter - JWT token extracted, username: user
+2025-09-04 14:15:21 [http-nio-3002-exec-9] INFO  c.s.security.JwtAuthenticationFilter - Loading user details for username: user
+2025-09-04 14:15:21 [http-nio-3002-exec-9] DEBUG c.s.service.DualDatabaseStrategyImpl - Secondary database not enabled, using primary for read operation
+2025-09-04 14:15:21 [http-nio-3002-exec-9] DEBUG org.hibernate.SQL - select u1_0.id,u1_0.created_at,u1_0.email,u1_0.password,u1_0.role,u1_0.updated_at,u1_0.username from users u1_0 where u1_0.username=?
+2025-09-04 14:15:21 [http-nio-3002-exec-9] INFO  c.s.security.JwtAuthenticationFilter - User details loaded successfully for: user
+2025-09-04 14:15:21 [http-nio-3002-exec-9] INFO  c.s.security.JwtAuthenticationFilter - JWT token validation successful for user: user
+2025-09-04 14:15:21 [http-nio-3002-exec-9] INFO  c.s.security.JwtAuthenticationFilter - Authentication set in SecurityContext for user: user
+2025-09-04 14:15:21 [http-nio-3002-exec-9] DEBUG o.s.security.web.FilterChainProxy - Secured GET /products
+2025-09-04 14:15:21 [http-nio-3002-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/products", parameters={}
+2025-09-04 14:15:21 [http-nio-3002-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.shopper.controller.ProductController#getAllProducts()
+2025-09-04 14:15:21 [http-nio-3002-exec-9] INFO  c.s.interceptor.LoggingInterceptor - 🔄 GET /api/products [User: user] - Request started
+2025-09-04 14:15:21 [http-nio-3002-exec-9] INFO  c.shopper.config.DevCycleLoggingHook - Feature flag evaluation completed for key: new-flow
+2025-09-04 14:15:21 [http-nio-3002-exec-9] DEBUG c.shopper.service.FeatureFlagService - 🎛️ Feature flag 'new-flow' evaluated to: true for user: user
+2025-09-04 14:15:21 [http-nio-3002-exec-9] INFO  com.shopper.service.ProductService - ✅ New flow enabled for user: user
+2025-09-04 14:15:21 [http-nio-3002-exec-9] DEBUG c.s.service.DualDatabaseStrategyImpl - Secondary database not enabled, using primary for read operation
+2025-09-04 14:15:21 [http-nio-3002-exec-9] DEBUG org.hibernate.SQL - select p1_0.id,p1_0.category,p1_0.created_at,p1_0.description,p1_0.image_url,p1_0.name,p1_0.price,p1_0.stock_quantity,p1_0.updated_at from products p1_0 where p1_0.stock_quantity>0
+2025-09-04 14:15:21 [http-nio-3002-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-09-04 14:15:21 [http-nio-3002-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[Product(id=65336362-3637-3733-2d33-3135312d3463, name=Wireless Bluetooth Headphones, description=Hi (truncated)...]
+2025-09-04 14:15:21 [http-nio-3002-exec-9] INFO  c.s.interceptor.LoggingInterceptor - ✅ GET /api/products [User: user] - 200 (39ms)
+2025-09-04 14:15:21 [http-nio-3002-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-04 14:15:23 [http-nio-3002-exec-8] INFO  c.shopper.config.DevCycleLoggingHook - Feature flag evaluation completed for key: new-flow
+2025-09-04 14:15:23 [http-nio-3002-exec-8] DEBUG c.shopper.service.FeatureFlagService - 🎛️ Feature flag 'new-flow' evaluated to: true for user: user
+2025-09-04 14:15:23 [http-nio-3002-exec-8] INFO  com.shopper.service.ProductService - ✅ New flow enabled for user: user
+2025-09-04 14:15:23 [http-nio-3002-exec-8] DEBUG c.s.service.DualDatabaseStrategyImpl - Secondary database not enabled, using primary for read operation
+2025-09-04 14:15:23 [http-nio-3002-exec-8] DEBUG org.hibernate.SQL - select p1_0.id,p1_0.category,p1_0.created_at,p1_0.description,p1_0.image_url,p1_0.name,p1_0.price,p1_0.stock_quantity,p1_0.updated_at from products p1_0 where p1_0.stock_quantity>0
+2025-09-04 14:15:23 [http-nio-3002-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-09-04 14:15:23 [http-nio-3002-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[Product(id=65336362-3637-3733-2d33-3135312d3463, name=Wireless Bluetooth Headphones, description=Hi (truncated)...]
+2025-09-04 14:15:23 [http-nio-3002-exec-8] INFO  c.s.interceptor.LoggingInterceptor - ✅ GET /api/products [User: user] - 200 (5043ms)
+2025-09-04 14:15:23 [http-nio-3002-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-04 14:15:23 [http-nio-3002-exec-10] DEBUG o.s.security.web.FilterChainProxy - Securing GET /products
+2025-09-04 14:15:23 [http-nio-3002-exec-10] INFO  c.s.security.JwtAuthenticationFilter - JWT token extracted, username: admin
+2025-09-04 14:15:23 [http-nio-3002-exec-10] INFO  c.s.security.JwtAuthenticationFilter - Loading user details for username: admin
+2025-09-04 14:15:23 [http-nio-3002-exec-10] DEBUG c.s.service.DualDatabaseStrategyImpl - Secondary database not enabled, using primary for read operation
+2025-09-04 14:15:23 [http-nio-3002-exec-10] DEBUG org.hibernate.SQL - select u1_0.id,u1_0.created_at,u1_0.email,u1_0.password,u1_0.role,u1_0.updated_at,u1_0.username from users u1_0 where u1_0.username=?
+2025-09-04 14:15:23 [http-nio-3002-exec-10] INFO  c.s.security.JwtAuthenticationFilter - User details loaded successfully for: admin
+2025-09-04 14:15:23 [http-nio-3002-exec-10] INFO  c.s.security.JwtAuthenticationFilter - JWT token validation successful for user: admin
+2025-09-04 14:15:23 [http-nio-3002-exec-10] INFO  c.s.security.JwtAuthenticationFilter - Authentication set in SecurityContext for user: admin
+2025-09-04 14:15:23 [http-nio-3002-exec-10] DEBUG o.s.security.web.FilterChainProxy - Secured GET /products
+2025-09-04 14:15:23 [http-nio-3002-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/products", parameters={}
+2025-09-04 14:15:23 [http-nio-3002-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.shopper.controller.ProductController#getAllProducts()
+2025-09-04 14:15:23 [http-nio-3002-exec-10] INFO  c.s.interceptor.LoggingInterceptor - 🔄 GET /api/products [User: admin] - Request started
+2025-09-04 14:15:23 [http-nio-3002-exec-10] INFO  c.shopper.config.DevCycleLoggingHook - Feature flag evaluation completed for key: new-flow
+2025-09-04 14:15:23 [http-nio-3002-exec-10] DEBUG c.shopper.service.FeatureFlagService - 🎛️ Feature flag 'new-flow' evaluated to: true for user: admin
+2025-09-04 14:15:23 [http-nio-3002-exec-10] INFO  com.shopper.service.ProductService - ✅ New flow enabled for user: admin
+2025-09-04 14:15:23 [http-nio-3002-exec-10] DEBUG c.s.service.DualDatabaseStrategyImpl - Secondary database not enabled, using primary for read operation
+2025-09-04 14:15:23 [http-nio-3002-exec-10] DEBUG org.hibernate.SQL - select p1_0.id,p1_0.category,p1_0.created_at,p1_0.description,p1_0.image_url,p1_0.name,p1_0.price,p1_0.stock_quantity,p1_0.updated_at from products p1_0 where p1_0.stock_quantity>0
+2025-09-04 14:15:23 [http-nio-3002-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-09-04 14:15:23 [http-nio-3002-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[Product(id=65336362-3637-3733-2d33-3135312d3463, name=Wireless Bluetooth Headphones, description=Hi (truncated)...]
+2025-09-04 14:15:23 [http-nio-3002-exec-10] INFO  c.s.interceptor.LoggingInterceptor - ✅ GET /api/products [User: admin] - 200 (112ms)
+2025-09-04 14:15:23 [http-nio-3002-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-09-04 14:15:25 [http-nio-3002-exec-2] DEBUG o.s.security.web.FilterChainProxy - Securing GET /products
+2025-09-04 14:15:25 [http-nio-3002-exec-2] INFO  c.s.security.JwtAuthenticationFilter - JWT token extracted, username: admin
+2025-09-04 14:15:25 [http-nio-3002-exec-2] INFO  c.s.security.JwtAuthenticationFilter - Loading user details for username: admin
+2025-09-04 14:15:25 [http-nio-3002-exec-2] DEBUG c.s.service.DualDatabaseStrategyImpl - Secondary database not enabled, using primary for read operation
+2025-09-04 14:15:25 [http-nio-3002-exec-2] DEBUG org.hibernate.SQL - select u1_0.id,u1_0.created_at,u1_0.email,u1_0.password,u1_0.role,u1_0.updated_at,u1_0.username from users u1_0 where u1_0.username=?
+2025-09-04 14:15:25 [http-nio-3002-exec-2] INFO  c.s.security.JwtAuthenticationFilter - User details loaded successfully for: admin
+2025-09-04 14:15:25 [http-nio-3002-exec-2] INFO  c.s.security.JwtAuthenticationFilter - JWT token validation successful for user: admin
+2025-09-04 14:15:25 [http-nio-3002-exec-2] INFO  c.s.security.JwtAuthenticationFilter - Authentication set in SecurityContext for user: admin
+2025-09-04 14:15:25 [http-nio-3002-exec-2] DEBUG o.s.security.web.FilterChainProxy - Secured GET /products
+2025-09-04 14:15:25 [http-nio-3002-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/products", parameters={}
+2025-09-04 14:15:25 [http-nio-3002-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.shopper.controller.ProductController#getAllProducts()
+2025-09-04 14:15:25 [http-nio-3002-exec-2] INFO  c.s.interceptor.LoggingInterceptor - 🔄 GET /api/products [User: admin] - Request started
+2025-09-04 14:15:25 [http-nio-3002-exec-2] INFO  c.shopper.config.DevCycleLoggingHook - Feature flag evaluation completed for key: new-flow
+2025-09-04 14:15:25 [http-nio-3002-exec-2] DEBUG c.shopper.service.FeatureFlagService - 🎛️ Feature flag 'new-flow' evaluated to: true for user: admin
+2025-09-04 14:15:25 [http-nio-3002-exec-2] INFO  com.shopper.service.ProductService - ✅ New flow enabled for user: admin
+2025-09-04 14:15:25 [http-nio-3002-exec-2] INFO  c.s.interceptor.LoggingInterceptor - ❌ GET /api/products [User: admin] - 200 (4ms) [Error in findAll]
+2025-09-04 14:15:25 [http-nio-3002-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Failed to complete request: java.lang.RuntimeException: Error in findAll
+2025-09-04 14:15:25 [http-nio-3002-exec-2] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [/api] threw exception [Request processing failed: java.lang.RuntimeException: Error in findAll] with root cause
+java.lang.RuntimeException: Error in findAll
+	at com.shopper.service.ProductService.findAll(ProductService.java:42)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:577)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:352)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:713)
+	at com.shopper.service.ProductService$$SpringCGLIB$$0.findAll(<generated>)
+	at com.shopper.controller.ProductController.getAllProducts(ProductController.java:59)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:577)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:352)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:713)
+	at com.shopper.controller.ProductController$$SpringCGLIB$$0.getAllProducts(<generated>)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:577)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:254)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:182)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:917)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:829)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:564)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:205)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:110)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:231)
+	at org.springframework.security.web.ObservationFilterChainDecorator$FilterObservation$SimpleFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:479)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:340)
+	at org.springframework.security.web.ObservationFilterChainDecorator.lambda$wrapSecured$0(ObservationFilterChainDecorator.java:82)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:128)
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:100)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:131)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:85)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at com.shopper.security.JwtAuthenticationFilter.doFilterInternal(JwtAuthenticationFilter.java:83)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:577)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:352)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:713)
+	at com.shopper.security.JwtAuthenticationFilter$$SpringCGLIB$$0.doFilterInternal(<generated>)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$0(ObservationFilterChainDecorator.java:323)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:224)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:352)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:268)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.servlet.v6_0.OpenTelemetryHandlerMappingFilter.doFilter(OpenTelemetryHandlerMappingFilter.java:78)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:109)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2025-09-04 14:15:25 [http-nio-3002-exec-2] DEBUG o.s.security.web.FilterChainProxy - Securing GET /error
+2025-09-04 14:15:25 [http-nio-3002-exec-2] DEBUG o.s.security.web.FilterChainProxy - Secured GET /error
+2025-09-04 14:15:25 [http-nio-3002-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - "ERROR" dispatch for GET "/api/error", parameters={}
+2025-09-04 14:15:25 [http-nio-3002-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
+2025-09-04 14:15:25 [http-nio-3002-exec-2] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-04 14:15:25 [http-nio-3002-exec-2] INFO  c.s.interceptor.LoggingInterceptor - 🔄 GET /api/error [Anonymous] - Request started
+2025-09-04 14:15:25 [http-nio-3002-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-09-04 14:15:25 [http-nio-3002-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [{timestamp=Thu Sep 04 14:15:25 EDT 2025, status=500, error=Internal Server Error, path=/api/products (truncated)...]
+2025-09-04 14:15:25 [http-nio-3002-exec-2] INFO  c.s.interceptor.LoggingInterceptor - ✅ GET /api/error [Anonymous] - 500 (1ms)
+2025-09-04 14:15:25 [http-nio-3002-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Exiting from "ERROR" dispatch, status 500
+2025-09-04 14:34:11 [http-nio-3002-exec-8] DEBUG o.s.security.web.FilterChainProxy - Securing HEAD /admin/feature-flags
+2025-09-04 14:34:11 [http-nio-3002-exec-8] INFO  c.s.security.JwtAuthenticationFilter - No Authorization header or Bearer token found
+2025-09-04 14:34:11 [http-nio-3002-exec-8] INFO  c.s.security.JwtAuthenticationFilter - No username extracted from JWT token
+2025-09-04 14:34:11 [http-nio-3002-exec-8] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-04 14:34:11 [http-nio-3002-exec-8] ERROR c.s.s.JwtAuthenticationEntryPoint - Unauthorized error: Full authentication is required to access this resource
+2025-09-04 14:34:11 [http-nio-3002-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.shopper.controller.AdminController#getAllFeatureFlags()
+2025-09-04 14:34:19 [http-nio-3002-exec-10] DEBUG o.s.security.web.FilterChainProxy - Securing GET /products
+2025-09-04 14:34:19 [http-nio-3002-exec-10] INFO  c.s.security.JwtAuthenticationFilter - No Authorization header or Bearer token found
+2025-09-04 14:34:19 [http-nio-3002-exec-10] INFO  c.s.security.JwtAuthenticationFilter - No username extracted from JWT token
+2025-09-04 14:34:19 [http-nio-3002-exec-10] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-04 14:34:19 [http-nio-3002-exec-10] DEBUG o.s.security.web.FilterChainProxy - Secured GET /products
+2025-09-04 14:34:19 [http-nio-3002-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/products", parameters={}
+2025-09-04 14:34:19 [http-nio-3002-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.shopper.controller.ProductController#getAllProducts()
+2025-09-04 14:34:19 [http-nio-3002-exec-10] INFO  c.s.interceptor.LoggingInterceptor - 🔄 GET /api/products [Anonymous] - Request started
+2025-09-04 14:34:24 [http-nio-3002-exec-10] INFO  c.shopper.config.DevCycleLoggingHook - Feature flag evaluation completed for key: new-flow
+2025-09-04 14:34:24 [http-nio-3002-exec-10] DEBUG c.shopper.service.FeatureFlagService - 🎛️ Feature flag 'new-flow' evaluated to: true for user: anonymous
+2025-09-04 14:34:24 [http-nio-3002-exec-10] INFO  com.shopper.service.ProductService - ✅ New flow enabled for user: anonymous
+2025-09-04 14:34:24 [http-nio-3002-exec-10] DEBUG c.s.service.DualDatabaseStrategyImpl - Secondary database not enabled, using primary for read operation
+2025-09-04 14:34:24 [http-nio-3002-exec-10] DEBUG org.hibernate.SQL - select p1_0.id,p1_0.category,p1_0.created_at,p1_0.description,p1_0.image_url,p1_0.name,p1_0.price,p1_0.stock_quantity,p1_0.updated_at from products p1_0 where p1_0.stock_quantity>0
+2025-09-04 14:34:24 [http-nio-3002-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-09-04 14:34:24 [http-nio-3002-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[Product(id=65336362-3637-3733-2d33-3135312d3463, name=Wireless Bluetooth Headphones, description=Hi (truncated)...]
+2025-09-04 14:34:24 [http-nio-3002-exec-10] INFO  c.s.interceptor.LoggingInterceptor - ✅ GET /api/products [Anonymous] - 200 (5059ms)
+2025-09-04 14:34:24 [http-nio-3002-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+Error reading event
+Stream closed by client
+2025-09-04 14:35:18 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-09-04 14:35:18 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-09-04 14:35:18 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  23:00 min
+[INFO] Finished at: 2025-09-04T14:35:22-04:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.springframework.boot:spring-boot-maven-plugin:3.2.0:run (default-cli) on project java-backend: Process terminated with exit code: 143 -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
+
+🧹 Cleaning up...

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" packages="io.opentelemetry.instrumentation.log4j.appender.v2_17">
+    
+    <Properties>
+        <!-- Define common pattern for console logging -->
+        <Property name="CONSOLE_LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Property>
+        <!-- Define pattern for JSON structured logging -->
+        <Property name="JSON_LOG_PATTERN">%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ} %-5level [%t] %c{1.}: %msg%n</Property>
+    </Properties>
+    
+    <Appenders>
+        <!-- Console appender for local development -->
+        <Console name="CONSOLE" target="SYSTEM_OUT">
+            <PatternLayout pattern="${CONSOLE_LOG_PATTERN}" />
+        </Console>
+        
+        <!-- JSON Console appender for structured logging -->
+        <Console name="JSON_CONSOLE" target="SYSTEM_OUT">
+            <JsonTemplateLayout eventTemplateUri="classpath:LogstashJsonEventLayoutV1.json"/>
+        </Console>
+        
+        <!-- File appender for structured JSON logs -->
+        <File name="JSON_FILE" fileName="logs/application-structured.log">
+            <JsonTemplateLayout eventTemplateUri="classpath:LogstashJsonEventLayoutV1.json">
+                <EventTemplateAdditionalFields>
+                    <KeyValuePair key="service.name" value="shopper-backend"/>
+                    <KeyValuePair key="service.version" value="1.0.0"/>
+                    <KeyValuePair key="environment" value="development"/>
+                </EventTemplateAdditionalFields>
+            </JsonTemplateLayout>
+        </File>
+        
+        <!-- Rolling file appender for general logs -->
+        <RollingFile name="ROLLING_FILE" fileName="logs/application.log" 
+                     filePattern="logs/application-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="${CONSOLE_LOG_PATTERN}" />
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="10MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="30"/>
+        </RollingFile>
+    </Appenders>
+    
+    <Loggers>
+        <!-- Feature Flag Logger - High priority structured logging -->
+        <Logger name="com.shopper.config.DevCycleLoggingHook" level="INFO" additivity="false">
+            <AppenderRef ref="CONSOLE"/>
+            <AppenderRef ref="JSON_FILE"/>
+        </Logger>
+        
+        <!-- Dynatrace OneAgent Hook Logger -->
+        <Logger name="com.shopper.config.DynatraceOneAgentHook" level="DEBUG" additivity="false">
+            <AppenderRef ref="CONSOLE"/>
+            <AppenderRef ref="JSON_FILE"/>
+        </Logger>
+        
+        <!-- Spring and application specific loggers -->
+        <Logger name="com.shopper" level="INFO" additivity="false">
+            <AppenderRef ref="CONSOLE"/>
+            <AppenderRef ref="JSON_FILE"/>
+        </Logger>
+        
+        <!-- OpenTelemetry and instrumentation logging -->
+        <Logger name="io.opentelemetry" level="INFO" additivity="false">
+            <AppenderRef ref="CONSOLE"/>
+        </Logger>
+        
+        <!-- DevCycle SDK logging -->
+        <Logger name="com.devcycle" level="INFO" additivity="false">
+            <AppenderRef ref="CONSOLE"/>
+            <AppenderRef ref="JSON_FILE"/>
+        </Logger>
+        
+        <!-- Spring Boot specific loggers with reduced verbosity -->
+        <Logger name="org.springframework" level="WARN" additivity="false">
+            <AppenderRef ref="CONSOLE"/>
+            <AppenderRef ref="ROLLING_FILE"/>
+        </Logger>
+        
+        <Logger name="org.hibernate" level="WARN" additivity="false">
+            <AppenderRef ref="CONSOLE"/>
+            <AppenderRef ref="ROLLING_FILE"/>
+        </Logger>
+        
+        <!-- Root logger - catches all other logs -->
+        <Root level="INFO">
+            <AppenderRef ref="CONSOLE"/>
+            <AppenderRef ref="ROLLING_FILE"/>
+        </Root>
+        
+    </Loggers>
+</Configuration>

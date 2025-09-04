@@ -1,69 +1,88 @@
-# OpenTelemetry to OneAgent SDK Migration Summary
+# OneAgent SDK to OpenTelemetry Migration Summary
 
 ## Migration Completed ✅
 
-The Java backend application has been successfully migrated from OpenTelemetry to Dynatrace OneAgent SDK for Java.
+The Java backend application has been successfully reverted from Dynatrace OneAgent SDK back to OpenTelemetry OTLP exporter using environment variables.
 
 ## Changes Made
 
 ### 1. Maven Dependencies Updated (`pom.xml`)
-- ✅ Removed OpenTelemetry dependencies:
-  - `io.opentelemetry:opentelemetry-api`
+- ✅ Removed OneAgent SDK dependency:
+  - `com.dynatrace.oneagent.sdk.java:oneagent-sdk:1.9.0`
+
+- ✅ Added OpenTelemetry dependencies:
   - `io.opentelemetry:opentelemetry-sdk`
   - `io.opentelemetry:opentelemetry-exporter-otlp`
   - `io.opentelemetry:opentelemetry-sdk-trace`
   - `io.opentelemetry.instrumentation:opentelemetry-spring-boot-starter`
   - `io.micrometer:micrometer-tracing-bridge-otel`
 
-- ✅ Added OneAgent SDK dependency:
-  - `com.dynatrace.oneagent.sdk.java:oneagent-sdk:1.9.0`
-
 ### 2. Configuration Classes Replaced
 
 #### Removed:
-- ❌ `src/main/java/com/shopper/config/OpenTelemetryConfig.java`
-- ❌ `src/main/java/com/shopper/config/DynatraceOtelLogHook.java`
+- ❌ `src/main/java/com/shopper/config/OneAgentConfig.java`
 
 #### Added:
-- ✅ `src/main/java/com/shopper/config/OneAgentConfig.java`
-  - OneAgent SDK initialization and status checking
-  - Logging callback configuration
-  - Service metadata configuration
+- ✅ `src/main/java/com/shopper/config/OpenTelemetryConfig.java`
+  - OTLP exporter configuration with environment variables
+  - Resource attributes and service metadata
+  - Automatic instrumentation support
 
-- ✅ `src/main/java/com/shopper/config/DynatraceOneAgentLogHook.java`
-  - Custom service tracing for feature flag evaluation
-  - Integration with DevCycle hooks
-  - Request attributes for flag context
+#### Retained:
+- ✅ `src/main/java/com/shopper/config/DynatraceOneAgentHook.java`
+  - Uses OpenTelemetry API for feature flag evaluation tracing
+  - Integration with DevCycle hooks remains unchanged
 
-### 3. Service Classes Enhanced
+### 3. Service Classes Reverted
 
-#### `UserService.java` - Authentication Tracing
-- ✅ Added OneAgent SDK custom service tracing for:
-  - User registration (`user_registration.register`)
-  - User authentication (`user_authentication.login`)
-- ✅ Custom request attributes:
-  - `username`, `email`, `assigned_role`, `user_id`, `user_role`
-- ✅ Error handling and logging integration
+#### `DualDatabaseStrategyImpl.java` - Database Operations Simplified  
+- ✅ Removed OneAgent SDK database request tracing
+- ✅ Simplified to direct operation execution
+- ✅ Automatic instrumentation via OpenTelemetry Java Agent will handle tracing
 
-#### `DualDatabaseStrategyImpl.java` - Database Request Tracing
-- ✅ Added OneAgent SDK database request tracing
-- ✅ Separate tracing for primary (SQLite) and secondary (PostgreSQL) databases
-- ✅ Operation type tracking: SELECT, INSERT/UPDATE, SELECT (fallback)
-- ✅ Database vendor and connection information
+#### `UserService.java` - Authentication Operations
+- ✅ Reverted to standard Spring Security operations
+- ✅ Automatic instrumentation via OpenTelemetry Java Agent will handle tracing
 
 ### 4. Configuration Files Updated
 
 #### `application.yml`
-- ✅ Removed OpenTelemetry OTLP configuration
-- ✅ Simplified telemetry configuration for OneAgent SDK
-- ✅ Updated comments to reflect OneAgent SDK usage
+- ✅ Added OpenTelemetry OTLP exporter configuration
+- ✅ Configured environment variable support for OTLP endpoint
+- ✅ Set up resource attributes and service metadata
 
-#### `application.properties`
-- ✅ Removed OpenTelemetry endpoint and token configuration
-- ✅ Kept essential telemetry project metadata
-- ✅ Updated documentation comments
+## Current Configuration
 
-### 5. OpenFeature Integration Updated
+The application now uses:
+- **OpenTelemetry Java Agent** for automatic instrumentation
+- **OTLP exporter** configured via environment variables  
+- **run-with-otel.sh** script for easy deployment with proper OTLP configuration
+- **Preserved deployment scripts** from previous migrations
+
+## Usage
+
+Run the application with OpenTelemetry instrumentation:
+
+```bash
+./run-with-otel.sh
+```
+
+Configure telemetry endpoints via environment variables:
+
+```bash
+# For local OneAgent OTLP endpoint
+export USE_LOCAL_OTLP=true
+./run-with-otel.sh
+
+# For direct Dynatrace endpoint  
+export DYNATRACE_ENV_URL="https://your-env.live.dynatrace.com"
+export DYNATRACE_API_TOKEN="your-api-token"
+./run-with-otel.sh
+```
+
+### 5. OpenFeature Integration Updated  
+- ✅ Removed OneAgent SDK dependency from OpenFeatureConfig
+- ✅ Updated hook registration messaging to reflect OpenTelemetry usage
 
 #### `OpenFeatureConfig.java`
 - ✅ Replaced OpenTelemetry Tracer dependency with OneAgentSDK

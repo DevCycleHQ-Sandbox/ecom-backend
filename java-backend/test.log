@@ -1,0 +1,1360 @@
+🚀 Starting Java Backend Server with OpenTelemetry...
+📋 Loading environment variables from .env file...
+📡 Using DYNATRACE OTLP endpoint: https://xtc47953.live.dynatrace.com/api/v2/otlp
+🔧 Configuration:
+  Port: 3002
+  Environment: development
+  Database: ./database.sqlite
+  Frontend URL: http://localhost:3000
+  OTLP Endpoint: https://xtc47953.live.dynatrace.com/api/v2/otlp
+
+🔍 Checking dependencies...
+✅ Starting with OpenTelemetry instrumentation...
+
+💡 Running Maven with Spring Boot and OpenTelemetry agent...
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------------< com.shopper:java-backend >----------------------
+[INFO] Building Java Backend 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.3.2:clean (default-clean) @ java-backend ---
+[INFO] Deleting /Users/suthar/dev/shopper/backend/java-backend/target
+[INFO] 
+[INFO] >>> spring-boot:3.2.0:run (default-cli) > test-compile @ java-backend >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ java-backend ---
+[INFO] Copying 4 resources from src/main/resources to target/classes
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ java-backend ---
+[INFO] Changes detected - recompiling the module! :source
+[INFO] Compiling 54 source files with javac [debug release 17] to target/classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ java-backend ---
+[INFO] Copying 1 resource from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ java-backend ---
+[INFO] Changes detected - recompiling the module! :dependency
+[INFO] Compiling 7 source files with javac [debug release 17] to target/test-classes
+[INFO] 
+[INFO] <<< spring-boot:3.2.0:run (default-cli) < test-compile @ java-backend <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.2.0:run (default-cli) @ java-backend ---
+[INFO] Attaching agents: []
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+[otel.javaagent 2025-09-03 17:08:04:550 -0400] [main] INFO io.opentelemetry.javaagent.tooling.VersionLogger - opentelemetry-javaagent - version: 2.17.1
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.0)
+
+2025-09-03T17:08:10.206-04:00  INFO 34706 --- [java-backend] [           main] [                                                 ] com.shopper.JavaBackendApplication       : Starting JavaBackendApplication using Java 18.0.2 with PID 34706 (/Users/suthar/dev/shopper/backend/java-backend/target/classes started by suthar in /Users/suthar/dev/shopper/backend/java-backend)
+2025-09-03T17:08:10.230-04:00 DEBUG 34706 --- [java-backend] [           main] [                                                 ] com.shopper.JavaBackendApplication       : Running with Spring Boot v3.2.0, Spring v6.1.1
+2025-09-03T17:08:10.232-04:00  INFO 34706 --- [java-backend] [           main] [                                                 ] com.shopper.JavaBackendApplication       : The following 1 profile is active: "development"
+2025-09-03T17:08:11.802-04:00  INFO 34706 --- [java-backend] [           main] [                                                 ] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-09-03T17:08:11.884-04:00  INFO 34706 --- [java-backend] [           main] [                                                 ] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 68 ms. Found 3 JPA repository interfaces.
+2025-09-03T17:08:11.887-04:00  INFO 34706 --- [java-backend] [           main] [                                                 ] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-09-03T17:08:11.903-04:00  INFO 34706 --- [java-backend] [           main] [                                                 ] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 15 ms. Found 2 JPA repository interfaces.
+2025-09-03T17:08:14.458-04:00  INFO 34706 --- [java-backend] [           main] [                                                 ] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 3002 (http)
+2025-09-03T17:08:14.533-04:00  INFO 34706 --- [java-backend] [           main] [                                                 ] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-09-03T17:08:14.534-04:00  INFO 34706 --- [java-backend] [           main] [                                                 ] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.16]
+2025-09-03T17:08:14.623-04:00  INFO 34706 --- [java-backend] [           main] [                                                 ] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2025-09-03T17:08:14.628-04:00  INFO 34706 --- [java-backend] [           main] [                                                 ] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4313 ms
+2025-09-03T17:08:14.778-04:00  INFO 34706 --- [java-backend] [           main] [                                                 ] com.shopper.config.OpenTelemetryConfig   : 📊 OpenTelemetry Auto-Instrumentation enabled for service: java-backend v1.0.0 (development)
+2025-09-03T17:08:14.781-04:00  INFO 34706 --- [java-backend] [           main] [                                                 ] com.shopper.config.OpenTelemetryConfig   : 🔗 OpenTelemetry configured for OTLP endpoint: https://xtc47953.live.dynatrace.com/api/v2/otlp
+2025-09-03T17:08:14.781-04:00  INFO 34706 --- [java-backend] [           main] [                                                 ] com.shopper.config.OpenTelemetryConfig   : 🔐 OTLP headers configured for authentication
+2025-09-03T17:08:14.781-04:00  INFO 34706 --- [java-backend] [           main] [                                                 ] com.shopper.config.OpenTelemetryConfig   : ✅ Using OpenTelemetry Spring Boot Starter for auto-instrumentation
+2025-09-03T17:08:16.261-04:00  INFO 34706 --- [java-backend] [           main] [                                                 ] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-09-03T17:08:16.353-04:00  INFO 34706 --- [java-backend] [           main] [                                                 ] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.3.1.Final
+2025-09-03T17:08:16.415-04:00  INFO 34706 --- [java-backend] [           main] [                                                 ] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-09-03T17:08:16.911-04:00  INFO 34706 --- [java-backend] [           main] [                                                 ] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-09-03T17:08:16.996-04:00  INFO 34706 --- [java-backend] [           main] [                                                 ] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-09-03T17:08:17.604-04:00  INFO 34706 --- [java-backend] [           main] [                                                 ] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.sqlite.jdbc4.JDBC4Connection@1448e2b6
+2025-09-03T17:08:17.617-04:00  INFO 34706 --- [java-backend] [           main] [                                                 ] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-09-03T17:08:19.462-04:00  INFO 34706 --- [java-backend] [           main] [                                                 ] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-09-03T17:08:19.552-04:00  INFO 34706 --- [java-backend] [           main] [                                                 ] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-09-03T17:08:20.183-04:00  INFO 34706 --- [java-backend] [           main] [                                                 ] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-09-03T17:08:22.062-04:00  INFO 34706 --- [java-backend] [           main] [                                                 ] com.shopper.config.OpenFeatureConfig     : ✅ OpenFeature with DevCycle provider initialized successfully
+2025-09-03T17:08:22.063-04:00  INFO 34706 --- [java-backend] [           main] [                                                 ] com.shopper.config.OpenFeatureConfig     : 🔍 DevCycle hook registered for OpenTelemetry tracing
+Variable called before DevCycleLocalClient has initialized, returning default value
+2025-09-03T17:08:22.128-04:00  INFO 34706 --- [java-backend] [           main] [                                                 ] com.shopper.config.OpenFeatureConfig     : 🎛️ DevCycle feature flag 'use-neon' evaluated to: false for admin user
+Variable called before DevCycleLocalClient has initialized, returning default value
+2025-09-03T17:08:22.130-04:00  INFO 34706 --- [java-backend] [           main] [                                                 ] com.shopper.config.OpenFeatureConfig     : 🎛️ DevCycle feature flag 'new-flow' evaluated to: false for admin user
+2025-09-03T17:08:22.237-04:00  WARN 34706 --- [java-backend] [           main] [                                                 ] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final void org.springframework.web.filter.OncePerRequestFilter.doFilter(jakarta.servlet.ServletRequest,jakarta.servlet.ServletResponse,jakarta.servlet.FilterChain) throws jakarta.servlet.ServletException,java.io.IOException] because it is marked as final, consider using interface-based JDK proxies instead.
+2025-09-03T17:08:22.237-04:00  WARN 34706 --- [java-backend] [           main] [                                                 ] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final void org.springframework.web.filter.GenericFilterBean.init(jakarta.servlet.FilterConfig) throws jakarta.servlet.ServletException] because it is marked as final, consider using interface-based JDK proxies instead.
+2025-09-03T17:08:22.631-04:00 DEBUG 34706 --- [java-backend] [           main] [                                                 ] c.s.security.JwtAuthenticationFilter     : Filter 'jwtAuthenticationFilter' configured for use
+2025-09-03T17:08:22.642-04:00 DEBUG 34706 --- [java-backend] [           main] [                                                 ] o.s.w.f.ServerHttpObservationFilter      : Filter 'webMvcObservationFilter' configured for use
+2025-09-03T17:08:24.050-04:00  WARN 34706 --- [java-backend] [           main] [                                                 ] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-09-03T17:08:24.567-04:00 DEBUG 34706 --- [java-backend] [           main] [                                                 ] s.w.s.m.m.a.RequestMappingHandlerMapping : 49 mappings in 'requestMappingHandlerMapping'
+2025-09-03T17:08:24.845-04:00 DEBUG 34706 --- [java-backend] [           main] [                                                 ] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2025-09-03T17:08:25.226-04:00  INFO 34706 --- [java-backend] [           main] [                                                 ] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 3 endpoint(s) beneath base path '/actuator'
+2025-09-03T17:08:25.335-04:00  INFO 34706 --- [java-backend] [           main] [                                                 ] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@727d612a, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1ec6b7b6, org.springframework.security.web.context.SecurityContextHolderFilter@64ef639c, org.springframework.security.web.header.HeaderWriterFilter@39449f7f, org.springframework.web.filter.CorsFilter@2e53107a, org.springframework.security.web.authentication.logout.LogoutFilter@173f34d8, com.shopper.security.JwtAuthenticationFilter@34518f0, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4d1ec2bf, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@445f815f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3a00c9af, org.springframework.security.web.session.SessionManagementFilter@5b63eae, org.springframework.security.web.access.ExceptionTranslationFilter@18f7f928, org.springframework.security.web.access.intercept.AuthorizationFilter@187c5844]
+2025-09-03T17:08:25.538-04:00 DEBUG 34706 --- [java-backend] [           main] [                                                 ] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-09-03T17:08:25.594-04:00 DEBUG 34706 --- [java-backend] [           main] [                                                 ] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-09-03T17:08:26.335-04:00  INFO 34706 --- [java-backend] [           main] [                                                 ] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 3002 (http) with context path '/api'
+2025-09-03T17:08:26.365-04:00  INFO 34706 --- [java-backend] [           main] [                                                 ] com.shopper.JavaBackendApplication       : Started JavaBackendApplication in 17.048 seconds (process running for 22.303)
+2025-09-03T17:08:26.476-04:00 ERROR 34706 --- [java-backend] [           main] [                                                 ] o.s.boot.SpringApplication               : Application run failed
+
+java.lang.NoClassDefFoundError: io/opentelemetry/api/incubator/logs/AnyValue
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:91) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:24) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.mapLoggingEvent(LoggingEventMapper.java:114) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.emit(LoggingEventMapper.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.emit(OpenTelemetryAppender.java:218) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.setOpenTelemetry(OpenTelemetryAppender.java:213) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.lambda$install$0(OpenTelemetryAppender.java:67) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at java.base/java.util.concurrent.CopyOnWriteArrayList$COWIterator.forEachRemaining(CopyOnWriteArrayList.java:1152) ~[na:na]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.install(OpenTelemetryAppender.java:64) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.spring.autoconfigure.internal.instrumentation.logging.OpenTelemetryAppenderAutoConfiguration$LogbackAppenderConfig.lambda$logbackOtelAppenderInitializer$0(OpenTelemetryAppenderAutoConfiguration.java:48) ~[opentelemetry-spring-boot-autoconfigure-2.8.0.jar:2.8.0]
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:178) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:171) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:149) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:445) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:378) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.boot.context.event.EventPublishingRunListener.ready(EventPublishingRunListener.java:109) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplicationRunListeners.lambda$ready$6(SpringApplicationRunListeners.java:80) ~[spring-boot-3.2.0.jar:3.2.0]
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75) ~[na:na]
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:118) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:112) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplicationRunListeners.ready(SpringApplicationRunListeners.java:80) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:341) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1342) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1331) ~[spring-boot-3.2.0.jar:3.2.0]
+	at com.shopper.JavaBackendApplication.main(JavaBackendApplication.java:14) ~[classes/:na]
+Caused by: java.lang.ClassNotFoundException: io.opentelemetry.api.incubator.logs.AnyValue
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641) ~[na:na]
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188) ~[na:na]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:521) ~[na:na]
+	... 25 common frames omitted
+
+Exception in thread "main" java.lang.NoClassDefFoundError: io/opentelemetry/api/incubator/logs/AnyValue
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:91)
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:24)
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.mapLoggingEvent(LoggingEventMapper.java:114)
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.emit(LoggingEventMapper.java:95)
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.emit(OpenTelemetryAppender.java:218)
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:95)
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:29)
+	at ch.qos.logback.core.UnsynchronizedAppenderBase.doAppend(UnsynchronizedAppenderBase.java:85)
+	at ch.qos.logback.core.spi.AppenderAttachableImpl.appendLoopOnAppenders(AppenderAttachableImpl.java:51)
+	at ch.qos.logback.classic.Logger.appendLoopOnAppenders(Logger.java:272)
+	at ch.qos.logback.classic.Logger.callAppenders(Logger.java:259)
+	at ch.qos.logback.classic.Logger.buildLoggingEventAndAppend(Logger.java:426)
+	at ch.qos.logback.classic.Logger.filterAndLog_0_Or3Plus(Logger.java:386)
+	at ch.qos.logback.classic.Logger.log(Logger.java:780)
+	at org.apache.commons.logging.LogAdapter$Slf4jLocationAwareLog.error(LogAdapter.java:431)
+	at org.springframework.boot.SpringApplication.reportFailure(SpringApplication.java:839)
+	at org.springframework.boot.SpringApplication.handleRunFailure(SpringApplication.java:803)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:348)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1342)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1331)
+	at com.shopper.JavaBackendApplication.main(JavaBackendApplication.java:14)
+Caused by: java.lang.ClassNotFoundException: io.opentelemetry.api.incubator.logs.AnyValue
+	... 21 more
+2025-09-03T17:08:40.478-04:00  INFO 34706 --- [java-backend] [nio-3002-exec-1] [                                                 ] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-09-03T17:08:40.479-04:00 ERROR 34706 --- [java-backend] [nio-3002-exec-1] [                                                 ] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Servlet.init() for servlet [dispatcherServlet] threw exception
+
+java.lang.NoClassDefFoundError: io/opentelemetry/api/incubator/logs/AnyValue
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:91) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:24) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.mapLoggingEvent(LoggingEventMapper.java:114) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.emit(LoggingEventMapper.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.emit(OpenTelemetryAppender.java:218) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:29) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at ch.qos.logback.core.UnsynchronizedAppenderBase.doAppend(UnsynchronizedAppenderBase.java:85) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.core.spi.AppenderAttachableImpl.appendLoopOnAppenders(AppenderAttachableImpl.java:51) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.appendLoopOnAppenders(Logger.java:272) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.callAppenders(Logger.java:259) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.buildLoggingEventAndAppend(Logger.java:426) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.filterAndLog_0_Or3Plus(Logger.java:386) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.log(Logger.java:780) ~[logback-classic-1.4.11.jar:1.4.11]
+	at org.slf4j.bridge.SLF4JBridgeHandler.callLocationAwareLogger(SLF4JBridgeHandler.java:232) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at org.slf4j.bridge.SLF4JBridgeHandler.publish(SLF4JBridgeHandler.java:313) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at java.logging/java.util.logging.Logger.log(Logger.java:983) ~[na:na]
+	at java.logging/java.util.logging.Logger.doLog(Logger.java:1010) ~[na:na]
+	at java.logging/java.util.logging.Logger.logp(Logger.java:1176) ~[na:na]
+	at org.apache.juli.logging.DirectJDKLog.log(DirectJDKLog.java:173) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.juli.logging.DirectJDKLog.info(DirectJDKLog.java:116) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.ApplicationContext.log(ApplicationContext.java:584) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.ApplicationContextFacade.log(ApplicationContextFacade.java:235) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.springframework.web.servlet.FrameworkServlet.initServletBean(FrameworkServlet.java:530) ~[spring-webmvc-6.1.1.jar:6.1.1]
+	at org.springframework.web.servlet.HttpServletBean.init(HttpServletBean.java:169) ~[spring-webmvc-6.1.1.jar:6.1.1]
+	at jakarta.servlet.GenericServlet.init(GenericServlet.java:143) ~[tomcat-embed-core-10.1.16.jar:6.0]
+	at jakarta.servlet.http.HttpServlet.init(HttpServlet.java:121) ~[tomcat-embed-core-10.1.16.jar:6.0]
+	at org.apache.catalina.core.StandardWrapper.initServlet(StandardWrapper.java:944) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardWrapper.allocate(StandardWrapper.java:662) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:115) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+Caused by: java.lang.ClassNotFoundException: io.opentelemetry.api.incubator.logs.AnyValue
+	... 45 common frames omitted
+
+2025-09-03T17:08:40.480-04:00 ERROR 34706 --- [java-backend] [nio-3002-exec-1] [                                                 ] o.a.c.c.C.[.[.[.[dispatcherServlet]      : Allocate exception for servlet [dispatcherServlet]
+
+java.lang.NoClassDefFoundError: io/opentelemetry/api/incubator/logs/AnyValue
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:91) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:24) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.mapLoggingEvent(LoggingEventMapper.java:114) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.emit(LoggingEventMapper.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.emit(OpenTelemetryAppender.java:218) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:29) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at ch.qos.logback.core.UnsynchronizedAppenderBase.doAppend(UnsynchronizedAppenderBase.java:85) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.core.spi.AppenderAttachableImpl.appendLoopOnAppenders(AppenderAttachableImpl.java:51) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.appendLoopOnAppenders(Logger.java:272) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.callAppenders(Logger.java:259) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.buildLoggingEventAndAppend(Logger.java:426) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.filterAndLog_0_Or3Plus(Logger.java:386) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.log(Logger.java:780) ~[logback-classic-1.4.11.jar:1.4.11]
+	at org.slf4j.bridge.SLF4JBridgeHandler.callLocationAwareLogger(SLF4JBridgeHandler.java:232) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at org.slf4j.bridge.SLF4JBridgeHandler.publish(SLF4JBridgeHandler.java:313) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at java.logging/java.util.logging.Logger.log(Logger.java:983) ~[na:na]
+	at java.logging/java.util.logging.Logger.doLog(Logger.java:1010) ~[na:na]
+	at java.logging/java.util.logging.Logger.logp(Logger.java:1287) ~[na:na]
+	at org.apache.juli.logging.DirectJDKLog.log(DirectJDKLog.java:175) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.juli.logging.DirectJDKLog.error(DirectJDKLog.java:141) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.ApplicationContext.log(ApplicationContext.java:590) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.ApplicationContextFacade.log(ApplicationContextFacade.java:245) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardWrapper.initServlet(StandardWrapper.java:957) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardWrapper.allocate(StandardWrapper.java:662) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:115) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+Caused by: java.lang.ClassNotFoundException: io.opentelemetry.api.incubator.logs.AnyValue
+	... 41 common frames omitted
+
+2025-09-03T17:08:40.482-04:00 ERROR 34706 --- [java-backend] [nio-3002-exec-1] [                                                 ] o.a.c.c.C.[Tomcat].[localhost]           : Exception Processing /api/health
+
+java.lang.NoClassDefFoundError: io/opentelemetry/api/incubator/logs/AnyValue
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:91) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:24) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.mapLoggingEvent(LoggingEventMapper.java:114) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.emit(LoggingEventMapper.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.emit(OpenTelemetryAppender.java:218) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:29) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at ch.qos.logback.core.UnsynchronizedAppenderBase.doAppend(UnsynchronizedAppenderBase.java:85) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.core.spi.AppenderAttachableImpl.appendLoopOnAppenders(AppenderAttachableImpl.java:51) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.appendLoopOnAppenders(Logger.java:272) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.callAppenders(Logger.java:259) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.buildLoggingEventAndAppend(Logger.java:426) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.filterAndLog_0_Or3Plus(Logger.java:386) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.log(Logger.java:780) ~[logback-classic-1.4.11.jar:1.4.11]
+	at org.slf4j.bridge.SLF4JBridgeHandler.callLocationAwareLogger(SLF4JBridgeHandler.java:232) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at org.slf4j.bridge.SLF4JBridgeHandler.publish(SLF4JBridgeHandler.java:313) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at java.logging/java.util.logging.Logger.log(Logger.java:983) ~[na:na]
+	at java.logging/java.util.logging.Logger.doLog(Logger.java:1010) ~[na:na]
+	at java.logging/java.util.logging.Logger.logp(Logger.java:1287) ~[na:na]
+	at org.apache.juli.logging.DirectJDKLog.log(DirectJDKLog.java:175) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.juli.logging.DirectJDKLog.error(DirectJDKLog.java:141) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:127) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+Caused by: java.lang.ClassNotFoundException: io.opentelemetry.api.incubator.logs.AnyValue
+	... 37 common frames omitted
+
+2025-09-03T17:08:40.493-04:00 ERROR 34706 --- [java-backend] [nio-3002-exec-1] [                                                 ] o.apache.coyote.http11.Http11Processor   : Error processing request
+
+java.lang.NoClassDefFoundError: io/opentelemetry/api/incubator/logs/AnyValue
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:91) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:24) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.mapLoggingEvent(LoggingEventMapper.java:114) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.emit(LoggingEventMapper.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.emit(OpenTelemetryAppender.java:218) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:29) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at ch.qos.logback.core.UnsynchronizedAppenderBase.doAppend(UnsynchronizedAppenderBase.java:85) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.core.spi.AppenderAttachableImpl.appendLoopOnAppenders(AppenderAttachableImpl.java:51) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.appendLoopOnAppenders(Logger.java:272) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.callAppenders(Logger.java:259) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.buildLoggingEventAndAppend(Logger.java:426) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.filterAndLog_0_Or3Plus(Logger.java:386) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.log(Logger.java:780) ~[logback-classic-1.4.11.jar:1.4.11]
+	at org.slf4j.bridge.SLF4JBridgeHandler.callLocationAwareLogger(SLF4JBridgeHandler.java:232) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at org.slf4j.bridge.SLF4JBridgeHandler.publish(SLF4JBridgeHandler.java:313) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at java.logging/java.util.logging.Logger.log(Logger.java:983) ~[na:na]
+	at java.logging/java.util.logging.Logger.doLog(Logger.java:1010) ~[na:na]
+	at java.logging/java.util.logging.Logger.logp(Logger.java:1287) ~[na:na]
+	at org.apache.juli.logging.DirectJDKLog.log(DirectJDKLog.java:175) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.juli.logging.DirectJDKLog.error(DirectJDKLog.java:141) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:119) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+Caused by: java.lang.ClassNotFoundException: io.opentelemetry.api.incubator.logs.AnyValue
+	... 34 common frames omitted
+
+2025-09-03T17:08:40.495-04:00 ERROR 34706 --- [java-backend] [nio-3002-exec-1] [                                                 ] o.a.coyote.http11.Http11NioProtocol      : Error reading request, ignored
+
+java.lang.NoClassDefFoundError: io/opentelemetry/api/incubator/logs/AnyValue
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:91) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:24) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.mapLoggingEvent(LoggingEventMapper.java:114) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.emit(LoggingEventMapper.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.emit(OpenTelemetryAppender.java:218) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:29) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at ch.qos.logback.core.UnsynchronizedAppenderBase.doAppend(UnsynchronizedAppenderBase.java:85) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.core.spi.AppenderAttachableImpl.appendLoopOnAppenders(AppenderAttachableImpl.java:51) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.appendLoopOnAppenders(Logger.java:272) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.callAppenders(Logger.java:259) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.buildLoggingEventAndAppend(Logger.java:426) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.filterAndLog_0_Or3Plus(Logger.java:386) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.log(Logger.java:780) ~[logback-classic-1.4.11.jar:1.4.11]
+	at org.slf4j.bridge.SLF4JBridgeHandler.callLocationAwareLogger(SLF4JBridgeHandler.java:232) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at org.slf4j.bridge.SLF4JBridgeHandler.publish(SLF4JBridgeHandler.java:313) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at java.logging/java.util.logging.Logger.log(Logger.java:983) ~[na:na]
+	at java.logging/java.util.logging.Logger.doLog(Logger.java:1010) ~[na:na]
+	at java.logging/java.util.logging.Logger.logp(Logger.java:1287) ~[na:na]
+	at org.apache.juli.logging.DirectJDKLog.log(DirectJDKLog.java:175) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.juli.logging.DirectJDKLog.error(DirectJDKLog.java:141) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:417) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+Caused by: java.lang.ClassNotFoundException: io.opentelemetry.api.incubator.logs.AnyValue
+	... 30 common frames omitted
+
+2025-09-03T17:08:40.497-04:00 ERROR 34706 --- [java-backend] [nio-3002-exec-1] [                                                 ] org.apache.tomcat.util.net.NioEndpoint   : Error running socket processor
+
+java.lang.NoClassDefFoundError: io/opentelemetry/api/incubator/logs/AnyValue
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:91) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:24) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.mapLoggingEvent(LoggingEventMapper.java:114) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.emit(LoggingEventMapper.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.emit(OpenTelemetryAppender.java:218) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:29) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at ch.qos.logback.core.UnsynchronizedAppenderBase.doAppend(UnsynchronizedAppenderBase.java:85) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.core.spi.AppenderAttachableImpl.appendLoopOnAppenders(AppenderAttachableImpl.java:51) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.appendLoopOnAppenders(Logger.java:272) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.callAppenders(Logger.java:259) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.buildLoggingEventAndAppend(Logger.java:426) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.filterAndLog_0_Or3Plus(Logger.java:386) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.log(Logger.java:780) ~[logback-classic-1.4.11.jar:1.4.11]
+	at org.slf4j.bridge.SLF4JBridgeHandler.callLocationAwareLogger(SLF4JBridgeHandler.java:232) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at org.slf4j.bridge.SLF4JBridgeHandler.publish(SLF4JBridgeHandler.java:313) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at java.logging/java.util.logging.Logger.log(Logger.java:983) ~[na:na]
+	at java.logging/java.util.logging.Logger.doLog(Logger.java:1010) ~[na:na]
+	at java.logging/java.util.logging.Logger.logp(Logger.java:1287) ~[na:na]
+	at org.apache.juli.logging.DirectJDKLog.log(DirectJDKLog.java:175) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.juli.logging.DirectJDKLog.error(DirectJDKLog.java:141) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:1055) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+Caused by: java.lang.ClassNotFoundException: io.opentelemetry.api.incubator.logs.AnyValue
+	... 28 common frames omitted
+
+Exception in thread "http-nio-3002-exec-1" java.lang.NoClassDefFoundError: io/opentelemetry/api/incubator/logs/AnyValue
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:91)
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:24)
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.mapLoggingEvent(LoggingEventMapper.java:114)
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.emit(LoggingEventMapper.java:95)
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.emit(OpenTelemetryAppender.java:218)
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:95)
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:29)
+	at ch.qos.logback.core.UnsynchronizedAppenderBase.doAppend(UnsynchronizedAppenderBase.java:85)
+	at ch.qos.logback.core.spi.AppenderAttachableImpl.appendLoopOnAppenders(AppenderAttachableImpl.java:51)
+	at ch.qos.logback.classic.Logger.appendLoopOnAppenders(Logger.java:272)
+	at ch.qos.logback.classic.Logger.callAppenders(Logger.java:259)
+	at ch.qos.logback.classic.Logger.buildLoggingEventAndAppend(Logger.java:426)
+	at ch.qos.logback.classic.Logger.filterAndLog_0_Or3Plus(Logger.java:386)
+	at ch.qos.logback.classic.Logger.log(Logger.java:780)
+	at org.slf4j.bridge.SLF4JBridgeHandler.callLocationAwareLogger(SLF4JBridgeHandler.java:232)
+	at org.slf4j.bridge.SLF4JBridgeHandler.publish(SLF4JBridgeHandler.java:313)
+	at java.logging/java.util.logging.Logger.log(Logger.java:983)
+	at java.logging/java.util.logging.Logger.doLog(Logger.java:1010)
+	at java.logging/java.util.logging.Logger.logp(Logger.java:1287)
+	at org.apache.juli.logging.DirectJDKLog.log(DirectJDKLog.java:175)
+	at org.apache.juli.logging.DirectJDKLog.error(DirectJDKLog.java:141)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1762)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.ClassNotFoundException: io.opentelemetry.api.incubator.logs.AnyValue
+	... 27 more
+2025-09-03T17:12:28.899-04:00  INFO 34706 --- [java-backend] [nio-3002-exec-2] [                                                 ] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-09-03T17:12:28.903-04:00 ERROR 34706 --- [java-backend] [nio-3002-exec-2] [                                                 ] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Servlet.init() for servlet [dispatcherServlet] threw exception
+
+java.lang.NoClassDefFoundError: io/opentelemetry/api/incubator/logs/AnyValue
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:91) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:24) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.mapLoggingEvent(LoggingEventMapper.java:114) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.emit(LoggingEventMapper.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.emit(OpenTelemetryAppender.java:218) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:29) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at ch.qos.logback.core.UnsynchronizedAppenderBase.doAppend(UnsynchronizedAppenderBase.java:85) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.core.spi.AppenderAttachableImpl.appendLoopOnAppenders(AppenderAttachableImpl.java:51) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.appendLoopOnAppenders(Logger.java:272) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.callAppenders(Logger.java:259) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.buildLoggingEventAndAppend(Logger.java:426) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.filterAndLog_0_Or3Plus(Logger.java:386) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.log(Logger.java:780) ~[logback-classic-1.4.11.jar:1.4.11]
+	at org.slf4j.bridge.SLF4JBridgeHandler.callLocationAwareLogger(SLF4JBridgeHandler.java:232) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at org.slf4j.bridge.SLF4JBridgeHandler.publish(SLF4JBridgeHandler.java:313) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at java.logging/java.util.logging.Logger.log(Logger.java:983) ~[na:na]
+	at java.logging/java.util.logging.Logger.doLog(Logger.java:1010) ~[na:na]
+	at java.logging/java.util.logging.Logger.logp(Logger.java:1176) ~[na:na]
+	at org.apache.juli.logging.DirectJDKLog.log(DirectJDKLog.java:173) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.juli.logging.DirectJDKLog.info(DirectJDKLog.java:116) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.ApplicationContext.log(ApplicationContext.java:584) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.ApplicationContextFacade.log(ApplicationContextFacade.java:235) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.springframework.web.servlet.FrameworkServlet.initServletBean(FrameworkServlet.java:530) ~[spring-webmvc-6.1.1.jar:6.1.1]
+	at org.springframework.web.servlet.HttpServletBean.init(HttpServletBean.java:169) ~[spring-webmvc-6.1.1.jar:6.1.1]
+	at jakarta.servlet.GenericServlet.init(GenericServlet.java:143) ~[tomcat-embed-core-10.1.16.jar:6.0]
+	at jakarta.servlet.http.HttpServlet.init(HttpServlet.java:121) ~[tomcat-embed-core-10.1.16.jar:6.0]
+	at org.apache.catalina.core.StandardWrapper.initServlet(StandardWrapper.java:944) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardWrapper.allocate(StandardWrapper.java:662) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:115) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+Caused by: java.lang.ClassNotFoundException: io.opentelemetry.api.incubator.logs.AnyValue
+	... 45 common frames omitted
+
+2025-09-03T17:12:28.906-04:00 ERROR 34706 --- [java-backend] [nio-3002-exec-2] [                                                 ] o.a.c.c.C.[.[.[.[dispatcherServlet]      : Allocate exception for servlet [dispatcherServlet]
+
+java.lang.NoClassDefFoundError: io/opentelemetry/api/incubator/logs/AnyValue
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:91) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:24) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.mapLoggingEvent(LoggingEventMapper.java:114) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.emit(LoggingEventMapper.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.emit(OpenTelemetryAppender.java:218) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:29) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at ch.qos.logback.core.UnsynchronizedAppenderBase.doAppend(UnsynchronizedAppenderBase.java:85) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.core.spi.AppenderAttachableImpl.appendLoopOnAppenders(AppenderAttachableImpl.java:51) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.appendLoopOnAppenders(Logger.java:272) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.callAppenders(Logger.java:259) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.buildLoggingEventAndAppend(Logger.java:426) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.filterAndLog_0_Or3Plus(Logger.java:386) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.log(Logger.java:780) ~[logback-classic-1.4.11.jar:1.4.11]
+	at org.slf4j.bridge.SLF4JBridgeHandler.callLocationAwareLogger(SLF4JBridgeHandler.java:232) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at org.slf4j.bridge.SLF4JBridgeHandler.publish(SLF4JBridgeHandler.java:313) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at java.logging/java.util.logging.Logger.log(Logger.java:983) ~[na:na]
+	at java.logging/java.util.logging.Logger.doLog(Logger.java:1010) ~[na:na]
+	at java.logging/java.util.logging.Logger.logp(Logger.java:1287) ~[na:na]
+	at org.apache.juli.logging.DirectJDKLog.log(DirectJDKLog.java:175) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.juli.logging.DirectJDKLog.error(DirectJDKLog.java:141) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.ApplicationContext.log(ApplicationContext.java:590) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.ApplicationContextFacade.log(ApplicationContextFacade.java:245) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardWrapper.initServlet(StandardWrapper.java:957) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardWrapper.allocate(StandardWrapper.java:662) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:115) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+Caused by: java.lang.ClassNotFoundException: io.opentelemetry.api.incubator.logs.AnyValue
+	... 41 common frames omitted
+
+2025-09-03T17:12:28.909-04:00 ERROR 34706 --- [java-backend] [nio-3002-exec-2] [                                                 ] o.a.c.c.C.[Tomcat].[localhost]           : Exception Processing /api/health
+
+java.lang.NoClassDefFoundError: io/opentelemetry/api/incubator/logs/AnyValue
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:91) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:24) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.mapLoggingEvent(LoggingEventMapper.java:114) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.emit(LoggingEventMapper.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.emit(OpenTelemetryAppender.java:218) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:29) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at ch.qos.logback.core.UnsynchronizedAppenderBase.doAppend(UnsynchronizedAppenderBase.java:85) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.core.spi.AppenderAttachableImpl.appendLoopOnAppenders(AppenderAttachableImpl.java:51) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.appendLoopOnAppenders(Logger.java:272) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.callAppenders(Logger.java:259) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.buildLoggingEventAndAppend(Logger.java:426) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.filterAndLog_0_Or3Plus(Logger.java:386) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.log(Logger.java:780) ~[logback-classic-1.4.11.jar:1.4.11]
+	at org.slf4j.bridge.SLF4JBridgeHandler.callLocationAwareLogger(SLF4JBridgeHandler.java:232) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at org.slf4j.bridge.SLF4JBridgeHandler.publish(SLF4JBridgeHandler.java:313) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at java.logging/java.util.logging.Logger.log(Logger.java:983) ~[na:na]
+	at java.logging/java.util.logging.Logger.doLog(Logger.java:1010) ~[na:na]
+	at java.logging/java.util.logging.Logger.logp(Logger.java:1287) ~[na:na]
+	at org.apache.juli.logging.DirectJDKLog.log(DirectJDKLog.java:175) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.juli.logging.DirectJDKLog.error(DirectJDKLog.java:141) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:127) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+Caused by: java.lang.ClassNotFoundException: io.opentelemetry.api.incubator.logs.AnyValue
+	... 37 common frames omitted
+
+2025-09-03T17:12:28.911-04:00 ERROR 34706 --- [java-backend] [nio-3002-exec-2] [                                                 ] o.apache.coyote.http11.Http11Processor   : Error processing request
+
+java.lang.NoClassDefFoundError: io/opentelemetry/api/incubator/logs/AnyValue
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:91) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:24) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.mapLoggingEvent(LoggingEventMapper.java:114) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.emit(LoggingEventMapper.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.emit(OpenTelemetryAppender.java:218) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:29) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at ch.qos.logback.core.UnsynchronizedAppenderBase.doAppend(UnsynchronizedAppenderBase.java:85) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.core.spi.AppenderAttachableImpl.appendLoopOnAppenders(AppenderAttachableImpl.java:51) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.appendLoopOnAppenders(Logger.java:272) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.callAppenders(Logger.java:259) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.buildLoggingEventAndAppend(Logger.java:426) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.filterAndLog_0_Or3Plus(Logger.java:386) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.log(Logger.java:780) ~[logback-classic-1.4.11.jar:1.4.11]
+	at org.slf4j.bridge.SLF4JBridgeHandler.callLocationAwareLogger(SLF4JBridgeHandler.java:232) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at org.slf4j.bridge.SLF4JBridgeHandler.publish(SLF4JBridgeHandler.java:313) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at java.logging/java.util.logging.Logger.log(Logger.java:983) ~[na:na]
+	at java.logging/java.util.logging.Logger.doLog(Logger.java:1010) ~[na:na]
+	at java.logging/java.util.logging.Logger.logp(Logger.java:1287) ~[na:na]
+	at org.apache.juli.logging.DirectJDKLog.log(DirectJDKLog.java:175) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.juli.logging.DirectJDKLog.error(DirectJDKLog.java:141) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:119) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+Caused by: java.lang.ClassNotFoundException: io.opentelemetry.api.incubator.logs.AnyValue
+	... 34 common frames omitted
+
+2025-09-03T17:12:28.912-04:00 ERROR 34706 --- [java-backend] [nio-3002-exec-2] [                                                 ] o.a.coyote.http11.Http11NioProtocol      : Error reading request, ignored
+
+java.lang.NoClassDefFoundError: io/opentelemetry/api/incubator/logs/AnyValue
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:91) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:24) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.mapLoggingEvent(LoggingEventMapper.java:114) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.emit(LoggingEventMapper.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.emit(OpenTelemetryAppender.java:218) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:29) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at ch.qos.logback.core.UnsynchronizedAppenderBase.doAppend(UnsynchronizedAppenderBase.java:85) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.core.spi.AppenderAttachableImpl.appendLoopOnAppenders(AppenderAttachableImpl.java:51) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.appendLoopOnAppenders(Logger.java:272) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.callAppenders(Logger.java:259) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.buildLoggingEventAndAppend(Logger.java:426) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.filterAndLog_0_Or3Plus(Logger.java:386) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.log(Logger.java:780) ~[logback-classic-1.4.11.jar:1.4.11]
+	at org.slf4j.bridge.SLF4JBridgeHandler.callLocationAwareLogger(SLF4JBridgeHandler.java:232) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at org.slf4j.bridge.SLF4JBridgeHandler.publish(SLF4JBridgeHandler.java:313) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at java.logging/java.util.logging.Logger.log(Logger.java:983) ~[na:na]
+	at java.logging/java.util.logging.Logger.doLog(Logger.java:1010) ~[na:na]
+	at java.logging/java.util.logging.Logger.logp(Logger.java:1287) ~[na:na]
+	at org.apache.juli.logging.DirectJDKLog.log(DirectJDKLog.java:175) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.juli.logging.DirectJDKLog.error(DirectJDKLog.java:141) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:417) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+Caused by: java.lang.ClassNotFoundException: io.opentelemetry.api.incubator.logs.AnyValue
+	... 30 common frames omitted
+
+2025-09-03T17:12:28.912-04:00 ERROR 34706 --- [java-backend] [nio-3002-exec-2] [                                                 ] org.apache.tomcat.util.net.NioEndpoint   : Error running socket processor
+
+java.lang.NoClassDefFoundError: io/opentelemetry/api/incubator/logs/AnyValue
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:91) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:24) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.mapLoggingEvent(LoggingEventMapper.java:114) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.emit(LoggingEventMapper.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.emit(OpenTelemetryAppender.java:218) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:29) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at ch.qos.logback.core.UnsynchronizedAppenderBase.doAppend(UnsynchronizedAppenderBase.java:85) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.core.spi.AppenderAttachableImpl.appendLoopOnAppenders(AppenderAttachableImpl.java:51) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.appendLoopOnAppenders(Logger.java:272) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.callAppenders(Logger.java:259) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.buildLoggingEventAndAppend(Logger.java:426) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.filterAndLog_0_Or3Plus(Logger.java:386) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.log(Logger.java:780) ~[logback-classic-1.4.11.jar:1.4.11]
+	at org.slf4j.bridge.SLF4JBridgeHandler.callLocationAwareLogger(SLF4JBridgeHandler.java:232) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at org.slf4j.bridge.SLF4JBridgeHandler.publish(SLF4JBridgeHandler.java:313) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at java.logging/java.util.logging.Logger.log(Logger.java:983) ~[na:na]
+	at java.logging/java.util.logging.Logger.doLog(Logger.java:1010) ~[na:na]
+	at java.logging/java.util.logging.Logger.logp(Logger.java:1287) ~[na:na]
+	at org.apache.juli.logging.DirectJDKLog.log(DirectJDKLog.java:175) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.juli.logging.DirectJDKLog.error(DirectJDKLog.java:141) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:1055) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+Caused by: java.lang.ClassNotFoundException: io.opentelemetry.api.incubator.logs.AnyValue
+	... 28 common frames omitted
+
+Exception in thread "http-nio-3002-exec-2" java.lang.NoClassDefFoundError: io/opentelemetry/api/incubator/logs/AnyValue
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:91)
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:24)
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.mapLoggingEvent(LoggingEventMapper.java:114)
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.emit(LoggingEventMapper.java:95)
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.emit(OpenTelemetryAppender.java:218)
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:95)
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:29)
+	at ch.qos.logback.core.UnsynchronizedAppenderBase.doAppend(UnsynchronizedAppenderBase.java:85)
+	at ch.qos.logback.core.spi.AppenderAttachableImpl.appendLoopOnAppenders(AppenderAttachableImpl.java:51)
+	at ch.qos.logback.classic.Logger.appendLoopOnAppenders(Logger.java:272)
+	at ch.qos.logback.classic.Logger.callAppenders(Logger.java:259)
+	at ch.qos.logback.classic.Logger.buildLoggingEventAndAppend(Logger.java:426)
+	at ch.qos.logback.classic.Logger.filterAndLog_0_Or3Plus(Logger.java:386)
+	at ch.qos.logback.classic.Logger.log(Logger.java:780)
+	at org.slf4j.bridge.SLF4JBridgeHandler.callLocationAwareLogger(SLF4JBridgeHandler.java:232)
+	at org.slf4j.bridge.SLF4JBridgeHandler.publish(SLF4JBridgeHandler.java:313)
+	at java.logging/java.util.logging.Logger.log(Logger.java:983)
+	at java.logging/java.util.logging.Logger.doLog(Logger.java:1010)
+	at java.logging/java.util.logging.Logger.logp(Logger.java:1287)
+	at org.apache.juli.logging.DirectJDKLog.log(DirectJDKLog.java:175)
+	at org.apache.juli.logging.DirectJDKLog.error(DirectJDKLog.java:141)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1762)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.ClassNotFoundException: io.opentelemetry.api.incubator.logs.AnyValue
+	... 27 more
+2025-09-03T17:14:19.201-04:00  INFO 34706 --- [java-backend] [nio-3002-exec-4] [                                                 ] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-09-03T17:14:19.204-04:00 ERROR 34706 --- [java-backend] [nio-3002-exec-4] [                                                 ] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Servlet.init() for servlet [dispatcherServlet] threw exception
+
+java.lang.NoClassDefFoundError: io/opentelemetry/api/incubator/logs/AnyValue
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:91) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:24) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.mapLoggingEvent(LoggingEventMapper.java:114) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.emit(LoggingEventMapper.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.emit(OpenTelemetryAppender.java:218) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:29) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at ch.qos.logback.core.UnsynchronizedAppenderBase.doAppend(UnsynchronizedAppenderBase.java:85) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.core.spi.AppenderAttachableImpl.appendLoopOnAppenders(AppenderAttachableImpl.java:51) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.appendLoopOnAppenders(Logger.java:272) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.callAppenders(Logger.java:259) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.buildLoggingEventAndAppend(Logger.java:426) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.filterAndLog_0_Or3Plus(Logger.java:386) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.log(Logger.java:780) ~[logback-classic-1.4.11.jar:1.4.11]
+	at org.slf4j.bridge.SLF4JBridgeHandler.callLocationAwareLogger(SLF4JBridgeHandler.java:232) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at org.slf4j.bridge.SLF4JBridgeHandler.publish(SLF4JBridgeHandler.java:313) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at java.logging/java.util.logging.Logger.log(Logger.java:983) ~[na:na]
+	at java.logging/java.util.logging.Logger.doLog(Logger.java:1010) ~[na:na]
+	at java.logging/java.util.logging.Logger.logp(Logger.java:1176) ~[na:na]
+	at org.apache.juli.logging.DirectJDKLog.log(DirectJDKLog.java:173) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.juli.logging.DirectJDKLog.info(DirectJDKLog.java:116) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.ApplicationContext.log(ApplicationContext.java:584) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.ApplicationContextFacade.log(ApplicationContextFacade.java:235) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.springframework.web.servlet.FrameworkServlet.initServletBean(FrameworkServlet.java:530) ~[spring-webmvc-6.1.1.jar:6.1.1]
+	at org.springframework.web.servlet.HttpServletBean.init(HttpServletBean.java:169) ~[spring-webmvc-6.1.1.jar:6.1.1]
+	at jakarta.servlet.GenericServlet.init(GenericServlet.java:143) ~[tomcat-embed-core-10.1.16.jar:6.0]
+	at jakarta.servlet.http.HttpServlet.init(HttpServlet.java:121) ~[tomcat-embed-core-10.1.16.jar:6.0]
+	at org.apache.catalina.core.StandardWrapper.initServlet(StandardWrapper.java:944) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardWrapper.allocate(StandardWrapper.java:662) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:115) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+Caused by: java.lang.ClassNotFoundException: io.opentelemetry.api.incubator.logs.AnyValue
+	... 45 common frames omitted
+
+2025-09-03T17:14:19.210-04:00  INFO 34706 --- [java-backend] [nio-3002-exec-3] [                                                 ] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-09-03T17:14:19.210-04:00 ERROR 34706 --- [java-backend] [nio-3002-exec-4] [                                                 ] o.a.c.c.C.[.[.[.[dispatcherServlet]      : Allocate exception for servlet [dispatcherServlet]
+
+java.lang.NoClassDefFoundError: io/opentelemetry/api/incubator/logs/AnyValue
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:91) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:24) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.mapLoggingEvent(LoggingEventMapper.java:114) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.emit(LoggingEventMapper.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.emit(OpenTelemetryAppender.java:218) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:29) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at ch.qos.logback.core.UnsynchronizedAppenderBase.doAppend(UnsynchronizedAppenderBase.java:85) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.core.spi.AppenderAttachableImpl.appendLoopOnAppenders(AppenderAttachableImpl.java:51) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.appendLoopOnAppenders(Logger.java:272) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.callAppenders(Logger.java:259) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.buildLoggingEventAndAppend(Logger.java:426) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.filterAndLog_0_Or3Plus(Logger.java:386) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.log(Logger.java:780) ~[logback-classic-1.4.11.jar:1.4.11]
+	at org.slf4j.bridge.SLF4JBridgeHandler.callLocationAwareLogger(SLF4JBridgeHandler.java:232) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at org.slf4j.bridge.SLF4JBridgeHandler.publish(SLF4JBridgeHandler.java:313) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at java.logging/java.util.logging.Logger.log(Logger.java:983) ~[na:na]
+	at java.logging/java.util.logging.Logger.doLog(Logger.java:1010) ~[na:na]
+	at java.logging/java.util.logging.Logger.logp(Logger.java:1287) ~[na:na]
+	at org.apache.juli.logging.DirectJDKLog.log(DirectJDKLog.java:175) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.juli.logging.DirectJDKLog.error(DirectJDKLog.java:141) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.ApplicationContext.log(ApplicationContext.java:590) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.ApplicationContextFacade.log(ApplicationContextFacade.java:245) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardWrapper.initServlet(StandardWrapper.java:957) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardWrapper.allocate(StandardWrapper.java:662) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:115) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+Caused by: java.lang.ClassNotFoundException: io.opentelemetry.api.incubator.logs.AnyValue
+	... 41 common frames omitted
+
+2025-09-03T17:14:19.216-04:00 ERROR 34706 --- [java-backend] [nio-3002-exec-4] [                                                 ] o.a.c.c.C.[Tomcat].[localhost]           : Exception Processing /api/auth/login
+
+java.lang.NoClassDefFoundError: io/opentelemetry/api/incubator/logs/AnyValue
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:91) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:24) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.mapLoggingEvent(LoggingEventMapper.java:114) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.emit(LoggingEventMapper.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.emit(OpenTelemetryAppender.java:218) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:29) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at ch.qos.logback.core.UnsynchronizedAppenderBase.doAppend(UnsynchronizedAppenderBase.java:85) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.core.spi.AppenderAttachableImpl.appendLoopOnAppenders(AppenderAttachableImpl.java:51) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.appendLoopOnAppenders(Logger.java:272) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.callAppenders(Logger.java:259) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.buildLoggingEventAndAppend(Logger.java:426) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.filterAndLog_0_Or3Plus(Logger.java:386) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.log(Logger.java:780) ~[logback-classic-1.4.11.jar:1.4.11]
+	at org.slf4j.bridge.SLF4JBridgeHandler.callLocationAwareLogger(SLF4JBridgeHandler.java:232) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at org.slf4j.bridge.SLF4JBridgeHandler.publish(SLF4JBridgeHandler.java:313) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at java.logging/java.util.logging.Logger.log(Logger.java:983) ~[na:na]
+	at java.logging/java.util.logging.Logger.doLog(Logger.java:1010) ~[na:na]
+	at java.logging/java.util.logging.Logger.logp(Logger.java:1287) ~[na:na]
+	at org.apache.juli.logging.DirectJDKLog.log(DirectJDKLog.java:175) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.juli.logging.DirectJDKLog.error(DirectJDKLog.java:141) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:127) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+Caused by: java.lang.ClassNotFoundException: io.opentelemetry.api.incubator.logs.AnyValue
+	... 37 common frames omitted
+
+2025-09-03T17:14:19.216-04:00 ERROR 34706 --- [java-backend] [nio-3002-exec-3] [                                                 ] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Servlet.init() for servlet [dispatcherServlet] threw exception
+
+java.lang.NoClassDefFoundError: io/opentelemetry/api/incubator/logs/AnyValue
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:91) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:24) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.mapLoggingEvent(LoggingEventMapper.java:114) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.emit(LoggingEventMapper.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.emit(OpenTelemetryAppender.java:218) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:29) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at ch.qos.logback.core.UnsynchronizedAppenderBase.doAppend(UnsynchronizedAppenderBase.java:85) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.core.spi.AppenderAttachableImpl.appendLoopOnAppenders(AppenderAttachableImpl.java:51) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.appendLoopOnAppenders(Logger.java:272) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.callAppenders(Logger.java:259) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.buildLoggingEventAndAppend(Logger.java:426) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.filterAndLog_0_Or3Plus(Logger.java:386) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.log(Logger.java:780) ~[logback-classic-1.4.11.jar:1.4.11]
+	at org.slf4j.bridge.SLF4JBridgeHandler.callLocationAwareLogger(SLF4JBridgeHandler.java:232) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at org.slf4j.bridge.SLF4JBridgeHandler.publish(SLF4JBridgeHandler.java:313) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at java.logging/java.util.logging.Logger.log(Logger.java:983) ~[na:na]
+	at java.logging/java.util.logging.Logger.doLog(Logger.java:1010) ~[na:na]
+	at java.logging/java.util.logging.Logger.logp(Logger.java:1176) ~[na:na]
+	at org.apache.juli.logging.DirectJDKLog.log(DirectJDKLog.java:173) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.juli.logging.DirectJDKLog.info(DirectJDKLog.java:116) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.ApplicationContext.log(ApplicationContext.java:584) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.ApplicationContextFacade.log(ApplicationContextFacade.java:235) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.springframework.web.servlet.FrameworkServlet.initServletBean(FrameworkServlet.java:530) ~[spring-webmvc-6.1.1.jar:6.1.1]
+	at org.springframework.web.servlet.HttpServletBean.init(HttpServletBean.java:169) ~[spring-webmvc-6.1.1.jar:6.1.1]
+	at jakarta.servlet.GenericServlet.init(GenericServlet.java:143) ~[tomcat-embed-core-10.1.16.jar:6.0]
+	at jakarta.servlet.http.HttpServlet.init(HttpServlet.java:121) ~[tomcat-embed-core-10.1.16.jar:6.0]
+	at org.apache.catalina.core.StandardWrapper.initServlet(StandardWrapper.java:944) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardWrapper.allocate(StandardWrapper.java:662) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:115) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+Caused by: java.lang.ClassNotFoundException: io.opentelemetry.api.incubator.logs.AnyValue
+	... 45 common frames omitted
+
+2025-09-03T17:14:19.225-04:00 ERROR 34706 --- [java-backend] [nio-3002-exec-4] [                                                 ] o.apache.coyote.http11.Http11Processor   : Error processing request
+
+java.lang.NoClassDefFoundError: io/opentelemetry/api/incubator/logs/AnyValue
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:91) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:24) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.mapLoggingEvent(LoggingEventMapper.java:114) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.emit(LoggingEventMapper.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.emit(OpenTelemetryAppender.java:218) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:29) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at ch.qos.logback.core.UnsynchronizedAppenderBase.doAppend(UnsynchronizedAppenderBase.java:85) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.core.spi.AppenderAttachableImpl.appendLoopOnAppenders(AppenderAttachableImpl.java:51) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.appendLoopOnAppenders(Logger.java:272) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.callAppenders(Logger.java:259) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.buildLoggingEventAndAppend(Logger.java:426) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.filterAndLog_0_Or3Plus(Logger.java:386) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.log(Logger.java:780) ~[logback-classic-1.4.11.jar:1.4.11]
+	at org.slf4j.bridge.SLF4JBridgeHandler.callLocationAwareLogger(SLF4JBridgeHandler.java:232) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at org.slf4j.bridge.SLF4JBridgeHandler.publish(SLF4JBridgeHandler.java:313) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at java.logging/java.util.logging.Logger.log(Logger.java:983) ~[na:na]
+	at java.logging/java.util.logging.Logger.doLog(Logger.java:1010) ~[na:na]
+	at java.logging/java.util.logging.Logger.logp(Logger.java:1287) ~[na:na]
+	at org.apache.juli.logging.DirectJDKLog.log(DirectJDKLog.java:175) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.juli.logging.DirectJDKLog.error(DirectJDKLog.java:141) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:119) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+Caused by: java.lang.ClassNotFoundException: io.opentelemetry.api.incubator.logs.AnyValue
+	... 34 common frames omitted
+
+2025-09-03T17:14:19.225-04:00 ERROR 34706 --- [java-backend] [nio-3002-exec-3] [                                                 ] o.a.c.c.C.[.[.[.[dispatcherServlet]      : Allocate exception for servlet [dispatcherServlet]
+
+java.lang.NoClassDefFoundError: io/opentelemetry/api/incubator/logs/AnyValue
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:91) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:24) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.mapLoggingEvent(LoggingEventMapper.java:114) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.emit(LoggingEventMapper.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.emit(OpenTelemetryAppender.java:218) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:29) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at ch.qos.logback.core.UnsynchronizedAppenderBase.doAppend(UnsynchronizedAppenderBase.java:85) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.core.spi.AppenderAttachableImpl.appendLoopOnAppenders(AppenderAttachableImpl.java:51) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.appendLoopOnAppenders(Logger.java:272) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.callAppenders(Logger.java:259) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.buildLoggingEventAndAppend(Logger.java:426) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.filterAndLog_0_Or3Plus(Logger.java:386) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.log(Logger.java:780) ~[logback-classic-1.4.11.jar:1.4.11]
+	at org.slf4j.bridge.SLF4JBridgeHandler.callLocationAwareLogger(SLF4JBridgeHandler.java:232) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at org.slf4j.bridge.SLF4JBridgeHandler.publish(SLF4JBridgeHandler.java:313) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at java.logging/java.util.logging.Logger.log(Logger.java:983) ~[na:na]
+	at java.logging/java.util.logging.Logger.doLog(Logger.java:1010) ~[na:na]
+	at java.logging/java.util.logging.Logger.logp(Logger.java:1287) ~[na:na]
+	at org.apache.juli.logging.DirectJDKLog.log(DirectJDKLog.java:175) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.juli.logging.DirectJDKLog.error(DirectJDKLog.java:141) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.ApplicationContext.log(ApplicationContext.java:590) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.ApplicationContextFacade.log(ApplicationContextFacade.java:245) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardWrapper.initServlet(StandardWrapper.java:957) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardWrapper.allocate(StandardWrapper.java:662) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:115) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+Caused by: java.lang.ClassNotFoundException: io.opentelemetry.api.incubator.logs.AnyValue
+	... 41 common frames omitted
+
+2025-09-03T17:14:19.226-04:00 ERROR 34706 --- [java-backend] [nio-3002-exec-3] [                                                 ] o.a.c.c.C.[Tomcat].[localhost]           : Exception Processing /api/auth/login
+
+java.lang.NoClassDefFoundError: io/opentelemetry/api/incubator/logs/AnyValue
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:91) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:24) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.mapLoggingEvent(LoggingEventMapper.java:114) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.emit(LoggingEventMapper.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.emit(OpenTelemetryAppender.java:218) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:29) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at ch.qos.logback.core.UnsynchronizedAppenderBase.doAppend(UnsynchronizedAppenderBase.java:85) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.core.spi.AppenderAttachableImpl.appendLoopOnAppenders(AppenderAttachableImpl.java:51) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.appendLoopOnAppenders(Logger.java:272) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.callAppenders(Logger.java:259) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.buildLoggingEventAndAppend(Logger.java:426) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.filterAndLog_0_Or3Plus(Logger.java:386) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.log(Logger.java:780) ~[logback-classic-1.4.11.jar:1.4.11]
+	at org.slf4j.bridge.SLF4JBridgeHandler.callLocationAwareLogger(SLF4JBridgeHandler.java:232) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at org.slf4j.bridge.SLF4JBridgeHandler.publish(SLF4JBridgeHandler.java:313) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at java.logging/java.util.logging.Logger.log(Logger.java:983) ~[na:na]
+	at java.logging/java.util.logging.Logger.doLog(Logger.java:1010) ~[na:na]
+	at java.logging/java.util.logging.Logger.logp(Logger.java:1287) ~[na:na]
+	at org.apache.juli.logging.DirectJDKLog.log(DirectJDKLog.java:175) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.juli.logging.DirectJDKLog.error(DirectJDKLog.java:141) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:127) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+Caused by: java.lang.ClassNotFoundException: io.opentelemetry.api.incubator.logs.AnyValue
+	... 37 common frames omitted
+
+2025-09-03T17:14:19.226-04:00 ERROR 34706 --- [java-backend] [nio-3002-exec-4] [                                                 ] o.a.coyote.http11.Http11NioProtocol      : Error reading request, ignored
+
+java.lang.NoClassDefFoundError: io/opentelemetry/api/incubator/logs/AnyValue
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:91) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:24) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.mapLoggingEvent(LoggingEventMapper.java:114) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.emit(LoggingEventMapper.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.emit(OpenTelemetryAppender.java:218) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:29) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at ch.qos.logback.core.UnsynchronizedAppenderBase.doAppend(UnsynchronizedAppenderBase.java:85) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.core.spi.AppenderAttachableImpl.appendLoopOnAppenders(AppenderAttachableImpl.java:51) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.appendLoopOnAppenders(Logger.java:272) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.callAppenders(Logger.java:259) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.buildLoggingEventAndAppend(Logger.java:426) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.filterAndLog_0_Or3Plus(Logger.java:386) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.log(Logger.java:780) ~[logback-classic-1.4.11.jar:1.4.11]
+	at org.slf4j.bridge.SLF4JBridgeHandler.callLocationAwareLogger(SLF4JBridgeHandler.java:232) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at org.slf4j.bridge.SLF4JBridgeHandler.publish(SLF4JBridgeHandler.java:313) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at java.logging/java.util.logging.Logger.log(Logger.java:983) ~[na:na]
+	at java.logging/java.util.logging.Logger.doLog(Logger.java:1010) ~[na:na]
+	at java.logging/java.util.logging.Logger.logp(Logger.java:1287) ~[na:na]
+	at org.apache.juli.logging.DirectJDKLog.log(DirectJDKLog.java:175) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.juli.logging.DirectJDKLog.error(DirectJDKLog.java:141) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:417) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+Caused by: java.lang.ClassNotFoundException: io.opentelemetry.api.incubator.logs.AnyValue
+	... 30 common frames omitted
+
+2025-09-03T17:14:19.229-04:00 ERROR 34706 --- [java-backend] [nio-3002-exec-4] [                                                 ] org.apache.tomcat.util.net.NioEndpoint   : Error running socket processor
+
+java.lang.NoClassDefFoundError: io/opentelemetry/api/incubator/logs/AnyValue
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:91) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:24) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.mapLoggingEvent(LoggingEventMapper.java:114) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.emit(LoggingEventMapper.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.emit(OpenTelemetryAppender.java:218) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:29) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at ch.qos.logback.core.UnsynchronizedAppenderBase.doAppend(UnsynchronizedAppenderBase.java:85) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.core.spi.AppenderAttachableImpl.appendLoopOnAppenders(AppenderAttachableImpl.java:51) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.appendLoopOnAppenders(Logger.java:272) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.callAppenders(Logger.java:259) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.buildLoggingEventAndAppend(Logger.java:426) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.filterAndLog_0_Or3Plus(Logger.java:386) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.log(Logger.java:780) ~[logback-classic-1.4.11.jar:1.4.11]
+	at org.slf4j.bridge.SLF4JBridgeHandler.callLocationAwareLogger(SLF4JBridgeHandler.java:232) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at org.slf4j.bridge.SLF4JBridgeHandler.publish(SLF4JBridgeHandler.java:313) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at java.logging/java.util.logging.Logger.log(Logger.java:983) ~[na:na]
+	at java.logging/java.util.logging.Logger.doLog(Logger.java:1010) ~[na:na]
+	at java.logging/java.util.logging.Logger.logp(Logger.java:1287) ~[na:na]
+	at org.apache.juli.logging.DirectJDKLog.log(DirectJDKLog.java:175) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.juli.logging.DirectJDKLog.error(DirectJDKLog.java:141) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:1055) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+Caused by: java.lang.ClassNotFoundException: io.opentelemetry.api.incubator.logs.AnyValue
+	... 28 common frames omitted
+
+2025-09-03T17:14:19.229-04:00 ERROR 34706 --- [java-backend] [nio-3002-exec-3] [                                                 ] o.apache.coyote.http11.Http11Processor   : Error processing request
+
+java.lang.NoClassDefFoundError: io/opentelemetry/api/incubator/logs/AnyValue
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:91) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:24) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.mapLoggingEvent(LoggingEventMapper.java:114) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.emit(LoggingEventMapper.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.emit(OpenTelemetryAppender.java:218) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:29) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at ch.qos.logback.core.UnsynchronizedAppenderBase.doAppend(UnsynchronizedAppenderBase.java:85) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.core.spi.AppenderAttachableImpl.appendLoopOnAppenders(AppenderAttachableImpl.java:51) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.appendLoopOnAppenders(Logger.java:272) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.callAppenders(Logger.java:259) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.buildLoggingEventAndAppend(Logger.java:426) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.filterAndLog_0_Or3Plus(Logger.java:386) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.log(Logger.java:780) ~[logback-classic-1.4.11.jar:1.4.11]
+	at org.slf4j.bridge.SLF4JBridgeHandler.callLocationAwareLogger(SLF4JBridgeHandler.java:232) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at org.slf4j.bridge.SLF4JBridgeHandler.publish(SLF4JBridgeHandler.java:313) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at java.logging/java.util.logging.Logger.log(Logger.java:983) ~[na:na]
+	at java.logging/java.util.logging.Logger.doLog(Logger.java:1010) ~[na:na]
+	at java.logging/java.util.logging.Logger.logp(Logger.java:1287) ~[na:na]
+	at org.apache.juli.logging.DirectJDKLog.log(DirectJDKLog.java:175) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.juli.logging.DirectJDKLog.error(DirectJDKLog.java:141) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:119) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+Caused by: java.lang.ClassNotFoundException: io.opentelemetry.api.incubator.logs.AnyValue
+	... 34 common frames omitted
+
+2025-09-03T17:14:19.229-04:00 ERROR 34706 --- [java-backend] [nio-3002-exec-3] [                                                 ] o.a.coyote.http11.Http11NioProtocol      : Error reading request, ignored
+
+java.lang.NoClassDefFoundError: io/opentelemetry/api/incubator/logs/AnyValue
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:91) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:24) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.mapLoggingEvent(LoggingEventMapper.java:114) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.emit(LoggingEventMapper.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.emit(OpenTelemetryAppender.java:218) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:29) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at ch.qos.logback.core.UnsynchronizedAppenderBase.doAppend(UnsynchronizedAppenderBase.java:85) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.core.spi.AppenderAttachableImpl.appendLoopOnAppenders(AppenderAttachableImpl.java:51) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.appendLoopOnAppenders(Logger.java:272) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.callAppenders(Logger.java:259) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.buildLoggingEventAndAppend(Logger.java:426) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.filterAndLog_0_Or3Plus(Logger.java:386) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.log(Logger.java:780) ~[logback-classic-1.4.11.jar:1.4.11]
+	at org.slf4j.bridge.SLF4JBridgeHandler.callLocationAwareLogger(SLF4JBridgeHandler.java:232) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at org.slf4j.bridge.SLF4JBridgeHandler.publish(SLF4JBridgeHandler.java:313) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at java.logging/java.util.logging.Logger.log(Logger.java:983) ~[na:na]
+	at java.logging/java.util.logging.Logger.doLog(Logger.java:1010) ~[na:na]
+	at java.logging/java.util.logging.Logger.logp(Logger.java:1287) ~[na:na]
+	at org.apache.juli.logging.DirectJDKLog.log(DirectJDKLog.java:175) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.juli.logging.DirectJDKLog.error(DirectJDKLog.java:141) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:417) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+Caused by: java.lang.ClassNotFoundException: io.opentelemetry.api.incubator.logs.AnyValue
+	... 30 common frames omitted
+
+Exception in thread "http-nio-3002-exec-4" java.lang.NoClassDefFoundError: io/opentelemetry/api/incubator/logs/AnyValue
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:91)
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:24)
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.mapLoggingEvent(LoggingEventMapper.java:114)
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.emit(LoggingEventMapper.java:95)
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.emit(OpenTelemetryAppender.java:218)
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:95)
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:29)
+	at ch.qos.logback.core.UnsynchronizedAppenderBase.doAppend(UnsynchronizedAppenderBase.java:85)
+	at ch.qos.logback.core.spi.AppenderAttachableImpl.appendLoopOnAppenders(AppenderAttachableImpl.java:51)
+	at ch.qos.logback.classic.Logger.appendLoopOnAppenders(Logger.java:272)
+	at ch.qos.logback.classic.Logger.callAppenders(Logger.java:259)
+	at ch.qos.logback.classic.Logger.buildLoggingEventAndAppend(Logger.java:426)
+	at ch.qos.logback.classic.Logger.filterAndLog_0_Or3Plus(Logger.java:386)
+	at ch.qos.logback.classic.Logger.log(Logger.java:780)
+	at org.slf4j.bridge.SLF4JBridgeHandler.callLocationAwareLogger(SLF4JBridgeHandler.java:232)
+	at org.slf4j.bridge.SLF4JBridgeHandler.publish(SLF4JBridgeHandler.java:313)
+	at java.logging/java.util.logging.Logger.log(Logger.java:983)
+	at java.logging/java.util.logging.Logger.doLog(Logger.java:1010)
+	at java.logging/java.util.logging.Logger.logp(Logger.java:1287)
+	at org.apache.juli.logging.DirectJDKLog.log(DirectJDKLog.java:175)
+	at org.apache.juli.logging.DirectJDKLog.error(DirectJDKLog.java:141)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1762)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.ClassNotFoundException: io.opentelemetry.api.incubator.logs.AnyValue
+	... 27 more
+2025-09-03T17:14:19.230-04:00 ERROR 34706 --- [java-backend] [nio-3002-exec-3] [                                                 ] org.apache.tomcat.util.net.NioEndpoint   : Error running socket processor
+
+java.lang.NoClassDefFoundError: io/opentelemetry/api/incubator/logs/AnyValue
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:91) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:24) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.mapLoggingEvent(LoggingEventMapper.java:114) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.emit(LoggingEventMapper.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.emit(OpenTelemetryAppender.java:218) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:29) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at ch.qos.logback.core.UnsynchronizedAppenderBase.doAppend(UnsynchronizedAppenderBase.java:85) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.core.spi.AppenderAttachableImpl.appendLoopOnAppenders(AppenderAttachableImpl.java:51) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.appendLoopOnAppenders(Logger.java:272) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.callAppenders(Logger.java:259) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.buildLoggingEventAndAppend(Logger.java:426) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.filterAndLog_0_Or3Plus(Logger.java:386) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.log(Logger.java:780) ~[logback-classic-1.4.11.jar:1.4.11]
+	at org.slf4j.bridge.SLF4JBridgeHandler.callLocationAwareLogger(SLF4JBridgeHandler.java:232) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at org.slf4j.bridge.SLF4JBridgeHandler.publish(SLF4JBridgeHandler.java:313) ~[jul-to-slf4j-2.0.9.jar:2.0.9]
+	at java.logging/java.util.logging.Logger.log(Logger.java:983) ~[na:na]
+	at java.logging/java.util.logging.Logger.doLog(Logger.java:1010) ~[na:na]
+	at java.logging/java.util.logging.Logger.logp(Logger.java:1287) ~[na:na]
+	at org.apache.juli.logging.DirectJDKLog.log(DirectJDKLog.java:175) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.juli.logging.DirectJDKLog.error(DirectJDKLog.java:141) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:1055) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.16.jar:10.1.16]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+Caused by: java.lang.ClassNotFoundException: io.opentelemetry.api.incubator.logs.AnyValue
+	... 28 common frames omitted
+
+Exception in thread "http-nio-3002-exec-3" java.lang.NoClassDefFoundError: io/opentelemetry/api/incubator/logs/AnyValue
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:91)
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:24)
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.mapLoggingEvent(LoggingEventMapper.java:114)
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.emit(LoggingEventMapper.java:95)
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.emit(OpenTelemetryAppender.java:218)
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:95)
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:29)
+	at ch.qos.logback.core.UnsynchronizedAppenderBase.doAppend(UnsynchronizedAppenderBase.java:85)
+	at ch.qos.logback.core.spi.AppenderAttachableImpl.appendLoopOnAppenders(AppenderAttachableImpl.java:51)
+	at ch.qos.logback.classic.Logger.appendLoopOnAppenders(Logger.java:272)
+	at ch.qos.logback.classic.Logger.callAppenders(Logger.java:259)
+	at ch.qos.logback.classic.Logger.buildLoggingEventAndAppend(Logger.java:426)
+	at ch.qos.logback.classic.Logger.filterAndLog_0_Or3Plus(Logger.java:386)
+	at ch.qos.logback.classic.Logger.log(Logger.java:780)
+	at org.slf4j.bridge.SLF4JBridgeHandler.callLocationAwareLogger(SLF4JBridgeHandler.java:232)
+	at org.slf4j.bridge.SLF4JBridgeHandler.publish(SLF4JBridgeHandler.java:313)
+	at java.logging/java.util.logging.Logger.log(Logger.java:983)
+	at java.logging/java.util.logging.Logger.doLog(Logger.java:1010)
+	at java.logging/java.util.logging.Logger.logp(Logger.java:1287)
+	at org.apache.juli.logging.DirectJDKLog.log(DirectJDKLog.java:175)
+	at org.apache.juli.logging.DirectJDKLog.error(DirectJDKLog.java:141)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1762)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.ClassNotFoundException: io.opentelemetry.api.incubator.logs.AnyValue
+	... 27 more
+Error reading event
+Stream closed by client
+2025-09-03T17:15:38.532-04:00  INFO 34706 --- [java-backend] [ionShutdownHook] [                                                 ] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-09-03T17:15:38.535-04:00  WARN 34706 --- [java-backend] [ionShutdownHook] [                                                 ] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'primaryEntityManagerFactory': java.lang.NoClassDefFoundError: io/opentelemetry/api/incubator/logs/AnyValue
+2025-09-03T17:15:38.536-04:00  WARN 34706 --- [java-backend] [ionShutdownHook] [                                                 ] o.s.b.f.s.DefaultListableBeanFactory     : Destruction of bean with name 'primaryEntityManagerFactory' threw an exception
+
+java.lang.NoClassDefFoundError: io/opentelemetry/api/incubator/logs/AnyValue
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:91) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:24) ~[opentelemetry-sdk-logs-1.40.0.jar:1.40.0]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.mapLoggingEvent(LoggingEventMapper.java:114) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.emit(LoggingEventMapper.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.emit(OpenTelemetryAppender.java:218) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:95) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:29) ~[opentelemetry-logback-appender-1.0-2.8.0-alpha.jar:2.8.0-alpha]
+	at ch.qos.logback.core.UnsynchronizedAppenderBase.doAppend(UnsynchronizedAppenderBase.java:85) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.core.spi.AppenderAttachableImpl.appendLoopOnAppenders(AppenderAttachableImpl.java:51) ~[logback-core-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.appendLoopOnAppenders(Logger.java:272) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.callAppenders(Logger.java:259) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.buildLoggingEventAndAppend(Logger.java:426) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.filterAndLog_0_Or3Plus(Logger.java:386) ~[logback-classic-1.4.11.jar:1.4.11]
+	at ch.qos.logback.classic.Logger.log(Logger.java:780) ~[logback-classic-1.4.11.jar:1.4.11]
+	at org.apache.commons.logging.LogAdapter$Slf4jLocationAwareLog.warn(LogAdapter.java:438) ~[spring-jcl-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:221) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroyBean(DefaultSingletonBeanRegistry.java:587) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingleton(DefaultSingletonBeanRegistry.java:559) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingleton(DefaultListableBeanFactory.java:1200) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingletons(DefaultSingletonBeanRegistry.java:520) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingletons(DefaultListableBeanFactory.java:1193) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.context.support.AbstractApplicationContext.destroyBeans(AbstractApplicationContext.java:1125) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1086) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.doClose(ServletWebServerApplicationContext.java:174) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:1037) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.boot.SpringApplicationShutdownHook.closeAndWait(SpringApplicationShutdownHook.java:145) ~[spring-boot-3.2.0.jar:3.2.0]
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75) ~[na:na]
+	at org.springframework.boot.SpringApplicationShutdownHook.run(SpringApplicationShutdownHook.java:114) ~[spring-boot-3.2.0.jar:3.2.0]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+Caused by: java.lang.ClassNotFoundException: io.opentelemetry.api.incubator.logs.AnyValue
+	... 29 common frames omitted
+
+Exception in thread "SpringApplicationShutdownHook" java.lang.NoClassDefFoundError: io/opentelemetry/api/incubator/logs/AnyValue
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:91)
+	at io.opentelemetry.sdk.logs.SdkLogRecordBuilder.setBody(SdkLogRecordBuilder.java:24)
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.mapLoggingEvent(LoggingEventMapper.java:114)
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper.emit(LoggingEventMapper.java:95)
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.emit(OpenTelemetryAppender.java:218)
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:95)
+	at io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender.append(OpenTelemetryAppender.java:29)
+	at ch.qos.logback.core.UnsynchronizedAppenderBase.doAppend(UnsynchronizedAppenderBase.java:85)
+	at ch.qos.logback.core.spi.AppenderAttachableImpl.appendLoopOnAppenders(AppenderAttachableImpl.java:51)
+	at ch.qos.logback.classic.Logger.appendLoopOnAppenders(Logger.java:272)
+	at ch.qos.logback.classic.Logger.callAppenders(Logger.java:259)
+	at ch.qos.logback.classic.Logger.buildLoggingEventAndAppend(Logger.java:426)
+	at ch.qos.logback.classic.Logger.filterAndLog_0_Or3Plus(Logger.java:386)
+	at ch.qos.logback.classic.Logger.log(Logger.java:780)
+	at org.apache.commons.logging.LogAdapter$Slf4jLocationAwareLog.warn(LogAdapter.java:445)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroyBean(DefaultSingletonBeanRegistry.java:591)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingleton(DefaultSingletonBeanRegistry.java:559)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingleton(DefaultListableBeanFactory.java:1200)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingletons(DefaultSingletonBeanRegistry.java:520)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingletons(DefaultListableBeanFactory.java:1193)
+	at org.springframework.context.support.AbstractApplicationContext.destroyBeans(AbstractApplicationContext.java:1125)
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1086)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.doClose(ServletWebServerApplicationContext.java:174)
+	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:1037)
+	at org.springframework.boot.SpringApplicationShutdownHook.closeAndWait(SpringApplicationShutdownHook.java:145)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.boot.SpringApplicationShutdownHook.run(SpringApplicationShutdownHook.java:114)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.ClassNotFoundException: io.opentelemetry.api.incubator.logs.AnyValue
+	... 28 more
+
+🧹 Cleaning up...

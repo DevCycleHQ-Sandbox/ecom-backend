@@ -1,0 +1,62 @@
+🚀 Starting Java Backend Server with OpenTelemetry...
+📋 Loading environment variables from .env file...
+📡 Using DYNATRACE OTLP endpoint: https://xtc47953.live.dynatrace.com/api/v2/otlp
+📊 Enabled OTLP export for traces, metrics, and logs
+🔧 Configuration:
+  Port: 3002
+  Environment: development
+  Database: ./database.sqlite
+  Frontend URL: http://localhost:3000
+  OTLP Endpoint: https://xtc47953.live.dynatrace.com/api/v2/otlp
+
+🔍 Checking dependencies...
+✅ Starting with OpenTelemetry instrumentation...
+
+💡 Running Maven with Spring Boot and OpenTelemetry agent...
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------------< com.shopper:java-backend >----------------------
+[INFO] Building Java Backend 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.3.2:clean (default-clean) @ java-backend ---
+[INFO] Deleting /Users/suthar/dev/shopper/backend/java-backend/target
+[INFO] 
+[INFO] >>> spring-boot:3.2.0:run (default-cli) > test-compile @ java-backend >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ java-backend ---
+[INFO] Copying 4 resources from src/main/resources to target/classes
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ java-backend ---
+[INFO] Changes detected - recompiling the module! :source
+[INFO] Compiling 54 source files with javac [debug release 17] to target/classes
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/config/DynatraceOneAgentHook.java:[180,23] cannot find symbol
+  symbol:   class Builder
+  location: interface io.opentelemetry.api.common.Attributes
+[INFO] 1 error
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  15.273 s
+[INFO] Finished at: 2025-09-04T13:20:03-04:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.11.0:compile (default-compile) on project java-backend: Compilation failure
+[ERROR] /Users/suthar/dev/shopper/backend/java-backend/src/main/java/com/shopper/config/DynatraceOneAgentHook.java:[180,23] cannot find symbol
+[ERROR]   symbol:   class Builder
+[ERROR]   location: interface io.opentelemetry.api.common.Attributes
+[ERROR] 
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+
+🧹 Cleaning up...
