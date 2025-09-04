@@ -37,12 +37,15 @@ public class OpenFeatureConfig {
             // Create DevCycle client with default options
             devCycleClient = new DevCycleLocalClient(devCycleServerSdkKey);
 
-            // Add DevCycle hook for feature flag tracing (uses OpenTelemetry API)
-            DynatraceOneAgentHook hook = new DynatraceOneAgentHook();
-            devCycleClient.addHook(hook);
+            // Add DevCycle hooks for feature flag tracing and logging
+            DynatraceOneAgentHook spanHook = new DynatraceOneAgentHook();
+            DevCycleLoggingHook loggingHook = new DevCycleLoggingHook();
+            
+            // devCycleClient.addHook(spanHook);
+            devCycleClient.addHook(loggingHook);
             
             log.info("✅ OpenFeature with DevCycle provider initialized successfully");
-            log.info("🔍 DevCycle hook registered for OpenTelemetry tracing");
+            log.info("🔍 DevCycle hooks registered for OpenTelemetry tracing and logging");
 
             // Test the client with a sample evaluation
             try {

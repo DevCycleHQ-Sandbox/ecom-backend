@@ -84,6 +84,10 @@ export OTEL_SERVICE_NAME="java-backend"
 export OTEL_SERVICE_VERSION="1.0.0"
 export OTEL_RESOURCE_ATTRIBUTES="service.name=java-backend,service.version=1.0.0,deployment.environment=${NODE_ENV}"
 
+# OpenTelemetry Logback Bridge Configuration
+export OTEL_LOGS_EXPORTER="otlp"
+export OTEL_INSTRUMENTATION_LOGBACK_APPENDER_ENABLED="true"
+
 
 # Only set endpoint if we have one configured
 if [ -n "$OTLP_ENDPOINT" ]; then
@@ -98,7 +102,7 @@ if [ -n "$OTLP_ENDPOINT" ]; then
     export OTEL_TRACES_EXPORTER="otlp"
     export OTEL_METRICS_EXPORTER="otlp"  
     export OTEL_LOGS_EXPORTER="otlp"
-    echo "📊 Enabled OTLP export for traces, metrics, and logs"
+    echo "📊 Enabled OTLP export for traces, metrics, and logs with bridge"
 else
     # Disable OTLP exporter if no endpoint configured
     export OTEL_TRACES_EXPORTER="none"
